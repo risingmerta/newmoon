@@ -28,6 +28,7 @@ import { FaCirclePlay } from "react-icons/fa6";
 import SignInSignUpModal from "@/component/SignSignup/SignInSignUpModal";
 import { Lily_Script_One } from "next/font/google";
 import { PiBroadcastFill } from "react-icons/pi";
+import Script from "next/script";
 
 function transformURL(originalURL) {
   if (!originalURL) return null; // Handle null/undefined cases

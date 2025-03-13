@@ -15,6 +15,7 @@ import { AiFillAudio } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import { PiBroadcastFill } from "react-icons/pi";
+import Script from "next/script";
 
 function transformURL(originalURL) {
   if (!originalURL) return null; // Handle null/undefined cases
