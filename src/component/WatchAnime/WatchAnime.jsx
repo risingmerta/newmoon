@@ -81,6 +81,22 @@ export default function WatchAnime(props) {
   // Usage
   const ls = localStorageWrapper();
 
+  useEffect(() => {
+    // Check if the ad script is already loaded
+    if (typeof window !== "undefined" && !window.adScriptLoaded) {
+      const script = document.createElement("script");
+      script.src =
+        "//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js";
+      script.setAttribute("data-cfasync", "false");
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+
+      // Mark the script as loaded to avoid duplicate loading
+      window.adScriptLoaded = true;
+    }
+  }, []);
+
   const [clickedId, setClickedId] = useState(props.epId);
   const [serverName, setServerName] = useState("Vidstreaming");
   const [descIsCollapsed, setDescIsCollapsed] = useState(true);
@@ -1304,11 +1320,6 @@ export default function WatchAnime(props) {
             </div>
 
             <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
-              <Script
-                src="//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"
-                strategy="afterInteractive"
-                data-cfasync="false"
-              />
               {/* Ad container */}
               <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c"></div>
             </div>
