@@ -396,6 +396,7 @@ export default function Details(props) {
         <Script
           src="//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"
           strategy="afterInteractive"
+          async
           data-cfasync="false"
         />
         {/* Ad container */}
