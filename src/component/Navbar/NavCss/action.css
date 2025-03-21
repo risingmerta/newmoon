@@ -1,0 +1,60 @@
+.action-bloc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+}
+.action-ico {
+  color: var(--theme);
+  font-size: 23px;
+}
+
+.action-bS {
+  font-size: 12px;
+}
+
+.action-iS {
+  font-size: 21px;
+}
+
+.action-comb {
+  display: flex;
+  align-items: center !important;
+  gap: 20px;
+}
+
+.action-new-c {
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.engJ {
+  padding: 1px 4px;
+  background: #535252;
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  color: white;
+  font-size: 11px;
+}
+
+.JpE {
+  padding: 1px 4px;
+  background: #535252;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  color: white;
+  font-size: 11px;
+}
+
+.selEJ {
+  color: black;
+  background: var(--theme);
+}
+
+.special-C {
+  margin-bottom: 10px;
+}

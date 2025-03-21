@@ -1,0 +1,98 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* High z-index for pop-up */
+  overflow-y: scroll;
+}
+
+.modal-content {
+  background: rgba(34, 33, 33, 0.7);
+  padding: 20px;
+  width: 300px;
+  height: 500px;
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: end;
+  align-items: start;
+  /* margin-right: -20px;
+  margin-top: -20px; */
+  border-top-right-radius: 10px;
+  overflow: hidden;
+}
+
+.modal-hed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: black;
+  padding: 14px 20px !important;
+  background: white;
+  overflow: hidden;
+}
+.hed-lab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  background: #494949;
+}
+
+.hed-vom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hed-but-1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  color: black;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+.hed-but-2 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  color: #fff;
+  background: rgb(231, 3, 3);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hed-but-1:hover {
+  cursor: pointer;
+}
+
+.hed-but-2:hover {
+  cursor: pointer;
+}

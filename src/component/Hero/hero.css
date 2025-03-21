@@ -1,0 +1,424 @@
+.carousel-img {
+  position: absolute;
+  right: 0;
+  object-fit: cover;
+
+  width: 100%;
+  height: var(--height-large);
+}
+.img-wrapper {
+  height: var(--height-large);
+  width: 100%;
+}
+
+.carousel {
+  height: var(--height-large);
+  top: 0;
+}
+.carousel-inner {
+  height: var(--height-large);
+  width: 100%;
+}
+.anime-info {
+  position: absolute;
+  height: var(--height-large);
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(0deg, #242428 0%, #24242800 15%, #24242800 60%);
+  z-index: 4;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px; /* Add some padding for better spacing */
+}
+
+.posterImg {
+  position: absolute;
+  bottom: 3em;
+  right: 0em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto; /* This will push the poster image to the right */
+  margin-right: 200px;
+  z-index: 5;
+  width: 275px; /* Set a fixed width */
+  height: 425px; /* Set a fixed height */
+}
+
+.posterImg img {
+  width: 100%; /* Make the image fill the container */
+  height: 100%; /* Make the image fill the container */
+  object-fit: cover; /* Maintain aspect ratio while covering the container */
+  border-radius: 8px; /* Optional: Add some rounding to the corners */
+}
+
+.genre-item {
+  display: inline-block; /* Makes the span inline and allows padding/border */
+  padding: 3px 7px; /* Add some padding */
+  border: 1px solid #ccc; /* Border around the genre */
+  border-radius: 5px; /* Optional: rounded corners */
+  font-size: 13.5px; /* Adjust font size as needed */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.genre-item:hover {
+  color: var(--theme);
+  border: 1px solid var(--theme); /* Border around the genre */
+  cursor: pointer;
+}
+
+/* Gradient from left to right */
+.carousel-item .anime-info::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #242428 5%, #242428d4 15%, #24242800 90%);
+}
+
+/* Gradient from navbar to bottom */
+.carousel-item .anime-info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #242428 5%, #242428d4 15%, #24242800 90%);
+}
+
+/* Gradient from right to left */
+.carousel-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, #242428 2%, #242428d4 5%, #24242800 50%);
+}
+
+.carousel-control-next {
+  z-index: 99;
+}
+
+.carousel-control-prev {
+  z-index: 99;
+}
+
+.carousel-item {
+  width: 100%;
+  height: 100%;
+}
+.anime-info-content {
+  position: absolute;
+  bottom: 3em;
+  left: 3em;
+  z-index: 2;
+  width: 40%;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.anime-st-item {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+.quality {
+  background-color: var(--theme);
+  color: black;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  gap: 2px;
+}
+.episode-count {
+  color: black;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  background-color: rgb(245, 180, 245);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.extra-epi-co {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.episode-count-dub {
+  color: black;
+  padding: 2px 4px;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -4px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  background-color: rgb(236, 238, 151);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.anime-statistics {
+  display: flex;
+  gap: 20px;
+}
+.anime-statistic {
+  display: flex;
+  gap: 5px;
+}
+.rank {
+  color: var(--theme);
+}
+
+.carousel-item .anime-title,
+.title-large {
+  display: flex;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  letter-spacing: 1px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+.hero-button {
+  padding: 10px 20px;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  gap: 5px;
+  border-radius: 30px;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none !important;
+}
+.button-wrapper {
+  display: flex;
+  gap: 10px;
+}
+.btn-primary {
+  background: var(--theme);
+  color: black !important;
+}
+
+.description {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn-secondary {
+  background: rgba(99, 98, 98, 0.829);
+  backdrop-filter: blur(10px);
+  color: white;
+}
+
+.carousel-controls {
+  position: relative !important;
+  width: 40px;
+  height: 40px;
+  background: rgba(99, 98, 98, 0.829);
+  color: white;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1 !important;
+  z-index: 10 !important;
+  user-select: none;
+  border: none;
+  cursor: pointer;
+}
+
+.carousel-controls:hover {
+  background: var(--theme);
+  color: #000;
+}
+
+.previ {
+  display: block;
+}
+
+.afteri {
+  display: none;
+}
+
+.carousel-controls-wrapper {
+  position: absolute;
+  right: 40px;
+  bottom: 3rem;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+.swiper-pagination-bullet {
+  background-color: var(--light) !important;
+  height: 9px !important;
+  width: 9px !important;
+
+  opacity: 1 !important;
+}
+.swiper-horizontal > .swiper-pagination-bullets {
+  display: none !important;
+}
+.swiper-pagination-bullet-active {
+  background-color: var(--theme) !important;
+}
+.rank {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+@media screen and (max-width: 1240px) {
+  .posterImg {
+    display: none;
+  }
+  .anime-info {
+    height: var(--height-medium);
+  }
+  .carousel-inner {
+    height: var(--height-medium);
+  }
+  .img-wrapper {
+    height: var(--height-medium);
+  }
+  .carousel-img {
+    height: var(--height-medium);
+  }
+  .carousel {
+    height: var(--height-medium);
+  }
+  .anime-statistic {
+    display: none;
+  }
+  .rank {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .anime-info-content {
+    width: 60%;
+  }
+  .description {
+    font-size: 14px;
+  }
+  .carousel-item .anime-title {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .carousel-item .anime-info::before {
+    display: none;
+  }
+  /* Gradient from left to right */
+
+  /* Gradient from right to left */
+  .carousel-item::after {
+    background: linear-gradient(
+      270deg,
+      #242428 2%,
+      #242428d4 5%,
+      #24242800 50%
+    );
+  }
+  .anime-statistics {
+    display: none;
+  }
+
+  .description {
+    display: none;
+  }
+  .buttons {
+    height: 30px;
+    width: 100px;
+  }
+  .hero-button {
+    font-size: 13px;
+    padding: 8px 15px;
+  }
+  .anime-info-content {
+    max-width: 100%;
+    padding-right: 2rem;
+  }
+  .anime-info::after {
+    display: none;
+  }
+  .carousel-img {
+    width: 100%;
+    opacity: 0.5;
+  }
+  .carousel-controls {
+    display: none;
+  }
+  .anime-info-content {
+    width: 100%;
+    left: 1em;
+  }
+  .carousel {
+    height: var(--height-small) !important;
+  }
+  .anime-info {
+    height: var(--height-small);
+  }
+  .carousel-inner {
+    height: var(--height-small);
+  }
+  .img-wrapper {
+    height: var(--height-small);
+  }
+  .carousel-img {
+    height: var(--height-small);
+  }
+  .carousel {
+    height: var(--height-medium);
+  }
+  .rank {
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .carousel-item .anime-title {
+    font-size: 20px;
+    letter-spacing: 0;
+  }
+
+  .swiper-horizontal > .swiper-pagination-bullets {
+    /* bottom: var(--swiper-pagination-bottom, 8px); */
+    bottom: 0;
+    right: 10px !important ;
+    left: auto !important;
+    width: 20px !important;
+    bottom: 5px !important;
+    display: flex !important;
+    gap: 13px;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .previ {
+    display: none;
+  }
+
+  .afteri {
+    display: block;
+  }
+}

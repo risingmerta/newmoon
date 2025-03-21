@@ -1,0 +1,76 @@
+.newPo {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: 15px;
+  cursor: pointer;
+  gap: 10px;
+  color: rgb(215, 218, 224);
+}
+.newPo:hover {
+  color: var(--theme);
+}
+.impot {
+  border-bottom: 1px solid var(--theme);
+  color: var(--theme);
+}
+.allpit {
+  position: relative;
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.allpit::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  background: rgba(54, 54, 54, 0.5);
+  z-index: -1;
+}
+.allpit-background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.linkok {
+  display: flex;
+  gap: 50px;
+}
+.hiik {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 760px) {
+  .namino {
+    display: none;
+  }
+  .hiik {
+    display: none;
+  }
+  .iconix {
+    font-size: 20px;
+  }
+  .linkok {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .linkok {
+    margin-top: 0;
+  }
+}

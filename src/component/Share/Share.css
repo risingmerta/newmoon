@@ -1,0 +1,314 @@
+.share-app {
+    padding: 40px;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    color: #fff;
+  }
+  .share-app p {
+    margin: 0 !important;
+  }
+  .share-app .primary {
+    color: var(--theme);
+    font-weight: 600;
+  }
+  .share-app .secoi {
+    color: #fff;
+    font-weight: 400;
+  }
+  .share-app img {
+    width: 70px;
+    
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .bundL {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #25D366;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundL:hover {
+    background: #1fa350;
+  }
+  .bundF {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #1877F2;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundF:hover {
+    background: #2563b4;
+  }
+  .bundT {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #24A1DE;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundT:hover {
+    background: #2388bb;
+  }
+  .bundG {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #FF4500;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundG:hover {
+    background: #d64f1e;
+  }
+  .bundTw {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #000000;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundTw:hover {
+    background: #302f2f;
+  }
+  .bundN {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #000000;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundN:hover {
+    background: #302f2f;
+  }
+  .bundEm {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #fc0202;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundEm:hover {
+    background: #c92121;
+  }
+  .bundJp {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #0fdafd;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundJp:hover {
+    background: #1ab3ce;
+  }
+  .bundIn {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #09cf9e;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundIn:hover {
+    background: #148367;;
+  }
+  .bundLn {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #21B94E;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundLn:hover {
+    background: #1b913e;
+  }
+  .bundLk {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #0077B5;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundLk:hover {
+    background: #0c567e;
+  }
+  .bundJr {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #bfcc0e;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundJr:hover {
+    background: #a5af11;
+  }
+  .bundAl {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #ee7b10;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundAl:hover {
+    background: #c06612;
+  }
+  .bundOk {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #75787B;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundOk:hover {
+    background: #545658;
+  }
+  .bundPi {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #E60023;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundPi:hover {
+    background: #ac0921;
+  }
+  .bundPo {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #cb00e6;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundPo:hover {
+    background: #a014b3;
+  }
+  .bundTu {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #021A35;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundTu:hover {
+    background: #173455;
+  }
+  .bundVi {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #7360f2;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundVi:hover {
+    background: #655ba7;
+  }
+  .bundVk {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #ff5fc2;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundVk:hover {
+    background: #bb448d;
+  }
+  .bundWp {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #f06666;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .bundWp:hover {
+    background: #b95151;
+  }
+  .iconS {
+    position: relative;
+  }
+  @media screen and (max-width: 600px) {
+    .share-app img {
+      width: 50px;
+      height: 50px;
+    }
+    .share-app .primary {
+      font-size: 15px;
+      font-weight: 400;
+    }
+    .share-app .secoi {
+      font-size: 14px;
+    }
+    .share-app {
+      padding: 20px 10px;
+    }
+  }

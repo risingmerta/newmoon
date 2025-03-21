@@ -1,0 +1,27 @@
+.contA {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+.collections-W {
+  width: calc(75% - 1rem);
+}
+
+@media screen and (max-width: 1150px) {
+  .collections-W {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1081px) {
+  .contA {
+    flex-direction: column-reverse;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .contA {
+    margin-top: 50px;
+  }
+}

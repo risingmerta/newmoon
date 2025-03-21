@@ -1,0 +1,149 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0; 
+  z-index: -1;
+  transition: all 0.1s ease-in-out;
+}
+
+.modal-content {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: rgba(59, 57, 57, 0.7);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 450px;
+  transition: all 0.2s ease-in-out;
+  z-index: 100;
+  backdrop-filter: blur(10px); /* Add blur effect */
+}
+
+.heddio {
+  font-size: 25px;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.heddp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.midO {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.midI {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.checki {
+  width: 20px; /* Adjust the size */
+  height: 20px; /* Adjust the size */
+  /* accent-color: #4CAF50; Optional: Change the checkbox color */
+}
+.kinto {
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 24px;
+  gap: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.midOT {
+  font-size: 13px;
+  color: #aca7a7;
+}
+.midOI {
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 10px;
+  color: black;
+  outline: none;
+}
+.btio {
+  font-size: 15px;
+  font-weight: 600;
+  color: black;
+  padding: 10px;
+  cursor: pointer;
+}
+.btiom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--theme);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.forget-pass {
+  color: var(--theme);
+  cursor: pointer;
+}
+.line-up {
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-style: normal;
+  gap: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+@media (max-width: 400px) {
+  .modal-content {
+    min-width: 100%; /* Make the modal content take full width */
+    padding: 15px; /* Adjust padding */
+    border-radius: 5px; /* Adjust border-radius for smaller screens */
+  }
+
+  .heddio {
+    font-size: 20px; /* Reduce heading font size */
+  }
+
+  .kinto {
+    font-size: 15px; /* Reduce text size */
+    line-height: 20px; /* Adjust line height */
+  }
+
+  .btio {
+    font-size: 14px; /* Reduce button text size */
+  }
+
+  .btiom {
+    padding: 10px; /* Adjust button padding */
+  }
+
+  .checki {
+    width: 15px; /* Adjust checkbox size */
+    height: 15px;
+  }
+
+  .midOI {
+    padding: 8px 10px; /* Adjust input padding */
+    font-size: 12px; /* Adjust input font size */
+  }
+
+  .midOT {
+    font-size: 12px; /* Reduce subtitle font size */
+  }
+}

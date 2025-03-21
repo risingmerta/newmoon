@@ -1,0 +1,418 @@
+.igg {
+  width: 70vw;
+  margin-left: 20px;
+  padding: 20px;
+  background: #303138;
+}
+
+.heading-Com {
+  color: var(--theme);
+  padding-block: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 20px;
+}
+
+.upperBir {
+  display: flex;
+  width: 100%;
+  justify-content: space-between; /* Aligns items at the start and end */
+  align-items: center; /* Vertically center items */
+  margin-bottom: 30px;
+}
+
+.startBir {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 10px;
+}
+.dropdown-container {
+  position: relative;
+}
+
+.selectOne {
+  display: none;
+  position: absolute;
+  top: 100%; /* Below the startOir */
+  font-size: 13px;
+  padding: 3px;
+  width: 150px;
+  border-radius: 10px;
+  left: 0;
+  background-color: #fff;
+  color: black;
+  z-index: 10;
+}
+
+.dropdown-container:hover .selectOne {
+  display: block;
+}
+
+.selectOneOne,
+.selectOneTwo {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between; /* Pushes mainBir to the left and secBir to the right */
+  align-items: center;
+  width: 100%; /* Ensures the container spans the entire width */
+  background-color: #fff; /* Default background color */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.selectOneOne:hover,
+.selectOneTwo:hover {
+  background-color: #f0f0f0; /* Hover background color */
+}
+
+.mainBir {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.secBir {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.boldiBir {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.drakiBir {
+  font-weight: 600;
+  background-color: #f0f0f0;
+}
+
+.startOir,
+.startTir {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.startOir {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-container {
+  margin-right: 10px;
+}
+
+.startTir {
+  margin-left: 10px;
+}
+
+.middleBir {
+  font-weight: 100;
+  color: rgb(129, 151, 180);
+}
+
+.endBir {
+  display: flex;
+  align-items: flex-end; /* Aligns the content to the bottom of the container */
+}
+.middBir {
+  display: flex;
+  width: 100%;
+  margin-left: 10px;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+.middMess {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 5px;
+  font-size: 14px;
+}
+.logg-col {
+  color: var(--theme);
+}
+.inputMess {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: center;
+}
+.profiy {
+  height: 40px;
+  border-radius: 50%;
+}
+.tuggi {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+.butt-o {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-weight: 500;
+}
+.fl1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.i-head {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.c-txt {
+  color: #bdbfc5;
+}
+.timeAgo-t {
+  font-size: 14px;
+  font-weight: 400;
+  color: #7e7f85;
+}
+.timeAgo-l {
+  font-size: 14px;
+  font-weight: 400;
+  color: #7e7f85;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.timeAgo-cam {
+  font-size: 14px;
+  font-weight: 400;
+  color: #7e7f85;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  display: none;
+}
+.gropi {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gropiPart {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.texaxo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #bdbfc5;
+}
+.theme-col {
+  color: var(--theme);
+  font-weight: 300;
+}
+.fuggi {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+.unf {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--theme);
+  font-size: 15px;
+  gap: 10px;
+  cursor: pointer;
+}
+.inputContainer {
+  border-radius: 8px;
+  width: 60vw;
+}
+.inputReplyContainer {
+  border-radius: 8px;
+  width: 53vw;
+  display: flex;
+}
+.input {
+  color: #fff;
+  background-color: #333;
+  width: 600px;
+  border: 1px solid #444;
+}
+.input::placeholder {
+  color: #aaa;
+}
+.buttonContainer {
+  text-align: center;
+  margin-top: 5px;
+}
+.button {
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.specialInputMess {
+  margin-top: -20px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.specialInputContainer {
+  border-radius: 8px;
+  width: 80vw;
+  display: none;
+}
+.specialInputReplyContainer {
+  display: none;
+  border-radius: 8px;
+  width: 90vw;
+  margin-left: -50px;
+}
+.specialInputRepContainer {
+  width: 90vw;
+  margin-top: -30px;
+  margin-bottom: 20px;
+  display: none;
+}
+.specialInput {
+  color: #fff;
+  background-color: #333;
+  width: 600px;
+  border: 1px solid #444;
+}
+.specialInput::placeholder {
+  color: #aaa;
+}
+.specialButtonContainer {
+  text-align: center;
+  margin-top: 5px;
+}
+.specialButton {
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+.time-cam {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.marginaL {
+  margin-left: 20px;
+}
+@media screen and (max-width: 1300px) {
+  .igg {
+    width: 96%;
+    margin-right: 20px;
+  }
+  .inputContainer {
+    width: 80vw;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .inputContainer {
+    width: 70vw;
+  }
+}
+@media screen and (max-width: 800px) {
+  .igg {
+    margin-left: 10px;
+    width: 96%;
+  }
+  .heading-Com {
+    margin-left: 10px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .igg {
+    padding: 10px;
+  }
+  .marginaL {
+    margin-left: 0;
+  }
+  .tuggi {
+    margin-left: 0;
+  }
+  .fuggi {
+    margin-left: 0;
+  }
+  .middBir {
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 500px) {
+  .button {
+    padding: 10px 11px;
+  }
+  .inputMess {
+    display: none;
+  }
+  .specialInputMess {
+    display: flex;
+  }
+  .inputContainer {
+    width: 63vw;
+  }
+  .igg {
+    margin-left: 5px;
+    padding: 5px;
+  }
+  .tuggi {
+    gap: 10px;
+  }
+  .profiy {
+    width: 38px;
+    height: 38px;
+  }
+  .middBir {
+    align-items: center;
+  }
+  .specialInputReplyContainer {
+    display: flex;
+  }
+  .specialInputContainer {
+    display: flex;
+  }
+  .inputContainer {
+    display: none;
+  }
+  .inputReplyContainer {
+    display: none;
+  }
+  .specialInputRepContainer {
+    display: flex;
+  }
+  .timeAgo-l {
+    display: none;
+  }
+  .timeAgo-t {
+    font-size: 13px;
+  }
+  .timeAgo-cam {
+    display: flex;
+  }
+  .startBir {
+    gap: 5px;
+  }
+  .boldiBir {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .userN {
+    font-size: 14px;
+    font-weight: normal;
+  }
+  .c-txt {
+    font-size: 14px;
+  }
+  .texaxo {
+    font-size: 14px;
+  }
+}

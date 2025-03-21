@@ -1,0 +1,158 @@
+.nav-1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed !important;
+  height: 65px;
+  width: 100%;
+  z-index: 80;
+  top: 0;
+  max-width: 1920px;
+  margin: auto;
+
+  /* background-color: rgba(46, 49, 45, 0.8); */
+}
+
+.barr:hover {
+  color: var(--theme);
+  cursor: pointer;
+}
+
+.nav-in {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 30px;
+  padding: 10px;
+}
+.darkio {
+  background-color: rgba(46, 49, 45, 0.8); /* 50% transparency */
+}
+.nav-end {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  gap: 10px;
+}
+.nav-ser {
+  display: none;
+}
+.nav-log {
+  padding: 5px 10px;
+  background: var(--theme);
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  border-radius: 5px;
+  text-align: center;
+}
+.float-ser {
+  display: none;
+}
+/* .searc {
+  z-index: 100;
+} */
+.logo {
+  max-height: 40px !important;
+}
+/* Navbar Logo Container */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spacing between the icon and text */
+}
+
+/* Crescent Moon Icon */
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(145deg, #ffffff, #00f2fe);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+}
+
+.logo-icon::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 7px;
+}
+
+/* Logo Text */
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #4facfe, #00f2fe, #e91e63, #ffeb3b);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 4s infinite;
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.profile-ico {
+  height: 36.5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Keyframe Animation for Gradient */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .searc {
+    display: none;
+  }
+  .float-ser {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: fixed !important;
+    height: 65px;
+    width: 100%;
+    z-index: 90;
+    top: 60px;
+    max-width: 1920px;
+    margin: auto;
+  }
+  .nav-ser {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .social-links {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 790px) {
+  .nav-action {
+    display: none;
+  }
+  .nav-in {
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 704px) {
+  .nav-1 {
+    background: var(--dark);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Shadow at the bottom */
+  }
+}

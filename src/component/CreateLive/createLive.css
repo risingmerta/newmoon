@@ -1,0 +1,507 @@
+.doto {
+  color: #ccbfbf;
+  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.kinj-Fa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kinj {
+  margin-top: 65px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  /* align-items: center;
+  justify-content: center; */
+}
+.dotoi {
+  color: #ccbfbf;
+  font-size: 10px;
+  margin-left: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.specif {
+  margin: 20px;
+  margin-bottom: -20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dtoP {
+  display: flex;
+  flex-wrap: wrap;
+}
+.namo {
+  padding: 2px 4px;
+  width: fit-content;
+  font-weight: 500;
+  font-size: 15px;
+  align-items: center;
+  color: rgb(171, 180, 177) !important;
+}
+
+.crt-bt {
+  margin: 20px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.homo {
+  padding: 2px 4px;
+  width: fit-content;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  align-items: center;
+}
+.anime-container {
+  position: relative;
+  overflow: hidden;
+  width: 350px;
+  height: 400px; /* Adjust as needed */
+}
+
+/* Background Image with Blur, Color, and Dotted Overlay */
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover, 40px 40px, cover; /* Adjust pattern size */
+  background-position: center, center, center;
+  background-blend-mode: overlay, normal; /* Blend color overlay and dotted pattern */
+  filter: blur(20px); /* Blur effect */
+  z-index: 0; /* Behind the content */
+  opacity: 0.7; /* Adjust transparency */
+}
+.anime-pos {
+  width: 90px;
+  height: 130px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* Horizontally center the image */
+  align-items: center; /* Vertically center the image */
+}
+
+.anime-pos img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; /* Ensure the image fits inside the container while maintaining aspect ratio */
+}
+
+.third-reich {
+  display: flex;
+  align-items: center;
+}
+.inner-reich {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  margin-right: 10px;
+}
+.inner-texi {
+  font-size: 14px;
+  padding: 4px 7px;
+  color: #e0d7d7;
+  display: flex;
+  font-weight: 400;
+}
+.rat {
+  background-color: aliceblue;
+  color: black;
+  padding: 2px 4px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  gap: 2px;
+}
+.qual {
+  background-color: var(--theme);
+  color: black;
+  padding: 2px 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  gap: 2px;
+}
+.subE {
+  color: black;
+  padding: 2px 4px;
+  font-size: 0.7rem;
+  background-color: rgb(245, 180, 245);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.dubE {
+  color: black;
+  padding: 2px 4px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  background-color: rgb(151, 235, 238);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+/* Content over the blurred background */
+.anime-content {
+  position: relative;
+  z-index: 1; /* Ensure content is above the background */
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+  padding: 20px; /* Adjust padding to suit your layout */
+  backdrop-filter: blur(
+    5px
+  ); /* Optional: adds a slight blur to the background through the content */
+  color: white; /* Ensure text is readable */
+}
+.descriptol {
+  font-size: 14px;
+  font-weight: 300;
+}
+.anime-namik {
+  font-weight: 600;
+}
+.rn1 {
+  height: 50%;
+  background-color: #3f4349;
+  padding: 30px;
+}
+.rn2 {
+  /* height: 50%; */
+  background-color: #3a3939;
+  /* padding: 50px 30px; */
+}
+.rn-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+}
+/* .rn-mar {
+  margin-bottom: 0;
+} */
+.rn-bott {
+  display: flex;
+  flex-direction: column;
+  /* align-items: ; */
+  justify-content: center;
+  gap: 10px;
+}
+.rn-ti {
+  gap: 20px;
+}
+.rn-input {
+  padding: 10px;
+  border-radius: 5px;
+  width: 350px;
+  color: black;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.rn-input::placeholder {
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+}
+.rn-sugg {
+  font-size: 14px;
+  font-weight: 300;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.rn-sug {
+  font-size: 14px;
+  font-weight: 300;
+  color: #ccbfbf;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.rn-b2t {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.subo {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  /* background: var(--theme);
+  color: black; */
+}
+.subo:hover {
+  color: var(--theme);
+  cursor: pointer;
+}
+.subo-col {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  background: var(--theme);
+  color: black;
+  cursor: pointer;
+}
+.col-i {
+  color: var(--theme);
+}
+.upp-bi {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+}
+.upp-bi1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.str-t {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  background: rgb(228, 228, 233);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+.str-t:hover {
+  cursor: pointer;
+}
+.cr1 {
+  padding: 10px 20%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--theme);
+  color: black;
+  font-weight: 600;
+}
+.cr2 {
+  padding: 10px 5%;
+  border-radius: 10px;
+  background: rgb(86, 87, 86);
+  color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.cr1:hover {
+  cursor: pointer;
+}
+
+.cr2:hover {
+  cursor: pointer;
+}
+
+.rb1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  height: 50%;
+  background-color: #3f4349;
+  padding: 30px;
+}
+.rby {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+.tyi {
+  font-size: 13px;
+}
+.rb-all {
+  width: 400px;
+}
+.subi-col {
+  color: var(--theme);
+}
+.subi {
+  color: #c7bebe;
+}
+
+.react-calendar {
+  background-color: #000; /* Black background */
+  color: #000; /* White text for contrast */
+  border: none; /* Remove border for a sleek look */
+  padding: 10px;
+}
+
+.react-calendar__tile {
+  background-color: #1c1c1c; /* Dark gray tiles */
+  color: #000; /* Text color */
+  border-radius: 6px;
+}
+
+.react-calendar__tile--active {
+  background-color: #333; /* Highlight for active date */
+  color: #61dafb; /* Accent color for active text */
+}
+
+.react-calendar__tile:hover {
+  background-color: #444; /* Hover effect */
+}
+
+/* .react-calendar__navigation button {
+  background-color: #111; /* Navigation buttons */
+/* color: #61dafb; Navigation text color */
+/* } */
+
+/* .react-calendar__month-view__weekdays {
+  /* background-color: #000; /* Weekday background */
+/* color: #888; Dimmed weekday labels */
+/* } */
+/* Overlay to dim the background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Pop-up styling */
+.cal-all {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 320px;
+  text-align: center;
+  position: relative;
+  z-index: 1000;
+}
+.cal-ut {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  background: #e9e4e4;
+  padding: 5px;
+  /* margin: 0.5px; */
+  margin-top: -5px;
+  padding-right: 20px;
+  gap: 20px;
+}
+
+.cal-ut1 {
+  /* background: red; */
+  color: #000;
+}
+.cal-ut1:hover {
+  cursor: pointer;
+}
+/* select {
+  width: 80px;
+  overflow-y: auto;
+  height: 300px; /* Ensures select element has fixed height */
+/* } */
+
+option {
+  height: 50px; /* Set a fixed height for options */
+  display: flex; /* Ensure the text aligns properly */
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.ti-all {
+  background-color: #ffffff; /* Pop-up background */
+  color: #000;
+  border-radius: 8px; /* Smooth edges */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  padding: 20px; /* Internal spacing */
+  width: 320px; /* Fixed width for pop-up */
+  text-align: center;
+  z-index: 1000; /* Above the overlay */
+}
+
+.middHo {
+  color: #000;
+}
+
+.topHo {
+  color: #5e5959 !important;
+}
+
+.rn-is {
+  font-size: 13px;
+}
+
+@media screen and (max-width: 1175px) {
+  .dtoP {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .anime-container {
+    width: 100%;
+  }
+  .rn1 {
+    width: 100%;
+    padding: 20px;
+  }
+  .rn-input {
+    width: 300px;
+  }
+  .rb1 {
+    width: 100%;
+    padding: 20px;
+  }
+  .rn-sug {
+    font-size: 13px;
+  }
+  .rn-all {
+    width: 100%;
+  }
+  .rb-all {
+    width: 100%;
+  }
+  .rn-sugg {
+    font-size: 13px;
+  }
+  .cr1 {
+    padding: 10px 15%;
+  }
+  .cr2 {
+    padding: 10px 8%;
+  }
+  .specif {
+    display: none;
+  }
+}

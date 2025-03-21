@@ -1,0 +1,44 @@
+.artplayer-app {
+  width: 100%;
+  height: 570px;
+}
+
+.vds-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.sync {
+  color: #fff;
+}
+
+.subtitle-text {
+  position: relative; /* Allows absolute positioning of the background */
+  color: #fff; /* Text color */
+  font-size: 20px; /* Font size */
+  -webkit-text-stroke: 1px #000; /* Adds a text border */
+  font-weight: 600; /* Font weight */
+  padding: 2px; /* Padding around the text */
+  background-color: black; /* Black background behind the text */
+  display: inline-block; /* Makes the background fit the text size */
+  border-radius: 4px; /* Optional: add a border radius if desired */
+}
+
+@media screen and (max-width: 870px) {
+  .artplayer-app {
+    height: 520px;
+    width: auto;
+  }
+}
+@media screen and (max-width: 711px) {
+  .artplayer-app {
+    height: 400px;
+    width: auto;
+  }
+}
+@media screen and (max-width: 580px) {
+  .artplayer-app {
+    height: 250px;
+    width: auto;
+  }
+}

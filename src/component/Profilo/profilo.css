@@ -1,0 +1,71 @@
+.profi {
+  position: fixed;
+  transition: all 0.2s ease-in-out;
+  min-height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  z-index: -1;
+  transition: all 0.1s ease-in-out;
+}
+.profi-list {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  top: 50px;
+  right: -250px;
+  width: 300px;
+  z-index: 100;
+  padding: 10px;
+  overflow-y: auto;
+  flex-direction: column;
+  background: var(--dark);
+  border: 1px solid #555050;
+  border-radius: 20px;
+  transition: all 0.2s ease-in-out;
+}
+.profD {
+  padding: 10px 15px;
+  background: var(--grey-dark);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: 15px;
+  cursor: pointer;
+  gap: 10px;
+}
+.profD:hover {
+  color: var(--theme);
+}
+.logD {
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 15px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+}
+.logD:hover {
+  color: rgb(253, 67, 67);
+}
+.logA {
+  border-radius: 20px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+.logAC {
+  color: var(--theme);
+  font-weight: 600;
+}
+.logAB {
+  margin-bottom: 10px;
+}

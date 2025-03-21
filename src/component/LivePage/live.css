@@ -1,0 +1,432 @@
+.foundati {
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+}
+.video-player {
+  width: 100%;
+}
+.hls-container {
+  min-width: 100%;
+  aspect-ratio: 16/9;
+}
+.timl-P {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.background-image {
+  position: absolute;
+  object-fit: cover;
+  filter: blur(10px) brightness(0.5);
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.timl-1 {
+  font-size: 25px;
+  font-weight: 300;
+}
+.timl-2 {
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--theme);
+}
+.timl-3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(34, 33, 33, 0.8); /* 50% transparency */
+}
+.timl-31 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #cac6c6;
+}
+.timl-32 {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 10px;
+}
+.timl-321 {
+  color: var(--theme);
+  font-weight: 600;
+}
+.ott-2 {
+  font-size: 14px;
+  color: rgb(136, 129, 129);
+}
+.opt-2 {
+  font-size: 14px;
+  color: rgb(153, 146, 146);
+}
+.five-str {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.kilO {
+  color: var(--theme);
+}
+.al-33 {
+  padding: 5px 30px;
+  background: #3d3c3c;
+}
+.five-22 {
+  margin-left: 30px;
+}
+.opt-11 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.opt-22 {
+  /* font-size: 1px; */
+  /* font-weight: 600; */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--theme);
+  color: black;
+}
+.oppt-22 {
+  font-size: 13px;
+}
+.opt-33 {
+  color: var(--theme);
+  font-size: 16px;
+  font-weight: 600;
+}
+.bit-co {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #3d3c3c;
+}
+.biit-1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.biit-img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.biit-more {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.biit-view {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--theme);
+}
+.biit-time {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.biit-set {
+  font-size: 13px;
+  padding: 4px;
+  border-radius: 4px;
+  background: #fff;
+  color: black;
+}
+.biit-set:hover {
+  cursor: pointer;
+}
+.kenpa-1 {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 40px);
+  gap: 15px;
+  background: #3d3c3c;
+  margin: 5px 20px;
+}
+.kenpa-img {
+  width: 151px;
+  min-width: 150px;
+}
+.kenpa-sts {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 1px;
+}
+.kenpa-name {
+  font-size: 25px;
+  color: #fff;
+  font-weight: 700;
+}
+.kenpa-sts-1 {
+  padding: 1px 5px;
+  color: black;
+  background: #fff;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.kenpa-sts-2 {
+  padding: 1px 5px;
+  color: black;
+  background: var(--theme);
+}
+.kenpa-sts-3 {
+  padding: 1px 5px;
+  color: black;
+  background: rgb(245, 180, 245);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.kenpa-sts-4 {
+  padding: 1px 5px;
+  color: black;
+  background: rgb(151, 235, 238);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.kenpa-sts-6 {
+  padding: 1px 5px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.spec {
+  margin-left: 5px;
+}
+
+.kenpa-sts-8 {
+  padding: 1px 5px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.decro {
+  font-size: 13px;
+  color: #c9c0c0;
+  font-weight: 300;
+}
+
+.fin-buut {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: black;
+  background: #fff;
+  font-size: 14px;
+  padding: 2px 4px;
+  border-radius: 10px;
+  padding-left: 8px;
+  width: 112px;
+}
+.kenpa-soul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  padding: 0 10px;
+}
+.user-N {
+  font-size: 20px;
+  font-weight: 600;
+}
+.time-N {
+  font-size: 14px;
+  color: #c9c0c0;
+  font-weight: 300;
+}
+
+.inen {
+  width: 70%;
+  z-index: 2;
+  margin-bottom: 70px;
+}
+.chatB {
+  height: calc(100vh - 70px);
+  position: fixed;
+  width: 30%;
+  top: 70px;
+  right: 0;
+  z-index: 1;
+}
+
+.chatC {
+  display: none;
+}
+.decrol {
+  display: none;
+  font-size: 13px;
+  color: #c9c0c0;
+  font-weight: 300;
+}
+@media screen and (max-width: 1200px) {
+  .chatB {
+    display: none;
+  }
+  .chatC {
+    height: 400px;
+    width: 100%;
+    /* top: 70px;
+    right: 0; */
+    display: block;
+    /* z-index: 2;  */
+  }
+  .inen {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .five-str {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .five-stn {
+    align-items: start;
+  }
+  .five-22 {
+    flex-wrap: wrap;
+  }
+  .al-33 {
+    padding: 5px 10px;
+    background: #3d3c3c;
+  }
+  .opt-11 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .opt-22 {
+    /* font-size: 1px; */
+    /* font-weight: 600; */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: var(--theme);
+    color: black;
+  }
+  .oppt-22 {
+    font-size: 12px;
+  }
+  .opt-33 {
+    color: var(--theme);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .biit-more {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .bit-co {
+    padding: 20px 10px;
+  }
+  .kenpa-1 {
+    display: flex;
+    align-items: start;
+    width: calc(100% - 20px);
+    gap: 15px;
+    background: none;
+    margin: 5px 10px;
+  }
+}
+
+@media screen and (max-width: 674px) {
+  .kenpa-img {
+    width: 101px;
+    min-width: 100px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .kenpa-img {
+    width: 71px;
+    min-width: 70px;
+  }
+  .decrol {
+    display: block;
+  }
+  .decro {
+    display: none;
+  }
+  .kenpa-name {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .kenpa-soul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+    padding-right: 10px;
+  }
+  .user-N {
+    font-size: 15px;
+  }
+  .time-N {
+    font-size: 13px;
+  }
+  .biit-view {
+    font-size: 13px;
+  }
+  .biit-time {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .kenpa-1 {
+    display: flex;
+    align-items: start;
+    width: calc(100% - 10px);
+    gap: 15px;
+    background: none;
+    margin: 5px;
+  }
+  .kenpa-soul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+    padding-right: 5px;
+  }
+}

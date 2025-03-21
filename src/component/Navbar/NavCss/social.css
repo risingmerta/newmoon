@@ -1,0 +1,11 @@
+.social-links-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.social-links-wrapper span {
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 20px;
+  overflow: hidden;
+}

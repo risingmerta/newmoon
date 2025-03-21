@@ -1,0 +1,143 @@
+.footer-container {
+  padding: 20px;
+}
+.footer-container > * {
+  padding: 10px;
+}
+.main-element {
+  border-right: 1px solid var(--grey-dark);
+  margin-right: 10px;
+  padding-right: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.logo-social-links .social-links {
+  border-bottom: 1px solid var(--grey-dark);
+  display: flex;
+  padding-block: 10px;
+  align-items: center;
+}
+
+.help-text {
+  align-items: center;
+}
+.alphabet-tile {
+  text-align: center;
+  min-width: 25px;
+  font-weight: bolder;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: var(--grey-dark);
+  text-decoration: none;
+  color: white;
+}
+.alphabet-tile:hover {
+  background: var(--theme);
+  color: black;
+}
+.alphabet-list {
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.copyright-text {
+  color: grey;
+}
+
+/* LOGO */
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.logo {
+  max-height: 40px !important;
+}
+/* Navbar Logo Container */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spacing between the icon and text */
+}
+
+/* Crescent Moon Icon */
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(145deg, #ffffff, #00f2fe);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+}
+
+.logo-icon::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 7px;
+}
+
+/* Logo Text */
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #4facfe, #00f2fe, #e91e63, #ffeb3b);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 4s infinite;
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.profile-ico {
+  height: 36.5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Keyframe Animation for Gradient */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .logo {
+    height: 30px;
+    width: auto;
+  }
+  .footer-container {
+    padding: 0;
+  }
+  .alphabet-tile {
+    padding: 2px 7px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+ .logo {
+  height: 30px;
+ } 
+ .logo-icon {
+  height: 30px;
+  width: 30px;
+ }
+ .logo-icon::after {
+  height: 20px;
+  width: 20px;
+ }
+ .logo-text {
+  font-size: 1.3rem;
+ }
+}

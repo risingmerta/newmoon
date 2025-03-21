@@ -1,0 +1,6 @@
+.err-utt {
+  padding: 5px 10px;
+  color: black;
+  background-color: var(--theme);
+  border-radius: 10px;
+}
