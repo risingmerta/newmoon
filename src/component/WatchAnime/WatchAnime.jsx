@@ -453,7 +453,7 @@ export default function WatchAnime(props) {
       }
     }
   }, [pathname]);
-
+ 
   const err = (data) => {
     if (data) {
       if (serverName === "Vidstreaming") {
