@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../Hero/Hero";
 import Trending from "../Trending/Trending";
 import Share from "../Share/Share";
@@ -12,6 +12,7 @@ import Profilo from "../Profilo/Profilo";
 import Footer from "../Footer/Footer";
 import BannerAd from "../Banner/Banner";
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 
 const Home = ({ data, existingAnime }) => {
   const [selectL, setSelectL] = useState("en");
@@ -24,6 +25,23 @@ const Home = ({ data, existingAnime }) => {
   const lang = (lang) => {
     setSelectL(lang);
   };
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container");
+      if (adContainer) {
+        adContainer.innerHTML = `
+          <iframe
+            src="/ad"
+            style="width: 100%; height: 100px; border: none; overflow: hidden;"
+            scrolling="no"
+          ></iframe>
+        `;
+      }
+    }
+  }, [pathname]);
 
   return (
     <div>
@@ -56,14 +74,8 @@ const Home = ({ data, existingAnime }) => {
           />
           {/* "//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"*/}
           <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
-            <Script
-              src="//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"
-              strategy="afterInteractive"
-              async
-              data-cfasync="false"
-            />
             {/* Ad container */}
-            <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c"></div>
+            <div id="ad-container"></div>
           </div>
 
           <Trending data={data?.trending || []} selectL={selectL} />

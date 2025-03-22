@@ -31,6 +31,20 @@ export default function GenreSidebar(props) {
       }, [20000]);
     }
   };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container");
+      if (adContainer) {
+        adContainer.innerHTML = `
+            <iframe
+              src="/ad"
+              style="width: 100%; height: 100px; border: none; overflow: hidden;"
+              scrolling="no"
+            ></iframe>
+          `;
+      }
+    }
+  }, [pathname]);
   return (
     <>
       <div>
@@ -62,6 +76,12 @@ export default function GenreSidebar(props) {
             <LoadingSpinner />
           ) : (
             <>
+              <div
+                style={{ width: "100%", height: "100px", overflow: "hidden" }}
+              >
+                {/* Ad container */}
+                <div id="ad-container"></div>
+              </div>
               <Share
                 style={{
                   paddingTop: 40,

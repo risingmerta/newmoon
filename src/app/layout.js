@@ -50,10 +50,10 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
           async
         />
-        <Script
+        {/* <Script
           strategy="afterInteractive"
           src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
-        />
+        /> */}
         {children}
       </body>
     </html>

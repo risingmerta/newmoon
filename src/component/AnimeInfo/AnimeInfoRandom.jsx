@@ -187,6 +187,21 @@ export default function Details(props) {
     }
   };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container");
+      if (adContainer) {
+        adContainer.innerHTML = `
+            <iframe
+              src="/ad"
+              style="width: 100%; height: 100px; border: none; overflow: hidden;"
+              scrolling="no"
+            ></iframe>
+          `;
+      }
+    }
+  }, [pathname]);
+
   return (
     <>
       <SignInSignUpModal setLogIsOpen={setLogIsOpen} logIsOpen={logIsOpen} />
@@ -393,14 +408,8 @@ export default function Details(props) {
         </div>
       </div>
       <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
-        <Script
-          src="//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"
-          strategy="afterInteractive"
-          async
-          data-cfasync="false"
-        />
         {/* Ad container */}
-        <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c"></div>
+        <div id="ad-container"></div>
       </div>
     </>
   );
