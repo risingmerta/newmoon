@@ -37,22 +37,36 @@ export async function generateMetadata({ params }) {
 
     const existingAnime = await animeCollection.findOne({ _id: idToCheck });
 
-    let datao = ''
+    let datao = "";
 
     if (!existingAnime) {
-      const res = await fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`);
+      const res = await fetch(
+        `https://vimal.animoon.me/api/info?id=${idToCheck}`
+      );
       const dat = await res.json();
-    
-      const rest = await fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`);
-      const epis = await rest.json();
-    
-      if (dat?.results?.data?.title && Array.isArray(epis?.results?.episodes) && epis.results.episodes.length > 0) {
-        await animeCollection.insertOne({ _id: idToCheck, info: dat, episodes: epis });
-        datao = dat
-      }
-    } 
 
-    const title = existingAnime ? existingAnime?.info?.results?.data?.title : datao?.results?.data?.title;
+      const rest = await fetch(
+        `https://vimal.animoon.me/api/episodes/${idToCheck}`
+      );
+      const epis = await rest.json();
+
+      if (
+        dat?.results?.data?.title &&
+        Array.isArray(epis?.results?.episodes) &&
+        epis.results.episodes.length > 0
+      ) {
+        await animeCollection.insertOne({
+          _id: idToCheck,
+          info: dat,
+          episodes: epis,
+        });
+        datao = dat;
+      }
+    }
+
+    const title = existingAnime
+      ? existingAnime?.info?.results?.data?.title
+      : datao?.results?.data?.title;
 
     return {
       title: `Watch ${title} English Sub/Dub online free on Animoon.me`,
@@ -105,18 +119,30 @@ export default async function page({ params, searchParams }) {
   data = existingAnime.episodes;
 
   if (!existingAnime) {
-    const res = await fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`);
+    const res = await fetch(
+      `https://vimal.animoon.me/api/info?id=${idToCheck}`
+    );
     const dat = await res.json();
-  
-    const rest = await fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`);
+
+    const rest = await fetch(
+      `https://vimal.animoon.me/api/episodes/${idToCheck}`
+    );
     const epis = await rest.json();
-  
-    if (dat?.results?.data?.title && Array.isArray(epis?.results?.episodes) && epis.results.episodes.length > 0) {
-      await animeCollection.insertOne({ _id: idToCheck, info: dat, episodes: epis });
-      datao = dat
-      data = epis
+
+    if (
+      dat?.results?.data?.title &&
+      Array.isArray(epis?.results?.episodes) &&
+      epis.results.episodes.length > 0
+    ) {
+      await animeCollection.insertOne({
+        _id: idToCheck,
+        info: dat,
+        episodes: epis,
+      });
+      datao = dat;
+      data = epis;
     }
-  } 
+  }
 
   // Determine the episode ID
   const epId = episodeIdParam || data?.results?.episodes[0]?.id;
@@ -149,7 +175,6 @@ export default async function page({ params, searchParams }) {
   if (datao?.results?.data?.animeInfo?.tvInfo?.dub >= epiod) {
     dubTruth = "yes";
   }
-
 
   // Fetch stream data (real-time, no caching)
   let dataj = [];
@@ -492,13 +517,15 @@ export default async function page({ params, searchParams }) {
       (ep) => ep?.id === epId
     );
     episodeNumber = currentEpisode ? currentEpisode?.episode_no : 0;
-  }  
+  }
 
   const dataStr = { sub: [], dub: [] }; // Separate arrays for sub and dub URLs
 
   try {
     // Step 1: Fetch the server list for the episode
-    const episodeId = epis ? epis : data?.results?.episodes[0].id.split("ep=")[1];
+    const episodeId = epis
+      ? epis
+      : data?.results?.episodes[0].id.split("ep=")[1];
     const serversResponse = await axios.get(
       `https://hianime.bz/ajax/v2/episode/servers?episodeId=${episodeId}`
     );
@@ -507,19 +534,28 @@ export default async function page({ params, searchParams }) {
     if (serversData?.html) {
       const $ = cheerio.load(serversData.html);
 
-      // Extract SUB, DUB, and RAW server data
-      ["sub", "dub", "raw"].forEach((type) => {
+      // Extract SUB and DUB server data
+      ["sub", "dub"].forEach((type) => {
         $(`div.ps_-block-sub.servers-${type} div.server-item`).each(
           (_, element) => {
             const dataId = $(element).attr("data-id");
             if (dataId) {
-              // For 'raw', add the URLs to 'sub' as well
-              const arrayType = type === "raw" ? "sub" : type;
-              dataStr[arrayType].push({ id: dataId, url: null }); // Initialize URL as null
+              dataStr[type].push({ id: dataId, url: null }); // Initialize URL as null
             }
           }
         );
       });
+
+      if ($("div.ps_-block-sub.servers-raw")?.length) {
+        $(`div.ps_-block-sub.servers-raw div.server-item`).each(
+          (_, element) => {
+            const dataId = $(element).attr("data-id");
+            if (dataId) {
+              dataStr["sub"].push({ id: dataId, url: null }); // Initialize URL as null
+            }
+          }
+        );
+      }
 
       // Step 2: Fetch sources for all `data-id`s in parallel
       for (const type of ["sub", "dub"]) {
@@ -549,7 +585,6 @@ export default async function page({ params, searchParams }) {
       }
 
       console.log("Extracted EA URLs:", dataStr);
-      return dataStr;
     } else {
       console.error("Invalid servers response or missing HTML.");
     }
@@ -757,7 +792,7 @@ export default async function page({ params, searchParams }) {
         arise={arise}
         raw={raw}
       />
-      <Advertize/>
+      <Advertize />
     </div>
   );
 }
