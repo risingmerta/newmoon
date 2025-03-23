@@ -507,13 +507,15 @@ export default async function page({ params, searchParams }) {
     if (serversData?.html) {
       const $ = cheerio.load(serversData.html);
 
-      // Extract SUB and DUB server data
-      ["sub", "dub"].forEach((type) => {
+      // Extract SUB, DUB, and RAW server data
+      ["sub", "dub", "raw"].forEach((type) => {
         $(`div.ps_-block-sub.servers-${type} div.server-item`).each(
           (_, element) => {
             const dataId = $(element).attr("data-id");
             if (dataId) {
-              dataStr[type].push({ id: dataId, url: null }); // Initialize URL as null
+              // For 'raw', add the URLs to 'sub' as well
+              const arrayType = type === "raw" ? "sub" : type;
+              dataStr[arrayType].push({ id: dataId, url: null }); // Initialize URL as null
             }
           }
         );
@@ -547,6 +549,7 @@ export default async function page({ params, searchParams }) {
       }
 
       console.log("Extracted EA URLs:", dataStr);
+      return dataStr;
     } else {
       console.error("Invalid servers response or missing HTML.");
     }
