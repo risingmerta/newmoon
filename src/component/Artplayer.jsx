@@ -9,9 +9,81 @@ import artplayerPluginHlsControl from "artplayer-plugin-hls-control";
 
 function ArtPlayer(props) {
   const artRef = useRef(null);
-  function getInstance() {
-    (art) => console.info(art);
+  function getInstance(art) {
+    console.info(art);
+    return art;
   }
+
+  // Wait for ArtPlayer to be ready
+  art.on("ready", () => {
+    const instance = getInstance(art);
+
+    // Create an ad overlay inside ArtPlayer
+    const adOverlay = document.createElement("div");
+    adOverlay.style.position = "absolute";
+    adOverlay.style.top = "0";
+    adOverlay.style.left = "0";
+    adOverlay.style.width = "100%";
+    adOverlay.style.height = "100%";
+    adOverlay.style.background = "rgba(0, 0, 0, 0.7)";
+    adOverlay.style.color = "white";
+    adOverlay.style.display = "none";
+    adOverlay.style.alignItems = "center";
+    adOverlay.style.justifyContent = "center";
+    adOverlay.style.fontSize = "24px";
+    adOverlay.style.zIndex = "1000";
+    adOverlay.innerHTML = `
+      <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c"></div>
+      <span>Ad - Skipping in <span id="ad-countdown">5</span>s</span>
+    `;
+
+    instance.template.$video.parentNode.appendChild(adOverlay);
+
+    // Load ad script dynamically
+    const adScript = document.createElement("script");
+    adScript.async = true;
+    adScript.dataset.cfasync = "false";
+    adScript.src =
+      "//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js";
+    document.body.appendChild(adScript);
+
+    // Store last ad time
+    let lastAdTime = 0;
+
+    // Function to show ads
+    function showAd() {
+      if (!instance.paused) {
+        instance.pause(); // Pause video during ad
+      }
+
+      adOverlay.style.display = "flex"; // Show ad overlay
+      let countdown = 5;
+      const adCountdownElement = document.getElementById("ad-countdown");
+
+      const adInterval = setInterval(() => {
+        adCountdownElement.textContent = countdown;
+        countdown--;
+
+        if (countdown < 0) {
+          clearInterval(adInterval);
+          adOverlay.style.display = "none"; // Hide ad
+          instance.play();
+        }
+      }, 1000);
+    }
+
+    // Listen for video time updates
+    instance.on("video:timeupdate", () => {
+      const currentTime = instance.currentTime;
+
+      if (currentTime >= lastAdTime + 120) {
+        // Every 2 minutes of video playback
+        lastAdTime = currentTime;
+        showAd();
+      }
+    });
+  });
+
   const filteredCaptions = props.subtitles
     ? props.subtitles.filter((sub) => sub.kind === "captions")
     : "";
