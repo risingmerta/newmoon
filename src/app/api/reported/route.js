@@ -16,7 +16,7 @@ export async function GET(req) {
       });
     }
 
-    const externalApiUrl = `https://vimal.animoon.me/api/stream?id=${id}&server=hd-1&type=${cate}`;
+    const externalApiUrl = `https://vimal.animoon.me/api/stream?id=${id}&server=hd-2&type=${cate}`;
     console.log(`Fetching data from: ${externalApiUrl}`);
 
     // Fetch data from the external API
@@ -48,7 +48,7 @@ export async function GET(req) {
       console.log("Connected to MongoDB");
 
       const db = client.db(dbName);
-      const episodesCollection = db.collection("episodesStream");
+      const episodesCollection = db.collection("episo");
       const savi = `streams.${cate}`;
 
       // Update MongoDB with the fetched data
