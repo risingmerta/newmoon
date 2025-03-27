@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import { PiBroadcastFill } from "react-icons/pi";
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 
 function transformURL(originalURL) {
   if (!originalURL) return null; // Handle null/undefined cases
@@ -155,7 +156,7 @@ export default function Details(props) {
   const [descIsCollapsed, setDescIsCollapsed] = useState(true);
   const genre = gnt?.animeInfo?.Genres?.map((genre) => {
     return (
-      <Link
+      <Link 
         className="genre-button"
         key={genre}
         href={`/genre?id=${genre}&name=${genre}`}
@@ -186,6 +187,8 @@ export default function Details(props) {
       setLogIsOpen(true);
     }
   };
+
+    const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
