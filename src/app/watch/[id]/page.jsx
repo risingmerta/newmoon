@@ -87,7 +87,8 @@ export default async function page({ params, searchParams }) {
   const client = new MongoClient(mongoUri);
   await client.connect();
   const db = client.db(dbName);
-  const episodesCollection = db.collection("episo");
+  const episodesCollection = db.collection("epi");
+  const epiColl = db.collection("episo")
   const animeCollection = db.collection("animeInfo");
   const searchParam = await searchParams;
   const epis = searchParam.ep;
@@ -266,7 +267,7 @@ export default async function page({ params, searchParams }) {
         datajDub = strdat;
 
         if (epId) {
-          const result = await episodesCollection.updateOne(
+          const result = await epiColl.updateOne(
             { _id: epId }, // Convert epId to ObjectId
             { $set: { "streams.dub": strdat } }
           );
@@ -296,7 +297,7 @@ export default async function page({ params, searchParams }) {
         datajSub = strdat;
 
         if (epId) {
-          const result = await episodesCollection.updateOne(
+          const result = await epiColl.updateOne(
             { _id: epId }, // Convert epId to ObjectId
             { $set: { "streams.sub": strdat } }
           );
@@ -320,7 +321,7 @@ export default async function page({ params, searchParams }) {
         datajSub = strdat;
 
         if (epId) {
-          const result = await episodesCollection.updateOne(
+          const result = await epiColl.updateOne(
             { _id: epId }, // Convert epId to ObjectId
             { $set: { "streams.raw": strdat } }
           );
@@ -359,7 +360,7 @@ export default async function page({ params, searchParams }) {
         datajDub = strdat;
 
         if (epId) {
-          const result = await episodesCollection.updateOne(
+          const result = await epiColl.updateOne(
             { _id: epId }, // Convert epId to ObjectId
             { $set: { "streams.dub": strdat } }
           );
@@ -389,7 +390,7 @@ export default async function page({ params, searchParams }) {
         datajSub = strdat;
 
         if (epId) {
-          const result = await episodesCollection.updateOne(
+          const result = await epiColl.updateOne(
             { _id: epId }, // Convert epId to ObjectId
             { $set: { "streams.sub": strdat } }
           );
@@ -420,7 +421,7 @@ export default async function page({ params, searchParams }) {
         datajSub = strdat;
 
         if (epId) {
-          const result = await episodesCollection.updateOne(
+          const result = await epiColl.updateOne(
             { _id: epId }, // Convert epId to ObjectId
             { $set: { "streams.raw": strdat } }
           );
