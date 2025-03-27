@@ -834,7 +834,7 @@ export default function WatchAnime(props) {
                           onn3={onn3}
                           getData={getData}
                           currIdx={currIdx}
-                          err={err}
+                          err={err} 
                           subtitles={subtitles}
                           introd={introd}
                           outrod={outrod}
