@@ -398,8 +398,6 @@ function ArtPlayer(props) {
     }
 
     art.on("ready", () => {
-      const instance = getInstance(art);
-
       // Create an ad overlay inside ArtPlayer
       const adOverlay = document.createElement("div");
       adOverlay.style.position = "absolute";
@@ -415,11 +413,10 @@ function ArtPlayer(props) {
       adOverlay.style.fontSize = "24px";
       adOverlay.style.zIndex = "1000";
       adOverlay.innerHTML = `
-        <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c"></div>
-        <span>Ad - Skipping in <span id="ad-countdown">5</span>s</span>
-      `;
-
-      instance.template.$video.parentNode.appendChild(adOverlay);
+    <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c"></div>
+    <span>Ad - Skipping in <span id="ad-countdown">5</span>s</span>
+`;
+      art.template.$video.parentNode.appendChild(adOverlay);
 
       // Load ad script dynamically
       const adScript = document.createElement("script");
@@ -434,8 +431,8 @@ function ArtPlayer(props) {
 
       // Function to show ads
       function showAd() {
-        if (!instance.paused) {
-          instance.pause(); // Pause video during ad
+        if (!art.paused) {
+          art.pause(); // Pause video during ad
         }
 
         adOverlay.style.display = "flex"; // Show ad overlay
@@ -449,14 +446,14 @@ function ArtPlayer(props) {
           if (countdown < 0) {
             clearInterval(adInterval);
             adOverlay.style.display = "none"; // Hide ad
-            instance.play();
+            art.play();
           }
         }, 1000);
       }
 
       // Listen for video time updates
-      instance.on("video:timeupdate", () => {
-        const currentTime = instance.currentTime;
+      art.on("video:timeupdate", () => {
+        const currentTime = art.currentTime;
 
         if (currentTime >= lastAdTime + 120) {
           // Every 2 minutes of video playback
