@@ -1,12 +1,9 @@
 import React from "react";
 // import WatchAnime from "../../../component/WatchAnime/WatchAnime";
 // import axios from "axios";
-import axios from "axios";
-import * as cheerio from "cheerio";
+// import * as cheerio from "cheerio";
 import { MongoClient, ObjectId } from "mongodb";
 import Watchi from "@/component/Watchi/page";
-import Advertize from "@/component/Advertize/Advertize";
-
 // import { currentUser } from "@clerk/nextjs/server";
 
 async function fetchDataFromAPI(url, revalidate) {
@@ -90,7 +87,7 @@ export default async function page({ params, searchParams }) {
   const client = new MongoClient(mongoUri);
   await client.connect();
   const db = client.db(dbName);
-  const episodesCollection = db.collection("episodesStream");
+  const episodesCollection = db.collection("episo");
   const animeCollection = db.collection("animeInfo");
   const searchParam = await searchParams;
   const epis = searchParam.ep;
@@ -205,7 +202,7 @@ export default async function page({ params, searchParams }) {
       // datajDub = {};
 
       // Create a `results` object inside `datajSub` and add data
-      datajDub = existingEpisode.streams.dub; // Add existing raw data
+      datajDub = existingEpisode?.streams?.dub; // Add existing raw data
       // If you need to log or use it:
     } catch (error) {
       console.error("Error fetching stream data: ", error);
@@ -223,7 +220,7 @@ export default async function page({ params, searchParams }) {
     // datajSub = {};
 
     // Create a `results` object inside `datajSub` and add data
-    datajSub = existingEpisode.streams.sub; // Add existing raw data
+    datajSub = existingEpisode?.streams?.sub; // Add existing raw data
     // If you need to log or use it:
   } catch (error) {
     console.error("Error fetching stream data: ", error);
@@ -248,7 +245,7 @@ export default async function page({ params, searchParams }) {
       // datajSub = {};
 
       // Create a `results` object inside `datajSub` and add data
-      datajSub = existingEpisode.streams.raw; // Add existing raw data
+      datajSub = existingEpisode?.streams?.raw; // Add existing raw data
       raw = "yes";
       // If you need to log or use it:
     } catch (error) {
@@ -262,7 +259,7 @@ export default async function page({ params, searchParams }) {
       const dat = await res.json();
       if (dat.results.some((item) => item.type === "dub")) {
         const res = await fetch(
-          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-1&type=dub`
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
         );
         const strdat = await res.json();
 
@@ -292,7 +289,7 @@ export default async function page({ params, searchParams }) {
       const dat = await res.json();
       if (dat.results.some((item) => item.type === "sub")) {
         const res = await fetch(
-          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-1&type=sub`
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
         );
         const strdat = await res.json();
 
@@ -316,7 +313,7 @@ export default async function page({ params, searchParams }) {
 
       if (dat.results.some((item) => item.type === "raw")) {
         const res = await fetch(
-          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-1&type=raw`
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
         );
         const strdat = await res.json();
 
@@ -355,7 +352,7 @@ export default async function page({ params, searchParams }) {
         )
       ) {
         const res = await fetch(
-          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-1&type=dub`
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
         );
         const strdat = await res.json();
 
@@ -385,7 +382,7 @@ export default async function page({ params, searchParams }) {
         )
       ) {
         const res = await fetch(
-          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-1&type=sub`
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
         );
         const strdat = await res.json();
 
@@ -416,7 +413,7 @@ export default async function page({ params, searchParams }) {
         )
       ) {
         const res = await fetch(
-          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-1&type=raw`
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
         );
         const strdat = await res.json();
 
@@ -521,76 +518,63 @@ export default async function page({ params, searchParams }) {
 
   const dataStr = { sub: [], dub: [] }; // Separate arrays for sub and dub URLs
 
-  try {
-    // Step 1: Fetch the server list for the episode
-    const episodeId = epis
-      ? epis
-      : data?.results?.episodes[0].id.split("ep=")[1];
-    const serversResponse = await axios.get(
-      `https://hianime.bz/ajax/v2/episode/servers?episodeId=${episodeId}`
-    );
-    const serversData = serversResponse.data;
+  // try {
+  //   // Step 1: Fetch the server list for the episode
+  //   const episodeId = epis ? epis : data.episodes[0].episodeId.split("ep=")[1];
+  //   const serversResponse = await axios.get(
+  //     `https://hianime.to/ajax/v2/episode/servers?episodeId=${episodeId}`
+  //   );
+  //   const serversData = serversResponse.data;
 
-    if (serversData?.html) {
-      const $ = cheerio.load(serversData.html);
+  //   if (serversData?.html) {
+  //     const $ = cheerio.load(serversData.html);
 
-      // Extract SUB and DUB server data
-      ["sub", "dub"].forEach((type) => {
-        $(`div.ps_-block-sub.servers-${type} div.server-item`).each(
-          (_, element) => {
-            const dataId = $(element).attr("data-id");
-            if (dataId) {
-              dataStr[type].push({ id: dataId, url: null }); // Initialize URL as null
-            }
-          }
-        );
-      });
+  //     // Extract SUB and DUB server data
+  //     ["sub", "dub"].forEach((type) => {
+  //       $(`div.ps_-block-sub.servers-${type} div.server-item`).each(
+  //         (_, element) => {
+  //           const dataId = $(element).attr("data-id");
+  //           if (dataId) {
+  //             dataStr[type].push({ id: dataId, url: null }); // Initialize URL as null
+  //           }
+  //         }
+  //       );
+  //     });
 
-      if ($("div.ps_-block-sub.servers-raw")?.length) {
-        $(`div.ps_-block-sub.servers-raw div.server-item`).each(
-          (_, element) => {
-            const dataId = $(element).attr("data-id");
-            if (dataId) {
-              dataStr["sub"].push({ id: dataId, url: null }); // Initialize URL as null
-            }
-          }
-        );
-      }
+  //     // Step 2: Fetch sources for all `data-id`s in parallel
+  //     for (const type of ["sub", "dub"]) {
+  //       await Promise.all(
+  //         dataStr[type].map(async (server) => {
+  //           try {
+  //             const sourcesResponse = await axios.get(
+  //               `https://hianime.to/ajax/v2/episode/sources?id=${server.id}`
+  //             );
+  //             const sourcesData = sourcesResponse.data;
 
-      // Step 2: Fetch sources for all `data-id`s in parallel
-      for (const type of ["sub", "dub"]) {
-        await Promise.all(
-          dataStr[type].map(async (server) => {
-            try {
-              const sourcesResponse = await axios.get(
-                `https://hianime.bz/ajax/v2/episode/sources?id=${server.id}`
-              );
-              const sourcesData = sourcesResponse.data;
+  //             if (sourcesData?.link) {
+  //               const match = sourcesData.link.match(/e-1\/(.*?)\?k=1/);
+  //               if (match && match[1]) {
+  //                 const extractedText = match[1];
+  //                 server.url = `https://ea.bunniescdn.online/embed-2/e-1/${extractedText}?k=1&ep_id=${server.id}&autostart=true`;
+  //               }
+  //             }
+  //           } catch (err) {
+  //             console.error(
+  //               `Error fetching sources for server ID ${server.id}:`,
+  //               err.message
+  //             );
+  //           }
+  //         })
+  //       );
+  //     }
 
-              if (sourcesData?.link) {
-                const match = sourcesData.link.match(/e-1\/(.*?)\?k=1/);
-                if (match && match[1]) {
-                  const extractedText = match[1];
-                  server.url = `https://ea.bunniescdn.online/embed-2/e-1/${extractedText}?k=1&ep_id=${server.id}&autostart=true`;
-                }
-              }
-            } catch (err) {
-              console.error(
-                `Error fetching sources for server ID ${server.id}:`,
-                err.message
-              );
-            }
-          })
-        );
-      }
-
-      console.log("Extracted EA URLs:", dataStr);
-    } else {
-      console.error("Invalid servers response or missing HTML.");
-    }
-  } catch (error) {
-    console.error("Error:", error.message);
-  }
+  //     console.log("Extracted EA URLs:", dataStr);
+  //   } else {
+  //     console.error("Invalid servers response or missing HTML.");
+  //   }
+  // } catch (error) {
+  //   console.error("Error:", error.message);
+  // }
 
   let datau = [];
   // try {
@@ -792,7 +776,6 @@ export default async function page({ params, searchParams }) {
         arise={arise}
         raw={raw}
       />
-      <Advertize />
     </div>
   );
 }

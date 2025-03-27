@@ -7,6 +7,7 @@ import Share from "@/component/Share/Share";
 import Link from "next/link";
 import { AiFillAudio } from "react-icons/ai";
 import loading from "../../../public/placeholder.gif";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import {
   FaAngleDown,
   FaBackward,
@@ -27,8 +28,6 @@ import { FaCirclePlay } from "react-icons/fa6";
 import SignInSignUpModal from "@/component/SignSignup/SignInSignUpModal";
 import { Lily_Script_One } from "next/font/google";
 import { PiBroadcastFill } from "react-icons/pi";
-import Script from "next/script";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 function transformURL(originalURL) {
   if (!originalURL) return null; // Handle null/undefined cases
@@ -58,9 +57,7 @@ export default function WatchAnime(props) {
       }, [20000]);
     }
   };
-  const handleNavigation = () => {
-    IsLoading(true);
-  };
+  const handleNavigation = () => {};
   const localStorageWrapper = () => {
     if (typeof window !== "undefined" && window.localStorage) {
       return {
@@ -87,13 +84,14 @@ export default function WatchAnime(props) {
   const [serverName, setServerName] = useState("Vidstreaming");
   const [descIsCollapsed, setDescIsCollapsed] = useState(true);
   const [quality, setQuality] = useState("");
+
   const [subIsSelected, setSubIsSelected] = useState(() => {
     const isDubSelected = ls.getItem("subordub") === "false";
     // Check if dub episodes exist in `props.datao`
-    const hasDubEpisodes = props.datao?.anime?.info?.stats?.episodes?.dub > 0;
+    const hasDubEpisodes = props.datao?.results.data.animeInfo.tvInfo.dub > 0;
 
     // Check if dub data exists in `props.dataStr`
-    const hasDubData = props.dataStr?.dub?.length > 0;
+    const hasDubData = props.datajDub.results;
 
     // Return the initial state
     if (isDubSelected) {
@@ -113,23 +111,23 @@ export default function WatchAnime(props) {
 
     // If props.dataj is empty, use props.dubPri for dub or props.subPri for sub
     // Check if dub episodes exist in `props.datao`
-    const hasDubEpisodes = props.datao?.anime?.info?.stats?.episodes?.dub > 0;
+    const hasDubEpisodes = props.datao?.results.data.animeInfo.tvInfo.dub > 0;
 
     // Check if dub data exists in `props.dataStr`
-    const hasDubData = props.dataStr?.dub?.length > 0;
+    const hasDubData = props.datajDub.results;
 
     // Handle Dub selection
     if (isDubSelected) {
       if (hasDubEpisodes && hasDubData) {
         // Check if there's a dub available in props.dataj
-        const dubLink = props.dataStr.dub[0]?.url;
+        const dubLink = props.datajDub.results?.streamingLink.link?.file;
 
         // If not found in dataj, fallback to gogoDub
         if (dubLink) {
           return dubLink;
         }
       } else {
-        const subLink = props.dataStr.sub[0]?.url;
+        const subLink = props.datajSub.results?.streamingLink.link?.file;
 
         // If not found in dataj, fallback to gogoSub
         if (subLink) {
@@ -139,7 +137,7 @@ export default function WatchAnime(props) {
     }
     // Handle Sub/Raw selection
     else {
-      const subLink = props.dataStr.sub[0]?.url;
+      const subLink = props.datajSub.results?.streamingLink.link?.file;
 
       // If not found in dataj, fallback to gogoSub
       if (subLink) {
@@ -152,52 +150,17 @@ export default function WatchAnime(props) {
   });
 
   const [introd, setIntrod] = useState(
-    ls.getItem("subordub") === "false" &&
-      props.dataj.results?.streamingInfo.some(
-        (info) => info.value.decryptionResult?.type === "dub"
-      )
-      ? props.dataj.results?.streamingInfo.find(
-          (info) =>
-            info.value.decryptionResult?.type === "dub" &&
-            info.value.decryptionResult.server === "Vidstreaming"
-        )?.value.decryptionResult.source.intro
-      : props.dataj.results?.streamingInfo.find(
-          (info) =>
-            (info.value.decryptionResult?.type === "sub" ||
-              info.value.decryptionResult?.type === "raw") &&
-            info.value.decryptionResult.server === "Vidstreaming"
-        )?.value.decryptionResult.source.intro
+    ls.getItem("subordub") === "false" && props.datajDub.results
+      ? props.datajDub.results?.streamingLink.intro
+      : props.datajSub.results?.streamingLink.intro
   );
   const [outrod, setOutrod] = useState(
-    ls.getItem("subordub") === "false" &&
-      props.dataj.results?.streamingInfo.some(
-        (info) => info.value.decryptionResult?.type === "dub"
-      )
-      ? props.dataj.results?.streamingInfo.find(
-          (info) =>
-            info.value.decryptionResult?.type === "dub" &&
-            info.value.decryptionResult.server === "Vidstreaming"
-        )?.value.decryptionResult.source.intro
-      : props.dataj.results?.streamingInfo.find(
-          (info) =>
-            (info.value.decryptionResult?.type === "sub" ||
-              info.value.decryptionResult?.type === "raw") &&
-            info.value.decryptionResult.server === "Vidstreaming"
-        )?.value.decryptionResult.source.outro
+    ls.getItem("subordub") === "false" && props.datajDub.results
+      ? props.datajDub.results?.streamingLink.outro
+      : props.datajSub.results?.streamingLink.outro
   );
   const [subtitles, setSubtitles] = useState(
-    ls.getItem("subordub") === "false" &&
-      props.dataj.results?.streamingInfo.some(
-        (info) => info.value.decryptionResult?.type === "dub"
-      )
-      ? ""
-      : props.subPrio ||
-          props.dataj.results?.streamingInfo.find(
-            (info) =>
-              (info.value.decryptionResult?.type === "sub" ||
-                info.value.decryptionResult?.type === "raw") &&
-              info.value.decryptionResult.server === "Vidstreaming"
-          )?.value.decryptionResult.source.tracks
+    props.datajSub.results?.streamingLink.tracks
   );
   const [onn1, setOnn1] = useState(
     ls.getItem("Onn1") ? ls.getItem("Onn1") : "Off"
@@ -342,10 +305,11 @@ export default function WatchAnime(props) {
     setSubIsSelected(() => {
       const isDubSelected = ls.getItem("subordub") === "false";
       // Check if dub episodes exist in `props.datao`
-      const hasDubEpisodes = props.datao?.anime?.info?.stats?.episodes?.dub > 0;
+      const hasDubEpisodes =
+        props.datao?.results.data.animeInfo.tvInfo?.dub > 0;
 
       // Check if dub data exists in `props.dataStr`
-      const hasDubData = props.dataStr?.dub?.length > 0;
+      const hasDubData = props.datajDub.results;
 
       // Return the initial state
       if (isDubSelected) {
@@ -453,7 +417,7 @@ export default function WatchAnime(props) {
       }
     }
   }, [pathname]);
- 
+
   const err = (data) => {
     if (data) {
       if (serverName === "Vidstreaming") {
@@ -487,96 +451,57 @@ export default function WatchAnime(props) {
           // If props.dataj is empty, use props.dubPri for dub or props.subPri for sub
           // Check if dub episodes exist in `props.datao`
           const hasDubEpisodes =
-            props.datao?.anime?.info?.stats?.episodes?.dub > 0;
+            props.datao?.results.data.animeInfo.tvInfo?.dub > 0;
 
           // Check if dub data exists in `props.dataStr`
-          const hasDubData = props.dataStr?.dub?.length > 0;
+          const hasDubData = props.datajDub.results;
 
           // Handle Dub selection
           if (isDubSelected) {
             if (hasDubEpisodes && hasDubData) {
               // Check if there's a dub available in props.dataj
-              const dubLink = props.dataStr.dub[0]?.url;
+              const dubLink = props.datajDub.results?.streamingLink.link?.file;
 
               // If not found in dataj, fallback to gogoDub
               if (dubLink) {
-                if (onn1 === "Off") {
-                  return dubLink + "&autoPlay=0&oa=0&asi=1";
-                }
-                if (onn1 === "On") {
-                  return dubLink + "&autoPlay=1&oa=0&asi=1";
-                }
+                return dubLink;
               }
             } else {
-              const subLink = props.dataStr.sub[0]?.url;
+              const subLink = props.datajSub.results?.streamingLink.link?.file;
 
               // If not found in dataj, fallback to gogoSub
               if (subLink) {
-                if (onn1 === "Off") {
-                  return subLink + "&autoPlay=0&oa=0&asi=1";
-                }
-                if (onn1 === "On") {
-                  return subLink + "&autoPlay=1&oa=0&asi=1";
-                }
+                return subLink;
               }
             }
           }
           // Handle Sub/Raw selection
           else {
-            const subLink = props.dataStr.sub[0]?.url;
+            const subLink = props.datajSub.results?.streamingLink.link?.file;
 
             // If not found in dataj, fallback to gogoSub
             if (subLink) {
-              if (onn1 === "Off") {
-                return subLink + "&autoPlay=0&oa=0&asi=1";
-              }
-              if (onn1 === "On") {
-                return subLink + "&autoPlay=1&oa=0&asi=1";
-              }
+              return subLink;
             }
           }
 
           // Default to an empty string if nothing is found
           return "";
         });
-        setSubtitles(
-          subIsSelected
-            ? props.subPrio ||
-                props.dataj.results?.streamingInfo.find(
-                  (info) =>
-                    (info.value.decryptionResult?.type === "sub" ||
-                      info.value.decryptionResult?.type === "raw") &&
-                    info.value.decryptionResult.server === "Vidstreaming"
-                )?.value.decryptionResult.source.tracks
-            : ""
-        );
+        setSubtitles(props.datajSub.results?.streamingLink.tracks);
         setIntrod(
-          subIsSelected
-            ? props.dataj.results?.streamingInfo.find(
-                (info) =>
-                  (info.value.decryptionResult?.type === "sub" ||
-                    info.value.decryptionResult?.type === "raw") &&
-                  info.value.decryptionResult.server === "Vidstreaming"
-              )?.value.decryptionResult.source.intro
-            : props.dataj.results?.streamingInfo.find(
-                (info) =>
-                  info.value.decryptionResult?.type === "dub" &&
-                  info.value.decryptionResult.server === "Vidstreaming"
-              )?.value.decryptionResult.source.intro
+          ls.getItem("subordub") === "false" &&
+            // !Array.isArray(props.datajDub)) ||
+            props.datajDub.results
+            ? props.datajDub.results?.streamingLink.intro
+            : props.datajSub.results?.streamingLink.intro
         );
         setOutrod(
-          subIsSelected
-            ? props.dataj.results?.streamingInfo.find(
-                (info) =>
-                  (info.value.decryptionResult?.type === "sub" ||
-                    info.value.decryptionResult?.type === "raw") &&
-                  info.value.decryptionResult.server === "Vidstreaming"
-              )?.value.decryptionResult.source.outro
-            : props.dataj.results?.streamingInfo.find(
-                (info) =>
-                  info.value.decryptionResult?.type === "dub" &&
-                  info.value.decryptionResult.server === "Vidstreaming"
-              )?.value.decryptionResult.source.outro
+          ls.getItem("subordub") === "false" &&
+            // !Array.isArray(props.datajDub)) ||
+            props.datajDub.results
+            ? props.datajDub.results?.streamingLink.outro
+            : props.datajSub.results?.streamingLink.outro
         );
       }
     }
@@ -878,6 +803,7 @@ export default function WatchAnime(props) {
                         </div>
                       </div>
                     </div>
+
                     <div
                       className={`${
                         episodeList?.length <= 24
@@ -891,21 +817,43 @@ export default function WatchAnime(props) {
                   <div className="video-player">
                     <div className="hls-container">
                       {clickedId === props.epId && props.datajSub ? (
-                        <iframe
-                          src={bhaiLink}
-                          frameBorder="0"
-                          allow="autoplay; fullscreen; encrypted-media; picture-in-picture" // Features for interactivity
-                          allowFullScreen // Enable fullscreen mode
-                          width="100%" // Full width
-                          height="100%" // Full height
-                          style={{
-                            border: "none", // Remove border
-                            display: "block", // Ensure proper layout
-                          }}
-                          loading="lazy" // Improve performance by deferring loading
-                          sandbox="allow-scripts allow-same-origin allow-presentation" // Security controls
-                          title="Video Player" // Accessible title for the iframe
-                        ></iframe>
+                        <ArtPlayer
+                          data={props.data}
+                          epId={props.epId}
+                          anId={props.anId}
+                          epNumb={epNumb}
+                          bhaiLink={
+                            "https://proxy.animoon.me/m3u8-proxy?url=" +
+                            bhaiLink
+                          }
+                          trutie={trutie}
+                          epNum={epiod}
+                          selectedServer={selectedServer}
+                          onn1={onn1}
+                          onn2={onn2}
+                          onn3={onn3}
+                          getData={getData}
+                          currIdx={currIdx}
+                          err={err}
+                          subtitles={subtitles}
+                          introd={introd}
+                          outrod={outrod}
+                          durEp={
+                            props.datao?.results.data.animeInfo.tvInfo.duration
+                          }
+                          subEp={props.datao?.results.data.animeInfo.tvInfo.sub}
+                          dubEp={
+                            props.datao?.results.data.animeInfo.tvInfo?.dub
+                          }
+                          ratUra={
+                            props.datao?.results.data.animeInfo.tvInfo?.rating
+                          }
+                          imgUra={props.datao?.results.data.poster}
+                          nameUra={title}
+                          quality={quality}
+                          sub={sub}
+                          IsLoading={IsLoading}
+                        />
                       ) : (
                         <div
                           className="d-flex a-center j-center"
@@ -1062,7 +1010,7 @@ export default function WatchAnime(props) {
                           <div className="flex flex-col items-center epIno containIno flex-wrap">
                             <div className="ino1">You are watching</div>
                             <div className="ino2">{`${
-                              props.data?.results.episodes[epiod]?.isFiller ===
+                              props.data?.results.episodes[epiod]?.filler ===
                               true
                                 ? "Filler"
                                 : ""
@@ -1075,19 +1023,18 @@ export default function WatchAnime(props) {
                           <div className=" flex flex-col serves">
                             <>
                               <>
-                                {props.dataStr?.sub?.length > 0 ? (
+                                {props.datajSub?.results ? (
                                   <div
                                     className={`serveSub ${
-                                      props.dataStr?.dub?.length > 0
-                                        ? "borderDot"
-                                        : ""
+                                      // !Array.isArray(props.datajDub) ||
+                                      props.datajDub?.results ? "borderDot" : ""
                                     } flex gap-5 items-center`}
                                   >
                                     <div className="subb flex gap-1 items-center">
                                       <div>SUB</div>
                                       <div>:</div>
                                     </div>
-                                    <div className="flex flex-wrap gap-2">
+                                    <div className="flex flex-wrap gap-2 subb-1">
                                       <div
                                         className={`subDub ${
                                           subIsSelected
@@ -1096,28 +1043,27 @@ export default function WatchAnime(props) {
                                               : ""
                                             : ""
                                         }`}
-                                        onClick={
-                                          () =>
-                                            setSelectedServer(0) &
-                                            setSubIsSelected(true) &
-                                            setServerName("Vidstreaming") &
-                                            setBhaiLink(
-                                              props.dataStr.sub[0]?.url
-                                            )
-                                          // setQuality("") &
-                                          // setSubtitles(
-                                          //   props.subPrio ||
-                                          //     no.value.decryptionResult.source
-                                          //       .tracks
-                                          // ) &
-                                          // // setIntrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .intro
-                                          // ) &
-                                          // setOutrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .outro
-                                          // )
+                                        onClick={() =>
+                                          setSelectedServer(0) &
+                                          setSubIsSelected(true) &
+                                          setServerName("Vidstreaming") &
+                                          setBhaiLink(
+                                            props.datajSub.results
+                                              ?.streamingLink.link.file
+                                          ) &
+                                          // setQuality("")
+                                          setSubtitles(
+                                            props.datajSub.results
+                                              ?.streamingLink.tracks
+                                          ) &
+                                          setIntrod(
+                                            props.datajSub.results
+                                              ?.streamingLink.intro
+                                          ) &
+                                          setOutrod(
+                                            props.datajSub.results
+                                              ?.streamingLink.outro
+                                          )
                                         }
                                       >
                                         Vidstreaming
@@ -1130,28 +1076,28 @@ export default function WatchAnime(props) {
                                               : ""
                                             : ""
                                         }`}
-                                        onClick={
-                                          () =>
-                                            setSelectedServer(1) &
-                                            setSubIsSelected(true) &
-                                            setServerName("Vidcloud") &
-                                            setBhaiLink(
-                                              props.dataStr.sub[1]?.url
-                                            )
-                                          // setQuality("") &
-                                          // setSubtitles(
-                                          //   props.subPrio ||
-                                          //     no.value.decryptionResult.source
-                                          //       .tracks
-                                          // ) &
-                                          // // setIntrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .intro
-                                          // ) &
-                                          // setOutrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .outro
-                                          // )
+                                        onClick={() =>
+                                          setSelectedServer(1) &
+                                          setSubIsSelected(true) &
+                                          setServerName("Vidcloud") &
+                                          setBhaiLink(
+                                            props.datajSub.results
+                                              ?.streamingLink.link.file
+                                          ) &
+                                          // setQuality("")
+                                          setSubtitles(
+                                            props.datajSub.results
+                                              ?.streamingLink.tracks
+                                          ) &
+                                          setCurrIdx(1) &
+                                          setIntrod(
+                                            props.datajSub.results
+                                              ?.streamingLink.intro
+                                          ) &
+                                          setOutrod(
+                                            props.datajSub.results
+                                              ?.streamingLink.outro
+                                          )
                                         }
                                       >
                                         Vidcloud
@@ -1161,88 +1107,91 @@ export default function WatchAnime(props) {
                                 ) : (
                                   ""
                                 )}
-                                {props.dataStr?.dub?.length > 0 ? (
-                                  <div
-                                    className={`serveSub flex gap-5 items-center`}
-                                  >
-                                    <div className="subb flex gap-1 items-center">
-                                      <div>DUB</div>
-                                      <div>:</div>
-                                    </div>
-                                    <div className="flex flex-wrap gap-2">
-                                      <div
-                                        className={`subDub ${
-                                          !subIsSelected
-                                            ? selectedServer === 0
-                                              ? "selected"
+                                {
+                                  // !Array.isArray(props.datajDub) ||
+                                  props.datajDub?.results ? (
+                                    <div
+                                      className={`serveSub flex gap-5 items-center`}
+                                    >
+                                      <div className="subb flex gap-1 items-center">
+                                        <div>DUB</div>
+                                        <div>:</div>
+                                      </div>
+                                      <div className="flex flex-wrap gap-2 subb-1">
+                                        <div
+                                          className={`subDub ${
+                                            !subIsSelected
+                                              ? selectedServer === 0
+                                                ? "selected"
+                                                : ""
                                               : ""
-                                            : ""
-                                        }`}
-                                        onClick={
-                                          () =>
+                                          }`}
+                                          onClick={() =>
                                             setSelectedServer(0) &
                                             setSubIsSelected(false) &
                                             setServerName("Vidstreaming") &
                                             setBhaiLink(
-                                              props.dataStr.dub[0]?.url
+                                              props.datajDub.results
+                                                ?.streamingLink.link.file
+                                            ) &
+                                            // setQuality("")
+
+                                            setSubtitles(
+                                              props.datajSub.results
+                                                ?.streamingLink.tracks
+                                            ) &
+                                            setIntrod(
+                                              props.datajDub.results
+                                                ?.streamingLink.intro
+                                            ) &
+                                            setOutrod(
+                                              props.datajDub.results
+                                                ?.streamingLink.outro
                                             )
-                                          // setQuality("") &
-                                          // setSubtitles(
-                                          //   props.subPrio ||
-                                          //     no.value.decryptionResult.source
-                                          //       .tracks
-                                          // ) &
-                                          // // setIntrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .intro
-                                          // ) &
-                                          // setOutrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .outro
-                                          // )
-                                        }
-                                      >
-                                        Vidstreaming
-                                      </div>
-                                      <div
-                                        className={`subDub ${
-                                          !subIsSelected
-                                            ? selectedServer === 1
-                                              ? "selected"
+                                          }
+                                        >
+                                          Vidstreaming
+                                        </div>
+                                        <div
+                                          className={`subDub ${
+                                            !subIsSelected
+                                              ? selectedServer === 1
+                                                ? "selected"
+                                                : ""
                                               : ""
-                                            : ""
-                                        }`}
-                                        onClick={
-                                          () =>
+                                          }`}
+                                          onClick={() =>
                                             setSelectedServer(1) &
                                             setSubIsSelected(false) &
                                             setServerName("Vidcloud") &
                                             setBhaiLink(
-                                              props.dataStr.dub[1]?.url
+                                              props.datajDub.results
+                                                ?.streamingLink.link.file
+                                            ) &
+                                            // setQuality("")
+                                            setCurrIdx(1) &
+                                            setSubtitles(
+                                              props.datajSub.results
+                                                ?.streamingLink.tracks
+                                            ) &
+                                            setIntrod(
+                                              props.datajDub.results
+                                                ?.streamingLink.intro
+                                            ) &
+                                            setOutrod(
+                                              props.datajDub.results
+                                                ?.streamingLink.outro
                                             )
-                                          // setQuality("") &
-                                          // setSubtitles(
-                                          //   props.subPrio ||
-                                          //     no.value.decryptionResult.source
-                                          //       .tracks
-                                          // ) &
-                                          // // setIntrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .intro
-                                          // ) &
-                                          // setOutrod(
-                                          //   no.value.decryptionResult.source
-                                          //     .outro
-                                          // )
-                                        }
-                                      >
-                                        Vidcloud
+                                          }
+                                        >
+                                          Vidcloud
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
+                                  ) : (
+                                    ""
+                                  )
+                                }
                               </>
                             </>
                           </div>
@@ -1403,7 +1352,7 @@ export default function WatchAnime(props) {
             />
           </div>
         )}
-      </SessionProvider>{" "}
+      </SessionProvider>
     </>
   );
 }

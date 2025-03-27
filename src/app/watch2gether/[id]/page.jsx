@@ -25,7 +25,7 @@ export default async function page({ params, searchParams }) {
   let difference;
   let episodes;
   if (searchParam.animeId) {
-    const episodesCollection = db.collection("episodesStream");
+    const episodesCollection = db.collection("episo");
     const animeCollection = db.collection("animeInfo");
 
     const existingAnime = await animeCollection.findOne({
@@ -82,6 +82,215 @@ export default async function page({ params, searchParams }) {
         raw = "yes";
       } catch (error) {
         console.error("Error fetching stream data: ", error);
+      }
+    }
+    if (data?.results?.data?.animeInfo?.tvInfo?.dub >= epiod) {
+      if (!datajDub?.results?.streamingLink?.link?.file) {
+        const res = await fetch(`https://vimal.animoon.me/api/servers/${epId}`);
+        const dat = await res.json();
+        if (dat.results.some((item) => item.type === "dub")) {
+          const res = await fetch(
+            `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
+          );
+          const strdat = await res.json();
+  
+          datajDub = strdat;
+  
+          if (epId) {
+            const result = await episodesCollection.updateOne(
+              { _id: epId }, // Convert epId to ObjectId
+              { $set: { "streams.dub": strdat } }
+            );
+  
+            if (result.modifiedCount > 0) {
+              console.log("Document updated successfully!");
+            } else {
+              console.log("No document was updated.");
+            }
+          } else {
+            console.log("Invalid ObjectId");
+          }
+        }
+      }
+    }
+  
+    if (data?.results?.data?.animeInfo?.tvInfo?.sub >= epiod) {
+      if (!datajSub?.results?.streamingLink?.link?.file) {
+        const res = await fetch(`https://vimal.animoon.me/api/servers/${epId}`);
+        const dat = await res.json();
+        if (dat.results.some((item) => item.type === "sub")) {
+          const res = await fetch(
+            `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
+          );
+          const strdat = await res.json();
+  
+          datajSub = strdat;
+  
+          if (epId) {
+            const result = await episodesCollection.updateOne(
+              { _id: epId }, // Convert epId to ObjectId
+              { $set: { "streams.sub": strdat } }
+            );
+  
+            if (result.modifiedCount > 0) {
+              console.log("Document updated successfully!");
+            } else {
+              console.log("No document was updated.");
+            }
+          } else {
+            console.log("Invalid ObjectId");
+          }
+        }
+  
+        if (dat.results.some((item) => item.type === "raw")) {
+          const res = await fetch(
+            `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
+          );
+          const strdat = await res.json();
+  
+          datajSub = strdat;
+  
+          if (epId) {
+            const result = await episodesCollection.updateOne(
+              { _id: epId }, // Convert epId to ObjectId
+              { $set: { "streams.raw": strdat } }
+            );
+  
+            if (result.modifiedCount > 0) {
+              console.log("Document updated successfully!");
+            } else {
+              console.log("No document was updated.");
+            }
+          } else {
+            console.log("Invalid ObjectId");
+          }
+        }
+      }
+    }
+  
+    if (data.results.data.animeInfo.Status === "Currently-Airing") {
+      const res = await fetch(`https://vimal.animoon.me/api/servers/${epId}`, {
+        next: { revalidate: 3600 },
+      });
+      const dat = await res.json();
+      if (dat.results.some((item) => item.server_id === "1")) {
+        if (
+          dat.results.some(
+            (item) =>
+              item.type === "dub" &&
+              datajDub?.results?.streamingLink?.intro?.end === 0 &&
+              datajDub?.results?.streamingLink?.outro?.start === 0
+          )
+        ) {
+          const res = await fetch(
+            `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
+          );
+          const strdat = await res.json();
+  
+          datajDub = strdat;
+  
+          if (epId) {
+            const result = await episodesCollection.updateOne(
+              { _id: epId }, // Convert epId to ObjectId
+              { $set: { "streams.dub": strdat } }
+            );
+  
+            if (result.modifiedCount > 0) {
+              console.log("Document updated successfully!");
+            } else {
+              console.log("No document was updated.");
+            }
+          } else {
+            console.log("Invalid ObjectId");
+          }
+        }
+        if (
+          dat.results.some(
+            (item) =>
+              item.type === "sub" &&
+              datajSub?.results?.streamingLink?.intro?.end === 0 &&
+              datajSub?.results?.streamingLink?.outro?.start === 0
+          )
+        ) {
+          const res = await fetch(
+            `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
+          );
+          const strdat = await res.json();
+  
+          datajSub = strdat;
+  
+          if (epId) {
+            const result = await episodesCollection.updateOne(
+              { _id: epId }, // Convert epId to ObjectId
+              { $set: { "streams.sub": strdat } }
+            );
+  
+            if (result.modifiedCount > 0) {
+              console.log("Document updated successfully!");
+            } else {
+              console.log("No document was updated.");
+            }
+          } else {
+            console.log("Invalid ObjectId");
+          }
+        }
+  
+        if (
+          dat.results.some(
+            (item) =>
+              item.type === "raw" &&
+              datajSub?.results?.streamingLink?.intro?.end === 0 &&
+              datajSub?.results?.streamingLink?.outro?.start === 0
+          )
+        ) {
+          const res = await fetch(
+            `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
+          );
+          const strdat = await res.json();
+  
+          datajSub = strdat;
+  
+          if (epId) {
+            const result = await episodesCollection.updateOne(
+              { _id: epId }, // Convert epId to ObjectId
+              { $set: { "streams.raw": strdat } }
+            );
+  
+            if (result.modifiedCount > 0) {
+              console.log("Document updated successfully!");
+            } else {
+              console.log("No document was updated.");
+            }
+          } else {
+            console.log("Invalid ObjectId");
+          }
+        }
+  
+        if (
+          datajSub?.results?.streamingLink?.intro?.end === 0 &&
+          datajSub?.results?.streamingLink?.outro?.start === 0
+        ) {
+          const resp = await fetch(
+            `https://vimal.animoon.me/api/episodes/${param.id}`
+          );
+          const datar = await resp.json();
+          data = datar;
+  
+          if (param.id) {
+            const result = await animeCollection.updateOne(
+              { _id: param.id }, // Convert epId to ObjectId
+              { $set: { episodes: datar } }
+            );
+  
+            if (result.modifiedCount > 0) {
+              console.log("Document updated successfully!");
+            } else {
+              console.log("No document was updated.");
+            }
+          } else {
+            console.log("Invalid ObjectId");
+          }
+        }
       }
     }
   }
