@@ -6,7 +6,7 @@ import React, { useRef, useEffect, useState } from "react";
 
 import "@/component/artplayer.css";
 import artplayerPluginHlsControl from "artplayer-plugin-hls-control";
-
+ 
 function ArtPlayer(props) {
   const artRef = useRef(null);
   function getInstance(art) {
