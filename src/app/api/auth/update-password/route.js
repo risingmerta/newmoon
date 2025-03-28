@@ -9,7 +9,7 @@ export const POST = async (req) => {
 
     const user = await users.findOne({
       resetToken: token,
-      resetTokenExpiry: { $gt: Date.now() }, // Ensures token is still valid
+      resetTokenExpiry: { $gt: new Date() }, // Fix: Ensure token is still valid
     });
 
     if (!user) {
@@ -30,10 +30,7 @@ export const POST = async (req) => {
 
     return new Response(
       JSON.stringify({ message: "Password updated successfully" }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {

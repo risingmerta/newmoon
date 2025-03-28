@@ -1,11 +1,10 @@
 import { connectDB } from "@/lib/mongoClient";
 import crypto from "crypto";
-import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 
 export const POST = async (req) => {
   try {
-    const { email } = await req.json(); // Read request body
+    const { email } = await req.json();
     const db = await connectDB();
     const users = db.collection("users");
 
@@ -17,9 +16,9 @@ export const POST = async (req) => {
       });
     }
 
-    // Generate a reset token & expiry (valid for 1 hour)
+    // Generate reset token (random) and expiry (1 hour)
     const resetToken = crypto.randomBytes(32).toString("hex");
-    const resetTokenExpiry = Date.now() + 3600000;
+    const resetTokenExpiry = new Date(Date.now() + 3600000); // Store as Date object
 
     await users.updateOne(
       { email },
@@ -46,10 +45,7 @@ export const POST = async (req) => {
 
     return new Response(
       JSON.stringify({ message: "Password reset email sent!" }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
