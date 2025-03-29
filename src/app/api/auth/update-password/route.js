@@ -7,16 +7,21 @@ export const POST = async (req) => {
     const db = await connectDB();
     const users = db.collection("users");
 
+    console.log("token found", token);
+
     const user = await users.findOne({
-      resetToken: "dc1c095078e8fe32f7b99a8885956e6a1c1868b6b5d9372625f714271774f813",
+      resetToken: token,
       resetTokenExpiry: { $gt: new Date() }, // Fix: Ensure token is still valid
     });
 
     if (!user) {
-      return new Response(JSON.stringify({ message: "Invalid or expired token" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ message: "Invalid or expired token" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
