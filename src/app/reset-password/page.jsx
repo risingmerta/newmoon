@@ -1,14 +1,13 @@
-import Advertize from "@/component/Advertize/Advertize";
 import ResetPass from "@/component/ResetPass/page";
 import React from "react";
 
-export default async function page({ params }) {
-  const param = await params;
+export default async function Page({ params }) {
+  const { token } = await params; // Await the params Promise
+  console.log("token:", token);
 
-  console.log("token", param.token);
   return (
     <div>
-      <ResetPass token={param.token} />
+      <ResetPass token={token} />
     </div>
   );
 }
