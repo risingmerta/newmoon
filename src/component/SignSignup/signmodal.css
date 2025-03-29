@@ -78,6 +78,7 @@
   border-radius: 10px;
   color: black;
   outline: none;
+  background: #fff;
 }
 .relati {
   display: flex;
@@ -92,6 +93,9 @@
   outline: none;
   background: #fff;
   color: black;
+}
+.midN {
+  width: 90%;
 }
 .btio {
   font-size: 15px;

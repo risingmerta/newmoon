@@ -59,7 +59,11 @@ const SignInSignUpModal = (props) => {
   const handleSignIn = async () => {
     setError("");
     setLoading(true);
-    const result = await signIn("credentials", { email, password, redirect: false });
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
     setLoading(false);
     if (result?.error) setError(result.error);
   };
@@ -73,12 +77,17 @@ const SignInSignUpModal = (props) => {
   return (
     <div
       className="modal"
-      style={{ zIndex: props.logIsOpen ? 100 : -100, opacity: props.logIsOpen ? 1 : 0 }}
+      style={{
+        zIndex: props.logIsOpen ? 100 : -100,
+        opacity: props.logIsOpen ? 1 : 0,
+      }}
       onClick={() => props.setLogIsOpen(false)}
     >
       <div
         className="modal-content"
-        style={{ transform: props.logIsOpen ? "translateX(0px)" : "translateX(1000px)" }}
+        style={{
+          transform: props.logIsOpen ? "translateX(0px)" : "translateX(1000px)",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {session ? (
@@ -99,7 +108,9 @@ const SignInSignUpModal = (props) => {
         ) : (
           <>
             <div className="heddp">
-              <h2 className="heddio">{isSignUp ? "Create an Account" : "Welcome back!"}</h2>
+              <h2 className="heddio">
+                {isSignUp ? "Create an Account" : "Welcome back!"}
+              </h2>
             </div>
 
             {isSignUp && (
@@ -118,7 +129,7 @@ const SignInSignUpModal = (props) => {
               <div className="midOT">EMAIL ADDRESS</div>
               <input
                 type="email"
-                className="midOI"
+                className="midOI midN"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -139,14 +150,21 @@ const SignInSignUpModal = (props) => {
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                  {showPassword ? (
+                    <AiOutlineEyeInvisible size={20} />
+                  ) : (
+                    <AiOutlineEye size={20} />
+                  )}
                 </button>
               </div>
             </div>
 
             {error && <p style={{ color: "#ff9999" }}>{error}</p>}
 
-            <div className="btiom" onClick={isSignUp ? handleSignUp : handleSignIn}>
+            <div
+              className="btiom"
+              onClick={isSignUp ? handleSignUp : handleSignIn}
+            >
               <button className="btio" disabled={loading}>
                 {loading ? "Hang in there..." : isSignUp ? "Register" : "Login"}
               </button>
@@ -154,7 +172,11 @@ const SignInSignUpModal = (props) => {
 
             <div className="line-up">
               <div className="kinto">
-                <div>{isSignUp ? "Already have an account?" : "Don't have an account?"}</div>
+                <div>
+                  {isSignUp
+                    ? "Already have an account?"
+                    : "Don't have an account?"}
+                </div>
                 <div className="forget-pass" onClick={toggleMode}>
                   {isSignUp ? "Login" : "Register"}
                 </div>
