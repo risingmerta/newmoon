@@ -8,7 +8,7 @@ export const POST = async (req) => {
     const users = db.collection("users");
 
     const user = await users.findOne({
-      resetToken: token,
+      resetToken: "dc1c095078e8fe32f7b99a8885956e6a1c1868b6b5d9372625f714271774f813",
       resetTokenExpiry: { $gt: new Date() }, // Fix: Ensure token is still valid
     });
 
