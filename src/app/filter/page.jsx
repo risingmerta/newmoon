@@ -3,6 +3,7 @@ import React from "react";
 import "./filterpage.css";
 import { MongoClient } from "mongodb";
 import Advertize from "@/component/Advertize/Advertize";
+import Script from "next/script";
 
 // MongoDB connection detail
 export async function generateMetadata({ params }) {
@@ -79,6 +80,10 @@ export default async function page({ searchParams }) {
 
   return (
     <div className="flirt">
+      <Script
+        strategy="afterInteractive"
+        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
+      />
       <FilterComp
         data={data}
         filteredAnimes={filteredAnimes}
@@ -99,9 +104,9 @@ export default async function page({ searchParams }) {
         page={searchParam.page}
         totalPages={filteredAnimes.results.totalPage}
         totalDocs={filteredAnimes.results.totalResults}
-        collectionName={'Filter Results'}
+        collectionName={"Filter Results"}
       />
-      <Advertize/>
+      <Advertize />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import Advertize from "@/component/Advertize/Advertize";
 import GenreSidebar from "@/component/Gridle/page";
 import { MongoClient } from "mongodb";
+import Script from "next/script";
 import React from "react";
 
 export async function generateMetadata({ searchParams }) {
@@ -84,6 +85,10 @@ export default async function page({ searchParams }) {
 
   return (
     <div>
+      <Script
+        strategy="afterInteractive"
+        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
+      />
       <GenreSidebar
         data={existingAnime}
         name={cate}
@@ -95,7 +100,7 @@ export default async function page({ searchParams }) {
         page={pageParam}
         arise={arise}
       />
-      <Advertize/>
+      <Advertize />
     </div>
   );
 }

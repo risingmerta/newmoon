@@ -2,6 +2,7 @@ import React from "react";
 import RecommendedTopTen from "../../layouts/RecommendedTopTen";
 import { MongoClient } from "mongodb";
 import Advertize from "@/component/Advertize/Advertize";
+import Script from "next/script";
 
 export async function generateMetadata({ params }) {
   const param = await params;
@@ -167,6 +168,10 @@ export default async function Page({ params }) {
 
   return (
     <div>
+      <Script
+          strategy="afterInteractive"
+          src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
+        />
       <RecommendedTopTen
         uiui={existingAnime}
         data={data}

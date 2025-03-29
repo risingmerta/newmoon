@@ -6,6 +6,7 @@ import * as cheerio from "cheerio";
 import WatchLive from "@/component/WatchLive/WatchLive";
 import { MongoClient } from "mongodb";
 import Advertize from "@/component/Advertize/Advertize";
+import Script from "next/script";
 
 export default async function page({ params, searchParams }) {
   const searchParam = await searchParams;
@@ -297,6 +298,10 @@ export default async function page({ params, searchParams }) {
 
   return (
     <div>
+      <Script
+        strategy="afterInteractive"
+        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
+      />
       <WatchLive
         id={param.id}
         data={data}

@@ -4,8 +4,10 @@ import Profito from "@/component/Profito/Profito";
 import MyComponent from "@/component/ContinueWatching/ContinueWatching";
 import WatchList from "@/component/WatchList/WatchList";
 import Settings from "@/component/Settings/Settings";
-import Notification from "@/component/Notification/Notification"
+import Notification from "@/component/Notification/Notification";
 import User from "@/component/User/user";
+import Script from "next/script";
+import Advertize from "@/component/Advertize/Advertize";
 
 export async function generateMetadata({ params }) {
   const idd = "Anime";
@@ -20,15 +22,21 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
 export default async function page({ params, searchParams }) {
   const param = (await params).id;
-  const searchParam = await searchParams
+  const searchParam = await searchParams;
   const slabId = param.replace("-", " ");
 
   return (
     <>
-    <div><User type={searchParam.type} id={param}/></div>
+      <Script
+        strategy="afterInteractive"
+        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
+      />
+      <div>
+        <User type={searchParam.type} id={param} />
+      </div>
+      <Advertize />
     </>
   );
 }

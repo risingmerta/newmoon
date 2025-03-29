@@ -1,5 +1,6 @@
 import SearchResults from "@/component/AZ/az";
 import { MongoClient } from "mongodb";
+import Script from "next/script";
 import React from "react";
 
 export async function generateMetadata({ params }) {
@@ -81,6 +82,10 @@ export default async function page({ params, searchParams }) {
 
   return (
     <div>
+      <Script
+        strategy="afterInteractive"
+        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
+      />
       <SearchResults
         el={existingAnime}
         sort={searchParam.sort}
