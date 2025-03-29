@@ -129,7 +129,7 @@ const SignInSignUpModal = (props) => {
               <div className="midOT">EMAIL ADDRESS</div>
               <input
                 type="email"
-                className="midOI midN"
+                className="midOI"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -140,7 +140,7 @@ const SignInSignUpModal = (props) => {
               <div className="relati">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="midOI pr-10"
+                  className="midOI midN"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

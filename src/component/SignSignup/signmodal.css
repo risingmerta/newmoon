@@ -78,7 +78,7 @@
   border-radius: 10px;
   color: black;
   outline: none;
-  background: #fff;
+  background: #fff !important;
 }
 .relati {
   display: flex;
@@ -91,7 +91,7 @@
   border-radius: 10px;
   color: black;
   outline: none;
-  background: #fff;
+  background: #fff !important;
   color: black;
 }
 .midN {
