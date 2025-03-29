@@ -1,15 +1,17 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"; // Import React Icons
+import "./ResetPass.css"; // Importing the CSS file
 
-const ResetPass = (props) => {
+const ResetPass = ({ token }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
-  // const params = new URLSearchParams(window.location.search);
-  const token = props.token;
 
   const handleReset = async () => {
     if (!newPassword || newPassword !== confirmPassword) {
@@ -30,24 +32,51 @@ const ResetPass = (props) => {
   };
 
   return (
-    <div>
-      <h2>Reset Password</h2>
-      <h1>{token}</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {message && <p style={{ color: "green" }}>{message}</p>}
-      <input
-        type="password"
-        placeholder="New Password"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <button onClick={handleReset}>Reset Password</button>
+    <div className="reset-container">
+      <div className="reset-box">
+        <h2 className="reset-title">Reset Password</h2>
+
+        {error && <p className="error-message">{error}</p>}
+        {message && <p className="success-message">{message}</p>}
+
+        <div className="input-group">
+          <input
+            type={showPassword ? "text" : "password"}
+            className="reset-input"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <AiFillEyeInvisible size={20} /> : <AiFillEye size={20} />}
+          </button>
+        </div>
+
+        <div className="input-group">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            className="reset-input"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? <AiFillEyeInvisible size={20} /> : <AiFillEye size={20} />}
+          </button>
+        </div>
+
+        <button onClick={handleReset} className="reset-button">
+          Reset Password
+        </button>
+      </div>
     </div>
   );
 };

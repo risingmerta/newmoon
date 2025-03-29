@@ -4,11 +4,13 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { imageData } from "@/data/imageData"; // Import images
 import "./signmodal.css";
 import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 // Function to get a random avatar
 const getRandomImage = () => {
   const categories = Object.keys(imageData.hashtags);
-  const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+  const randomCategory =
+    categories[Math.floor(Math.random() * categories.length)];
   const images = imageData.hashtags[randomCategory].images;
   return images[Math.floor(Math.random() * images.length)];
 };
@@ -23,17 +25,8 @@ const SignInSignUpModal = (props) => {
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const { data: session } = useSession();
-
-  // Load stored credentials
-  useEffect(() => {
-    const savedEmail = localStorage.getItem("email");
-    const savedPassword = localStorage.getItem("password");
-    const savedUsername = localStorage.getItem("username");
-
-    if (savedEmail) setEmail(savedEmail);
-    if (savedPassword) setPassword(savedPassword);
-    if (savedUsername) setUsername(savedUsername);
-  }, []);
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (isSignUp) {
@@ -41,12 +34,10 @@ const SignInSignUpModal = (props) => {
     }
   }, [isSignUp]);
 
-  const router = useRouter();
-
   const toggleMode = () => {
     setIsSignUp(!isSignUp);
     setError("");
-    router.refresh(); // This will reload the current page
+    router.refresh();
   };
 
   const handleSignUp = async () => {
@@ -62,22 +53,13 @@ const SignInSignUpModal = (props) => {
     setLoading(false);
     if (!res.ok) return setError(data.message);
 
-    // Store credentials locally
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-    localStorage.setItem("username", username);
-
     await signIn("credentials", { email, password, redirect: false });
   };
 
   const handleSignIn = async () => {
     setError("");
     setLoading(true);
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    const result = await signIn("credentials", { email, password, redirect: false });
     setLoading(false);
     if (result?.error) setError(result.error);
   };
@@ -88,37 +70,15 @@ const SignInSignUpModal = (props) => {
     setLoading(false);
   };
 
-  const handleForgotPassword = async () => {
-    if (!email) return setError("Enter your email to reset password");
-  
-    setLoading(true);
-    const res = await fetch("/api/auth/reset-password", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-  
-    const data = await res.json();
-    setLoading(false);
-    if (!res.ok) return setError(data.message);
-  
-    setMessage("Password reset email sent! Check your inbox.");
-  };
-
   return (
     <div
       className="modal"
-      style={{
-        zIndex: props.logIsOpen ? 100 : -100,
-        opacity: props.logIsOpen ? 1 : 0,
-      }}
+      style={{ zIndex: props.logIsOpen ? 100 : -100, opacity: props.logIsOpen ? 1 : 0 }}
       onClick={() => props.setLogIsOpen(false)}
     >
       <div
         className="modal-content"
-        style={{
-          transform: props.logIsOpen ? "translateX(0px)" : "translateX(1000px)",
-        }}
+        style={{ transform: props.logIsOpen ? "translateX(0px)" : "translateX(1000px)" }}
         onClick={(e) => e.stopPropagation()}
       >
         {session ? (
@@ -139,9 +99,7 @@ const SignInSignUpModal = (props) => {
         ) : (
           <>
             <div className="heddp">
-              <h2 className="heddio">
-                {isSignUp ? "Create an Account" : "Welcome back!"}
-              </h2>
+              <h2 className="heddio">{isSignUp ? "Create an Account" : "Welcome back!"}</h2>
             </div>
 
             {isSignUp && (
@@ -168,39 +126,27 @@ const SignInSignUpModal = (props) => {
             </div>
             <div className="midO">
               <div className="midOT">PASSWORD</div>
-              <input
-                type="password"
-                className="midOI"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            <div className="midI">
-              <label className="kinto">
+              <div className="relati">
                 <input
-                  type="checkbox"
-                  className="checki"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  type={showPassword ? "text" : "password"}
+                  className="midOI pr-10"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                Remember Me
-              </label>
-              <button
-                  onClick={handleForgotPassword}
-                  className="kinto forget-pass"
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  Forgot Password?
-              </button>
+                  {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                </button>
+              </div>
             </div>
 
             {error && <p style={{ color: "#ff9999" }}>{error}</p>}
 
-            <div
-              className="btiom"
-              onClick={isSignUp ? handleSignUp : handleSignIn}
-            >
+            <div className="btiom" onClick={isSignUp ? handleSignUp : handleSignIn}>
               <button className="btio" disabled={loading}>
                 {loading ? "Hang in there..." : isSignUp ? "Register" : "Login"}
               </button>
@@ -208,11 +154,7 @@ const SignInSignUpModal = (props) => {
 
             <div className="line-up">
               <div className="kinto">
-                <div>
-                  {isSignUp
-                    ? "Already have an account?"
-                    : "Don't have an account?"}
-                </div>
+                <div>{isSignUp ? "Already have an account?" : "Don't have an account?"}</div>
                 <div className="forget-pass" onClick={toggleMode}>
                   {isSignUp ? "Login" : "Register"}
                 </div>

@@ -10,7 +10,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  bottom: 0; 
+  bottom: 0;
   z-index: -1;
   transition: all 0.1s ease-in-out;
 }
@@ -78,6 +78,20 @@
   border-radius: 10px;
   color: black;
   outline: none;
+}
+.relati {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+  gap: 10px;
+  /* padding: 10px 15px;
+  font-size: 14px; */
+  border-radius: 10px;
+  color: black;
+  outline: none;
+  background: #fff;
+  color: black;
 }
 .btio {
   font-size: 15px;

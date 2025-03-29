@@ -1,0 +1,89 @@
+/* ResetPass.css */
+
+.reset-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #111;
+  }
+  
+  .reset-box {
+    background: #222;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 350px;
+  }
+  
+  .reset-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00f2fe;
+    margin-bottom: 1rem;
+  }
+  
+  .error-message {
+    color: red;
+    margin-bottom: 0.5rem;
+  }
+  
+  .success-message {
+    color: green;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .reset-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #00f2fe;
+    border-radius: 8px;
+    background: #333;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .reset-input:focus {
+    border-color: #00c8d6;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .toggle-password:hover {
+    color: white;
+  }
+  
+  .reset-button {
+    width: 100%;
+    padding: 12px;
+    background: #00f2fe;
+    color: #222;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .reset-button:hover {
+    background: #00c8d6;
+  }
+  
