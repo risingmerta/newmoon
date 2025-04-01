@@ -54,8 +54,8 @@ export default function User(props) {
           <Slab slabId={slabId} />
         </div>
         {props.id === "profile" ? <Profito /> : ""}
-        {props.id === "continue-watching" ? <MyComponent /> : ""}
-        {props.id === "watch-list" ? <WatchList type={props.type} /> : ""}
+        {props.id === "continue-watching" ? <MyComponent page={props.page}/> : ""}
+        {props.id === "watch-list" ? <WatchList type={props.type} ipage={props.page}/> : ""}
         {props.id === "settings" ? <Settings /> : ""}
         {props.id === "notification" ? <Notification /> : ""}
         <div>

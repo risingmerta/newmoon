@@ -74,6 +74,23 @@ const SignInSignUpModal = (props) => {
     setLoading(false);
   };
 
+  const handleForgotPassword = async () => {
+    if (!email) return setError("Enter your email to reset password");
+
+    setLoading(true);
+    const res = await fetch("/api/auth/reset-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+    setLoading(false);
+    if (!res.ok) return setError(data.message);
+
+    setMessage("Password reset email sent! Check your inbox.");
+  };
+
   return (
     <div
       className="modal"
@@ -157,6 +174,24 @@ const SignInSignUpModal = (props) => {
                   )}
                 </button>
               </div>
+            </div>
+
+            <div className="midI">
+              <label className="kinto">
+                <input
+                  type="checkbox"
+                  className="checki"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                Remember Me
+              </label>
+              <button
+                onClick={handleForgotPassword}
+                className="kinto forget-pass"
+              >
+                Forgot Password?
+              </button>
             </div>
 
             {error && <p style={{ color: "#ff9999" }}>{error}</p>}

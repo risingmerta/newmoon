@@ -36,6 +36,38 @@
   width: calc(75% - 1rem);
 }
 
+.paginA {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+.pagin-tile {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--grey-dark);
+  color: rgb(160, 163, 159);
+  border-radius: 50%;
+  font-weight: 600;
+}
+.pagin-tile:hover {
+  color: var(--theme);
+  cursor: pointer;
+}
+.pagin-colo {
+  background: var(--theme);
+  color: black;
+}
+.pagin-colo:hover {
+  background: var(--theme);
+  color: black;
+}
+
 @media screen and (max-width: 1150px) {
   .crd-col {
     width: 100%;

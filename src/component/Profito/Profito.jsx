@@ -1,34 +1,56 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { FaKey, FaPen, FaUser } from "react-icons/fa";
-import "./profito.css";
 import { useSession } from "next-auth/react";
+import { imageData } from "@/data/imageData"; // Import imageData
+import { signIn } from "next-auth/react"; // For session handling
+import "./profito.css";
 
-export default function Profito(props) {
-  // Create a new Date object
-
+export default function Profito() {
   const { data: session } = useSession();
+  const [newEmail, setNewEmail] = useState(session?.user.email || "");
+  const [newUsername, setNewUsername] = useState(session?.user.username || "");
+  const [newPassword, setNewPassword] = useState("");
+  const [newAvatar, setNewAvatar] = useState(session?.user.avatar || ""); // Default avatar from session
+  const [showModal, setShowModal] = useState(false);
 
   const date = new Date(session?.user.timeOfJoining);
-
-  // Get the date and time in a more readable format
   const dated = date.getDate();
   const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December",
   ];
   const monthi = month[date.getMonth()];
   const year = date.getFullYear();
+
+  const handleSave = async () => {
+    const { id, email, username, password, avatar } = session?.user;
+  
+    const response = await fetch("/api/updateProfile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: id, email: newEmail, username: newUsername, password: newPassword, avatar: newAvatar }),
+    });
+  
+    const data = await response.json();
+  
+    if (response.ok) {
+      // Re-sign in with new credentials to update the session
+      await signIn("credentials", {
+        email: newEmail,
+        password: newPassword,
+        redirect: false,
+      });
+  
+      // The session will now reflect the updated email, username, and avatar
+      alert("Profile updated successfully");
+      setShowModal(false); // Close the modal on success
+    } else {
+      alert(data.message || "Something went wrong");
+    }
+  };
 
   return (
     <div className="comAll">
@@ -37,16 +59,16 @@ export default function Profito(props) {
       </div>
       <div className="profile-content">
         <div className="cofs">
-          <div className={`rofile-image`}>
+          <div className={`profile-image`}>
             <img
-              src={session?.user.avatar.replace(
+              src={newAvatar || session?.user.avatar.replace(
                 "https://cdn.noitatnemucod.net/avatar/100x100/",
                 "https://img.flawlessfiles.com/_r/100x100/100/avatar/"
               )}
               className="profile-img"
               alt="Profile"
             />
-            <div className="cof-pen">
+            <div className="cof-pen" onClick={() => setShowModal(true)}>
               <FaPen />
             </div>
           </div>
@@ -59,6 +81,8 @@ export default function Profito(props) {
               className="field-input"
               type="text"
               placeholder={session?.user.email}
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
               name="email"
             />
           </div>
@@ -68,6 +92,8 @@ export default function Profito(props) {
               className="field-input"
               type="text"
               placeholder={session?.user.username}
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
               name="name"
             />
           </div>
@@ -78,24 +104,54 @@ export default function Profito(props) {
             </div>
           </div>
           <div className="paske">
-            <FaKey />
-            Change Password
+            <FaKey /> Change Password
           </div>
-          <div className="save-button">Save</div>
-        </div>
-
-        <div className="cofs">
-          <div className={`profile-image`}>
-            <img
-              src={session?.user.avatar.replace(
-                "https://cdn.noitatnemucod.net/avatar/100x100/",
-                "https://img.flawlessfiles.com/_r/100x100/100/avatar/"
-              )}
-              className="profile-img"
-              alt="Profile"
+          <div className="profile-field">
+            <div className="field-label">NEW PASSWORD</div>
+            <input
+              className="field-input"
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              name="password"
             />
           </div>
+          <div className="save-button" onClick={handleSave}>
+            Save
+          </div>
         </div>
+
+        {/* Avatar Selection Modal */}
+        {showModal && (
+          <div className="avatar-modal">
+            <div className="modal-content">
+              <h3>Select an Avatar</h3>
+              {/* Render all avatars categorized by hashtags */}
+              <div className="avatar-selection">
+                {Object.keys(imageData.hashtags).map((category) => (
+                  <div key={category} className="avatar-category">
+                    <h4>{category}</h4>
+                    <div className="avatar-images">
+                      {imageData.hashtags[category].images.map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={category}
+                          onClick={() => setNewAvatar(img)} // Set avatar on click
+                          className="avatar-image"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="modal-footer">
+                <button onClick={() => setShowModal(false)}>Close</button>
+                <button onClick={handleSave}>Save</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
