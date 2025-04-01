@@ -149,7 +149,7 @@ const WatchList = ({ type, ipage }) => {
             ) : (
               <div className="EmLi">
                   <div className="listEmp">
-                    {getOptionName(props.type)} list is empty
+                    {getOptionName(type)} list is empty
                   </div>
                   <div className="adviso">{'<^ Add some animes to the list ^>'}</div>
                   <div className="flex adviso-1">
