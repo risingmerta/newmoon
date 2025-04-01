@@ -86,6 +86,22 @@ const WatchList = ({ type, ipage }) => {
   } else {
     useArr = [currentPage - 1, currentPage, currentPage + 1];
   }
+  const getOptionName = (type) => {
+    switch (type) {
+      case "1":
+        return "Watching";
+      case "2":
+        return "On-Hold";
+      case "3":
+        return "Plan to Watch";
+      case "4":
+        return "Dropped";
+      case "5":
+        return "Completed";
+      default:
+        return "All";
+    }
+  };
 
   return (
     <div className="alltio">
