@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next"; // Ensure it's correctly imported
 import { connectDB } from "@/lib/mongoClient";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { ObjectId } from "mongodb";
 
 export async function POST(req) {
@@ -28,7 +28,7 @@ export async function POST(req) {
     // Hash the password if updating
     if (password) {
       updateData.password = await hash(password, 10);
-    }
+    } 
 
     // Update user in MongoDB
     const result = await users.updateOne(
