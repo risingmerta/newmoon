@@ -137,10 +137,10 @@ const WatchList = ({ type, ipage }) => {
       <div className="ddidd">
         <div className="drd-col">
           <div className="darg d-flex a-center j-center">
-            {data.length > 0 ? (
-              data.map((anime, idx) => (
+            {data?.length > 0 ? (
+              data?.map((anime, idx) => (
                 <Card
-                  key={anime.id}
+                  key={anime?.id}
                   data={anime}
                   delay={idx * 0.05}
                   itsMe={"true"}
