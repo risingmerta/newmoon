@@ -1,5 +1,5 @@
 import { connectDB } from "@/lib/mongoClient";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const POST = async (req) => {
   try {

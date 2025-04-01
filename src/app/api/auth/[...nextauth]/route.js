@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectDB } from "@/lib/mongoClient";
-import { compare } from "bcrypt";
+import { compare } from "bcryptjs";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/lib/mongoClient";
 import { imageData } from "@/data/imageData"; // Import imageData

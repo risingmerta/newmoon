@@ -1,4 +1,4 @@
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { connectDB } from "@/lib/mongoClient";
 import { imageData } from "@/data/imageData";
 
