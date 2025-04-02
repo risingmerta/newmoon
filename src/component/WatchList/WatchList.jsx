@@ -68,7 +68,6 @@ const WatchList = ({ type, ipage }) => {
   }, []);
 
   const migrateLocalStorageToMongoDB = async (userId) => {
-    if (!userId) return;
 
     let migrationPromises = [];
 
