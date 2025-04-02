@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { connectDB } from "@/lib/mongoClient";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { ObjectId } from "mongodb";
 
 export async function POST(req) {
