@@ -22,6 +22,8 @@ const TYPE_MAP = {
 
 const WatchList = ({ type, ipage }) => {
   const { data: session } = useSession();
+  console.log(session);
+  console.log("sess", session?.user?.id);
   const userId = session?.user?.id;
   const [data, setData] = useState([]);
   const [page, setPage] = useState(parseInt(ipage) || 1);
@@ -148,16 +150,18 @@ const WatchList = ({ type, ipage }) => {
               ))
             ) : (
               <div className="EmLi">
-                  <div className="listEmp">
-                    {getOptionName(type)} list is empty
-                  </div>
-                  <div className="adviso">{'<^ Add some animes to the list ^>'}</div>
-                  <div className="flex adviso-1">
-                    <div>\__---</div>
-                    <div className="adviso">/\/\/\/\/\/\</div>
-                    <div>---__/</div>
-                  </div>
+                <div className="listEmp">
+                  {getOptionName(type)} list is empty
                 </div>
+                <div className="adviso">
+                  {"<^ Add some animes to the list ^>"}
+                </div>
+                <div className="flex adviso-1">
+                  <div>\__---</div>
+                  <div className="adviso">/\/\/\/\/\/\</div>
+                  <div>---__/</div>
+                </div>
+              </div>
             )}
           </div>
         </div>
