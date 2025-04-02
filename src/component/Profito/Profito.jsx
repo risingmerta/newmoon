@@ -14,7 +14,6 @@ export default function Profito() {
   const [newAvatar, setNewAvatar] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // Ensure state is updated when session data becomes available
   useEffect(() => {
     if (session?.user) {
       setNewEmail(session.user.email || "");
@@ -24,13 +23,7 @@ export default function Profito() {
   }, [session]);
 
   const date = new Date(session?.user?.timeOfJoining);
-  const dated = date.getDate();
-  const month = [
-    "January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December",
-  ];
-  const monthi = month[date.getMonth()];
-  const year = date.getFullYear();
+  const formattedDate = `${date.getDate()}-${date.toLocaleString("default", { month: "long" })}-${date.getFullYear()}`;
 
   const handleSave = async () => {
     const userId = session?.user?.id;
@@ -38,8 +31,8 @@ export default function Profito() {
 
     if (newEmail !== session?.user?.email) updatedFields.email = newEmail;
     if (newUsername !== session?.user?.username) updatedFields.username = newUsername;
-    if (newPassword) updatedFields.password = newPassword; 
     if (newAvatar !== session?.user?.avatar) updatedFields.avatar = newAvatar;
+    if (newPassword.trim() !== "") updatedFields.password = newPassword; // Only send if password is entered
 
     if (Object.keys(updatedFields).length === 0) {
       alert("No changes detected");
@@ -81,7 +74,7 @@ export default function Profito() {
       </div>
       <div className="profile-content">
         <div className="cofs">
-          <div className={`profile-image`}>
+          <div className="profile-image">
             <img
               src={newAvatar || session?.user?.avatar}
               className="profile-img"
@@ -116,9 +109,7 @@ export default function Profito() {
           </div>
           <div className="profile-field">
             <div className="field-label">JOINED</div>
-            <div className="field-value">
-              {dated + "-" + monthi + "-" + year}
-            </div>
+            <div className="field-value">{formattedDate}</div>
           </div>
           <div className="paske">
             <FaKey /> Change Password
@@ -131,6 +122,7 @@ export default function Profito() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               name="password"
+              placeholder="Leave empty to keep current password"
             />
           </div>
           <div className="save-button" onClick={handleSave}>

@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { connectDB } from "@/lib/mongoClient";
-import { hash } from "bcryptjs";
+import { hash } from "bcrypt";
 import { ObjectId } from "mongodb";
 
 export async function POST(req) {
@@ -23,7 +23,9 @@ export async function POST(req) {
     if (email) updateData.email = email;
     if (username) updateData.username = username;
     if (avatar) updateData.avatar = avatar;
-    if (password) updateData.password = await hash(password, 10); // Hash the password if it's being updated
+    if (password && password.trim() !== "") {
+      updateData.password = await hash(password, 10); // Only hash if password is provided
+    }
 
     // If no changes, return early
     if (Object.keys(updateData).length === 0) {
