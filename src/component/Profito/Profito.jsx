@@ -8,10 +8,10 @@ import "./profito.css";
 
 export default function Profito() {
   const { data: session } = useSession();
-  const [newEmail, setNewEmail] = useState(session?.user?.email || "");
-  const [newUsername, setNewUsername] = useState(session?.user?.username || "");
+  const [newEmail, setNewEmail] = useState(session?.user?.email);
+  const [newUsername, setNewUsername] = useState(session?.user?.username);
   const [newPassword, setNewPassword] = useState("");
-  const [newAvatar, setNewAvatar] = useState(session?.user?.avatar || "");
+  const [newAvatar, setNewAvatar] = useState(session?.user?.avatar);
   const [showModal, setShowModal] = useState(false);
 
   const date = new Date(session?.user?.timeOfJoining);
