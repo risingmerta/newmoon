@@ -61,20 +61,37 @@ const WatchList = ({ type, ipage }) => {
 
   const migrateLocalStorageToMongoDB = async (userId) => {
     if (!userId) return;
+
+    let migrationPromises = [];
+
     for (const key in TYPE_MAP) {
       const localData = localStorage.getItem(`animeData_${key}`);
       if (localData) {
         const animeList = JSON.parse(localData);
-        for (const anime of animeList) {
-          await fetch("/api/watchlist", {
+
+        // Convert key (number) to type label
+        const typeLabel = TYPE_MAP[key];
+
+        const uploadPromises = animeList.map((anime) =>
+          fetch("/api/watchlist", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ anime: { ...anime, type: key, userId } }),
-          });
-        }
-        localStorage.removeItem(`animeData_${key}`);
+            body: JSON.stringify({
+              anime: { ...anime, type: typeLabel, userId },
+            }),
+          })
+        );
+
+        migrationPromises.push(Promise.all(uploadPromises));
+
+        // Remove localStorage after migration completes
+        Promise.all(uploadPromises).then(() =>
+          localStorage.removeItem(`animeData_${key}`)
+        );
       }
     }
+
+    await Promise.all(migrationPromises);
   };
 
   const currentPage = parseInt(page) || 1;
