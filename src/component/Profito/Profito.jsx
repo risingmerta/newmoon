@@ -2,19 +2,19 @@
 import React, { useState } from "react";
 import { FaKey, FaPen, FaUser } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import { imageData } from "@/data/imageData"; // Import imageData
-import { signIn } from "next-auth/react"; // For session handling
+import { imageData } from "@/data/imageData";
+import { signIn } from "next-auth/react";
 import "./profito.css";
 
 export default function Profito() {
   const { data: session } = useSession();
-  const [newEmail, setNewEmail] = useState(session?.user.email || "");
-  const [newUsername, setNewUsername] = useState(session?.user.username || "");
+  const [newEmail, setNewEmail] = useState(session?.user?.email || "");
+  const [newUsername, setNewUsername] = useState(session?.user?.username || "");
   const [newPassword, setNewPassword] = useState("");
-  const [newAvatar, setNewAvatar] = useState(session?.user.avatar || ""); // Default avatar from session
+  const [newAvatar, setNewAvatar] = useState(session?.user?.avatar || "");
   const [showModal, setShowModal] = useState(false);
 
-  const date = new Date(session?.user.timeOfJoining);
+  const date = new Date(session?.user?.timeOfJoining);
   const dated = date.getDate();
   const month = [
     "January", "February", "March", "April", "May", "June", "July",
@@ -24,29 +24,42 @@ export default function Profito() {
   const year = date.getFullYear();
 
   const handleSave = async () => {
-    const { id, email, username, password, avatar } = session?.user;
-  
+    const userId = session?.user?.id;
+    const updatedFields = {};
+
+    if (newEmail !== session?.user?.email) updatedFields.email = newEmail;
+    if (newUsername !== session?.user?.username) updatedFields.username = newUsername;
+    if (newPassword) updatedFields.password = newPassword; 
+    if (newAvatar !== session?.user?.avatar) updatedFields.avatar = newAvatar;
+
+    if (Object.keys(updatedFields).length === 0) {
+      alert("No changes detected");
+      return;
+    }
+
+    updatedFields.userId = userId;
+
     const response = await fetch("/api/updateProfile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: id, email: newEmail, username: newUsername, password: newPassword, avatar: newAvatar }),
+      body: JSON.stringify(updatedFields),
     });
-  
+
     const data = await response.json();
-  
+
     if (response.ok) {
-      // Re-sign in with new credentials to update the session
-      await signIn("credentials", {
-        email: newEmail,
-        password: newPassword,
-        redirect: false,
-      });
-  
-      // The session will now reflect the updated email, username, and avatar
+      if (updatedFields.email || updatedFields.password) {
+        await signIn("credentials", {
+          email: newEmail,
+          password: newPassword || "",
+          redirect: false,
+        });
+      }
+
       alert("Profile updated successfully");
-      setShowModal(false); // Close the modal on success
+      setShowModal(false);
     } else {
       alert(data.message || "Something went wrong");
     }
@@ -80,7 +93,6 @@ export default function Profito() {
             <input
               className="field-input"
               type="text"
-              placeholder={session?.user.email}
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               name="email"
@@ -91,7 +103,6 @@ export default function Profito() {
             <input
               className="field-input"
               type="text"
-              placeholder={session?.user.username}
               value={newUsername}
               onChange={(e) => setNewUsername(e.target.value)}
               name="name"
@@ -121,12 +132,10 @@ export default function Profito() {
           </div>
         </div>
 
-        {/* Avatar Selection Modal */}
         {showModal && (
           <div className="avatar-modal">
             <div className="modal-content">
               <h3>Select an Avatar</h3>
-              {/* Render all avatars categorized by hashtags */}
               <div className="avatar-selection">
                 {Object.keys(imageData.hashtags).map((category) => (
                   <div key={category} className="avatar-category">
@@ -137,7 +146,7 @@ export default function Profito() {
                           key={idx}
                           src={img}
                           alt={category}
-                          onClick={() => setNewAvatar(img)} // Set avatar on click
+                          onClick={() => setNewAvatar(img)}
                           className="avatar-image"
                         />
                       ))}
