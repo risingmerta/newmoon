@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaKey, FaPen, FaUser } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { imageData } from "@/data/imageData";
@@ -8,11 +8,20 @@ import "./profito.css";
 
 export default function Profito() {
   const { data: session } = useSession();
-  const [newEmail, setNewEmail] = useState(session?.user?.email);
-  const [newUsername, setNewUsername] = useState(session?.user?.username);
+  const [newEmail, setNewEmail] = useState("");
+  const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [newAvatar, setNewAvatar] = useState(session?.user?.avatar);
+  const [newAvatar, setNewAvatar] = useState("");
   const [showModal, setShowModal] = useState(false);
+
+  // Ensure state is updated when session data becomes available
+  useEffect(() => {
+    if (session?.user) {
+      setNewEmail(session.user.email || "");
+      setNewUsername(session.user.username || "");
+      setNewAvatar(session.user.avatar || "");
+    }
+  }, [session]);
 
   const date = new Date(session?.user?.timeOfJoining);
   const dated = date.getDate();
@@ -74,10 +83,7 @@ export default function Profito() {
         <div className="cofs">
           <div className={`profile-image`}>
             <img
-              src={newAvatar || session?.user.avatar.replace(
-                "https://cdn.noitatnemucod.net/avatar/100x100/",
-                "https://img.flawlessfiles.com/_r/100x100/100/avatar/"
-              )}
+              src={newAvatar || session?.user?.avatar}
               className="profile-img"
               alt="Profile"
             />
