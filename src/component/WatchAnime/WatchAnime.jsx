@@ -831,7 +831,7 @@ export default function WatchAnime(props) {
                           selectedServer={selectedServer}
                           onn1={onn1}
                           onn2={onn2}
-                          onn3={onn3}
+                          onn3={onn3} 
                           getData={getData}
                           currIdx={currIdx}
                           err={err} 
