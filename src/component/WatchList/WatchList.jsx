@@ -21,29 +21,41 @@ const TYPE_MAP = {
 };
 
 const WatchList = ({ type, ipage }) => {
-  const { data: session } = useSession();
-  console.log(session);
-  console.log("sess", session?.user?.id);
+  const { data: session, status } = useSession();
   const userId = session?.user?.id;
   const [data, setData] = useState([]);
   const [page, setPage] = useState(parseInt(ipage) || 1);
   const [totalPages, setTotalPages] = useState(1);
+
+  // Debugging: Check when userId becomes available
+  useEffect(() => {
+    console.log("Updated userId:", userId);
+  }, [userId]);
+
+  // Wait until session is fully loaded
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
   useEffect(() => {
     setPage(parseInt(ipage) || 1);
   }, [ipage]);
 
   useEffect(() => {
-    if (userId) {
-      migrateLocalStorageToMongoDB(userId);
+    if (!userId) return; // Ensures userId is available before running migration & fetching
+
+    const migrateAndFetch = async () => {
+      await migrateLocalStorageToMongoDB(userId);
       fetchWatchlist(userId, type, page);
-    }
+    };
+
+    migrateAndFetch();
   }, [userId, type, page]);
 
   const fetchWatchlist = useCallback(async (userId, type, page) => {
     if (!userId) return;
 
-    const typeLabel = TYPE_MAP[type]; // Get the label (e.g., "Watching") based on number
+    const typeLabel = TYPE_MAP[type];
 
     const url = typeLabel
       ? `/api/watchlist?userId=${userId}&type=${encodeURIComponent(
@@ -51,47 +63,45 @@ const WatchList = ({ type, ipage }) => {
         )}&page=${page}&pageSize=24`
       : `/api/watchlist?userId=${userId}&page=${page}&pageSize=24`;
 
-    const res = await fetch(url);
-    if (res.ok) {
-      const { data, totalPages } = await res.json();
-      setData(data);
-      setTotalPages(totalPages);
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        const { data, totalPages } = await res.json();
+        setData(data);
+        setTotalPages(totalPages);
+      }
+    } catch (error) {
+      console.error("Error fetching watchlist:", error);
     }
   }, []);
 
   const migrateLocalStorageToMongoDB = async (userId) => {
     if (!userId) return;
 
-    let migrationPromises = [];
+    const migrationPromises = [];
 
     for (const key in TYPE_MAP) {
       const localData = localStorage.getItem(`animeData_${key}`);
       if (localData) {
-        const animeList = JSON.parse(localData);
+        try {
+          const animeList = JSON.parse(localData);
+          const typeLabel = TYPE_MAP[key];
 
-        // Convert key (number) to type label
-        const typeLabel = TYPE_MAP[key];
+          const uploadPromises = animeList.map((anime) =>
+            fetch("/api/watchlist", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ ...anime, type: typeLabel, userId }),
+            })
+          );
 
-        const uploadPromises = animeList.map((anime) =>
-          fetch("/api/watchlist", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              anime: { ...anime, type: typeLabel, userId },
-            }),
-          })
-        );
-
-        migrationPromises.push(Promise.all(uploadPromises));
-
-        // Remove localStorage after migration completes
-        Promise.all(uploadPromises).then(() =>
-          localStorage.removeItem(`animeData_${key}`)
-        );
+          await Promise.all(uploadPromises);
+          localStorage.removeItem(`animeData_${key}`);
+        } catch (error) {
+          console.error("Error migrating data for type", typeLabel, error);
+        }
       }
     }
-
-    await Promise.all(migrationPromises);
   };
 
   const currentPage = parseInt(page) || 1;
@@ -105,22 +115,8 @@ const WatchList = ({ type, ipage }) => {
   } else {
     useArr = [currentPage - 1, currentPage, currentPage + 1];
   }
-  const getOptionName = (type) => {
-    switch (type) {
-      case "1":
-        return "Watching";
-      case "2":
-        return "On-Hold";
-      case "3":
-        return "Plan to Watch";
-      case "4":
-        return "Dropped";
-      case "5":
-        return "Completed";
-      default:
-        return "All";
-    }
-  };
+
+  const getOptionName = (type) => TYPE_MAP[type] || "All";
 
   return (
     <div className="alltio">
@@ -157,22 +153,13 @@ const WatchList = ({ type, ipage }) => {
         <div className="drd-col">
           <div className="darg d-flex a-center j-center">
             {data?.length > 0 ? (
-              data?.map((anime, idx) => (
-                <Card
-                  key={anime?.id}
-                  data={anime}
-                  delay={idx * 0.05}
-                  itsMe={"true"}
-                />
+              data.map((anime, idx) => (
+                <Card key={anime?.id} data={anime} delay={idx * 0.05} itsMe="true" />
               ))
             ) : (
               <div className="EmLi">
-                <div className="listEmp">
-                  {getOptionName(type)} list is empty
-                </div>
-                <div className="adviso">
-                  {"<^ Add some animes to the list ^>"}
-                </div>
+                <div className="listEmp">{getOptionName(type)} list is empty</div>
+                <div className="adviso">{"<^ Add some animes to the list ^>"}</div>
                 <div className="flex adviso-1">
                   <div>\__---</div>
                   <div className="adviso">/\/\/\/\/\/\</div>
@@ -189,19 +176,13 @@ const WatchList = ({ type, ipage }) => {
           {currentPage > 1 && (
             <>
               <Link
-                href={
-                  type ? `/user/watch-list?type=${type}` : `/user/watch-list`
-                }
+                href={type ? `/user/watch-list?type=${type}` : `/user/watch-list`}
                 className="pagin-tile"
               >
                 <FaAngleDoubleLeft />
               </Link>
               <Link
-                href={
-                  type
-                    ? `/user/watch-list?type=${type}&page=${currentPage - 1}`
-                    : `/user/watch-list?page=${currentPage - 1}`
-                }
+                href={type ? `/user/watch-list?type=${type}&page=${currentPage - 1}` : `/user/watch-list?page=${currentPage - 1}`}
                 className="pagin-tile"
               >
                 <FaAngleLeft />
@@ -212,15 +193,7 @@ const WatchList = ({ type, ipage }) => {
           {useArr.map((ii) => (
             <Link
               key={ii}
-              href={
-                type
-                  ? ii === 1
-                    ? `/user/watch-list?type=${type}`
-                    : `/user/watch-list?type=${type}&page=${ii}`
-                  : ii === 1
-                  ? `/user/watch-list`
-                  : `/user/watch-list?page=${ii}`
-              }
+              href={type ? `/user/watch-list?type=${type}&page=${ii}` : `/user/watch-list?page=${ii}`}
               className={`pagin-tile ${ii === currentPage ? "pagin-colo" : ""}`}
             >
               {ii}
@@ -230,21 +203,13 @@ const WatchList = ({ type, ipage }) => {
           {currentPage < totalPages && (
             <>
               <Link
-                href={
-                  type
-                    ? `/user/watch-list?type=${type}&page=${currentPage + 1}`
-                    : `/user/watch-list?page=${currentPage + 1}`
-                }
+                href={type ? `/user/watch-list?type=${type}&page=${currentPage + 1}` : `/user/watch-list?page=${currentPage + 1}`}
                 className="pagin-tile"
               >
                 <FaAngleRight />
               </Link>
               <Link
-                href={
-                  type
-                    ? `/user/watch-list?type=${type}&page=${totalPages}`
-                    : `/user/watch-list?page=${totalPages}`
-                }
+                href={type ? `/user/watch-list?type=${type}&page=${totalPages}` : `/user/watch-list?page=${totalPages}`}
                 className="pagin-tile"
               >
                 <FaAngleDoubleRight />
