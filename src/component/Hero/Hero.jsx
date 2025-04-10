@@ -34,7 +34,6 @@ function transformURL(originalURL) {
   return `https://img.flawlessfiles.com/_r/300x400/100/${part1}/${part2}/${id}/${id}.jpg`;
 }
 
-
 export default function Hero({ trendingAnime, existingAnime, selectL }) {
   const [localStorageData, setLocalStorageData] = useState({});
 
@@ -117,7 +116,7 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
                 </div>
                 <p className="description">{removeHtmlTags(description)}</p>
                 <div className="anime-statistic">
-                  {existingAnime[idx].Genres.map((genre, index) => (
+                  {existingAnime[idx]?.Genres?.map((genre, index) => (
                     <span key={index} className="anime-st-item genre-item">
                       {genre}
                     </span>
@@ -144,7 +143,7 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
                 <img
                   src={
                     // existingAnime[idx].poster ||
-                    transformURL(existingAnime[idx].poster)
+                    transformURL(existingAnime[idx]?.poster)
                   }
                   alt={anime.title}
                 />
@@ -162,7 +161,7 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
               className="carousel-img afteri"
               src={
                 // existingAnime[idx].poster ||
-                transformURL(existingAnime[idx].poster)
+                transformURL(existingAnime[idx]?.poster)
               }
               alt={title}
             />
