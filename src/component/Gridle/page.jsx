@@ -11,6 +11,7 @@ import Navbar from "../Navbar/Navbar";
 import Profilo from "../Profilo/Profilo";
 import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import Footer from "../Footer/Footer";
+import { usePathname } from "next/navigation";
 export default function GenreSidebar(props) {
   const [selectL, setSelectL] = useState("en");
   const [profiIsOpen, setProfiIsOpen] = useState(false);
@@ -31,6 +32,9 @@ export default function GenreSidebar(props) {
       }, [20000]);
     }
   };
+
+    const pathname = usePathname();
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       const adContainer = document.getElementById("ad-container");

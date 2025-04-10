@@ -156,7 +156,7 @@ export default function Details(props) {
   const [descIsCollapsed, setDescIsCollapsed] = useState(true);
   const genre = gnt?.animeInfo?.Genres?.map((genre) => {
     return (
-      <Link 
+      <Link
         className="genre-button"
         key={genre}
         href={`/genre?id=${genre}&name=${genre}`}
@@ -188,7 +188,7 @@ export default function Details(props) {
     }
   };
 
-    const pathname = usePathname();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
