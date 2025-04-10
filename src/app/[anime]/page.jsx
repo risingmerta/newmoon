@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   const idToCheck = param.anime;
 
   const mongoUri =
-    "mongodb://root:Imperial_king2004@145.223.118.168:27017/?authSource=admin";
+    "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
   const dbName = "mydatabase";
   const homeCollectionName = "animoon-home";
   const animeCollectionName = "animeInfo";
@@ -96,7 +96,7 @@ export default async function Page({ params }) {
   const idToCheck = param.anime;
 
   const mongoUri =
-    "mongodb://root:Imperial_king2004@145.223.118.168:27017/?authSource=admin";
+    "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
   const dbName = "mydatabase";
   const homeCollectionName = "animoon-home";
   const animeCollectionName = "animeInfo";

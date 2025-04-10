@@ -1,26 +1,20 @@
-export async function GET(req) {
-  const { headers } = req;
-  const host = headers.get("host"); // Get the current domain dynamically
+export async function GET() {
+  const baseUrl = process.env.BASE_URL;
+
+  const sitemaps = Array.from({ length: 10 }, (_, i) => 
+    `Sitemap: ${baseUrl}/api/anime/sitemap${i + 1}`
+  ).join("\n");
 
   const robotsTxt = `
-  User-agent: *
-  Allow: /
-  Disallow: /sign-in
-  Disallow: /sign-up
-  Disallow: /random
-  
-  Sitemap: https://${host}/api/anime/sitemap
-  Sitemap: https://${host}/api/anime/sitemap1
-  Sitemap: https://${host}/api/anime/sitemap2
-  Sitemap: https://${host}/api/anime/sitemap3
-  Sitemap: https://${host}/api/anime/sitemap4
-  Sitemap: https://${host}/api/anime/sitemap5
-  Sitemap: https://${host}/api/anime/sitemap6
-  Sitemap: https://${host}/api/anime/sitemap7
-  Sitemap: https://${host}/api/anime/sitemap8
-  Sitemap: https://${host}/api/anime/sitemap9
-  Sitemap: https://${host}/api/anime/sitemap10
-    `;
+User-agent: *
+Allow: /
+Disallow: /sign-in
+Disallow: /sign-up
+Disallow: /random
+
+Sitemap: ${baseUrl}/api/anime/sitemap
+${sitemaps}
+  `.trim();
 
   return new Response(robotsTxt, {
     headers: {

@@ -13,7 +13,7 @@ export default async function page({ params, searchParams }) {
   const param = await params;
 
   const mongoUri =
-    "mongodb://root:Imperial_king2004@145.223.118.168:27017/?authSource=admin";
+    "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
   const dbName = "mydatabase"; // Change the database name as needed
   const client = new MongoClient(mongoUri);
   await client.connect();
