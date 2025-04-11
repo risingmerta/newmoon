@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
 
     let datao = "";
 
-    if (!existingAnime?.info?.results?.data) {
+    if (!existingAnime) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
@@ -61,6 +61,34 @@ export async function generateMetadata({ params }) {
         datao = dat;
       }
     }
+
+    if (!existingAnime?.info?.results?.data) {
+      const res = await fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`);
+      const dat = await res.json();
+    
+      const rest = await fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`);
+      const epis = await rest.json();
+    
+      if (
+        dat?.results?.data?.title &&
+        Array.isArray(epis?.results?.episodes) &&
+        epis.results.episodes.length > 0
+      ) {
+        await animeCollection.updateOne(
+          { _id: idToCheck },
+          {
+            $set: {
+              info: dat,
+              episodes: epis,
+            },
+          },
+          { upsert: true }
+        );
+    
+        datao = dat;
+      }
+    }
+    
 
     const title = existingAnime?.info
       ? existingAnime?.info?.results?.data?.title
@@ -117,7 +145,7 @@ export default async function page({ params, searchParams }) {
   // );
   data = existingAnime?.episodes;
 
-  if (!existingAnime?.info?.results?.data || !existingAnime?.episodes) {
+  if (!existingAnime) {
     const res = await fetch(
       `https://vimal.animoon.me/api/info?id=${idToCheck}`
     );
@@ -142,6 +170,34 @@ export default async function page({ params, searchParams }) {
       data = epis;
     }
   }
+
+  if (!existingAnime?.info?.results?.data) {
+    const res = await fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`);
+    const dat = await res.json();
+  
+    const rest = await fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`);
+    const epis = await rest.json();
+  
+    if (
+      dat?.results?.data?.title &&
+      Array.isArray(epis?.results?.episodes) &&
+      epis.results.episodes.length > 0
+    ) {
+      await animeCollection.updateOne(
+        { _id: idToCheck },
+        {
+          $set: {
+            info: dat,
+            episodes: epis,
+          },
+        },
+        { upsert: true }
+      );
+  
+      datao = dat;
+    }
+  }
+  
 
   // Determine the episode ID
   const epId = episodeIdParam || data?.results?.episodes[0]?.id;

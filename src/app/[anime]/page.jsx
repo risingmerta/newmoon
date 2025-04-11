@@ -133,7 +133,7 @@ export default async function Page({ params }) {
     // Check if anime from spotlights exists in the animeInfo collection
     const animeCollection = db.collection(animeCollectionName.trim());
     existingAnime = await animeCollection.findOne({ _id: idToCheck });
-    if (!existingAnime?.info?.results?.data) {
+    if (!existingAnime) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
@@ -157,6 +157,34 @@ export default async function Page({ params }) {
         });
       }
     }
+
+    if (!existingAnime?.info?.results?.data) {
+      const res = await fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`);
+      const dat = await res.json();
+    
+      const rest = await fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`);
+      const epis = await rest.json();
+    
+      if (
+        dat?.results?.data?.title &&
+        Array.isArray(epis?.results?.episodes) &&
+        epis.results.episodes.length > 0
+      ) {
+        await animeCollection.updateOne(
+          { _id: idToCheck },
+          {
+            $set: {
+              info: dat,
+              episodes: epis,
+            },
+          },
+          { upsert: true }
+        );
+    
+        existingAnime = dat;
+      }
+    }
+    
   } catch (error) {
     console.error("Error fetching data from MongoDB or API:", error.message);
   } finally {
