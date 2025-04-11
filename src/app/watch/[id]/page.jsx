@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
 
     let datao = "";
 
-    if (!existingAnime) {
+    if (!existingAnime?.info) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
@@ -62,7 +62,7 @@ export async function generateMetadata({ params }) {
       }
     }
 
-    const title = existingAnime
+    const title = existingAnime?.info
       ? existingAnime?.info?.results?.data?.title
       : datao?.results?.data?.title;
 
@@ -89,7 +89,7 @@ export default async function page({ params, searchParams }) {
   await client.connect();
   const db = client.db(dbName);
   const episodesCollection = db.collection("epi");
-  const epiColl = db.collection("episo")
+  const epiColl = db.collection("episo");
   const animeCollection = db.collection("animeInfo");
   const searchParam = await searchParams;
   const epis = searchParam.ep;
@@ -108,16 +108,16 @@ export default async function page({ params, searchParams }) {
   //   `https://hianimes.animoon.me/anime/info?id=${param.id}`,
   //   18000 // Revalidate after 5 hours
   // );
-  datao = existingAnime.info;
+  datao = existingAnime?.info;
   // Fetch episodes with force-cache and revalidation
   let data;
   // = await fetchDataFromAPI(
   //   `https://hianimes.animoon.me/anime/episodes/${param.id}`,
   //   3600 // Revalidate after 1 hour
   // );
-  data = existingAnime.episodes;
+  data = existingAnime?.episodes;
 
-  if (!existingAnime) {
+  if (!existingAnime?.info || !existingAnime?.episodes) {
     const res = await fetch(
       `https://vimal.animoon.me/api/info?id=${idToCheck}`
     );

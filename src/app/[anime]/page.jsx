@@ -46,8 +46,8 @@ export async function generateMetadata({ params }) {
     // Check if anime from spotlights exists in the animeInfo collection
     const animeCollection = db.collection(animeCollectionName.trim());
     existingAnime = await animeCollection.findOne({ _id: idToCheck });
-    
-    if (!existingAnime) {
+
+    if (!existingAnime?.info) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
@@ -77,14 +77,16 @@ export async function generateMetadata({ params }) {
     await client.close();
     console.log("MongoDB connection closed");
   }
-  if (!existingAnime || !existingAnime?.info?.results?.data?.title) {
-    return {
-      title: "Anime not found - Animoon",
-      description: "The requested anime could not be found.",
-    };
-  }
+  // if (!existingAnime || !existingAnime?.info?.results?.data?.title) {
+  //   return {
+  //     title: "Anime not found - Animoon",
+  //     description: "The requested anime could not be found.",
+  //   };
+  // }
 
-  const title = existingAnime ? existingAnime?.info?.results?.data?.title : datao?.results?.data?.title;
+  const title = existingAnime?.info
+    ? existingAnime?.info?.results?.data?.title
+    : datao?.results?.data?.title;
   return {
     title: `Watch ${title} English Sub/Dub online free on Animoon.me`,
     description: `Animoon is the best site to watch ${title} SUB online, or you can even watch ${title} DUB in HD quality. You can also watch underrated anime on Animoon.`,
@@ -131,7 +133,7 @@ export default async function Page({ params }) {
     // Check if anime from spotlights exists in the animeInfo collection
     const animeCollection = db.collection(animeCollectionName.trim());
     existingAnime = await animeCollection.findOne({ _id: idToCheck });
-    if (!existingAnime) {
+    if (!existingAnime?.info) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
@@ -169,9 +171,9 @@ export default async function Page({ params }) {
   return (
     <div>
       <Script
-          strategy="afterInteractive"
-          src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
-        />
+        strategy="afterInteractive"
+        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
+      />
       <RecommendedTopTen
         uiui={existingAnime}
         data={data}
@@ -179,7 +181,7 @@ export default async function Page({ params }) {
         arise={arise}
         id={idToCheck}
       />
-      <Advertize/>
+      <Advertize />
     </div>
   );
 }
