@@ -96,7 +96,7 @@ export default async function Page({ params }) {
   const idToCheck = param.anime;
 
   const mongoUri =
-    "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
+    "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
   const dbName = "mydatabase";
   const homeCollectionName = "animoon-home";
   const animeCollectionName = "animeInfo";
