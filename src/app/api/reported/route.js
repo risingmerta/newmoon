@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 const mongoUri =
-  "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
+  "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
 const dbName = "mydatabase";
 
 export async function GET(req) {

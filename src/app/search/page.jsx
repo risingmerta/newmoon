@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
 export default async function page({ searchParams }) {
   const searchParam = await searchParams;
   const mongoUri =
-    "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
+    "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
   const dbName = "mydatabase";
   const homeCollectionName = "animoon-home";
 

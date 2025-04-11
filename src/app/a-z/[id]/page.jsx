@@ -24,7 +24,7 @@ export default async function page({ params, searchParams }) {
   const cacheMaxAge = 345600; // 4 days in seconds
 
   const mongoUri =
-    "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
+    "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
   const dbName = "mydatabase";
   const azCollectionName = searchParam.sort
     ? "az-list_" + searchParam.sort.toString().toLowerCase()
