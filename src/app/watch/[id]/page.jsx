@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
 
     let datao = "";
 
-    if (!existingAnime?.info) {
+    if (!existingAnime?.info?.results?.data) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
@@ -117,7 +117,7 @@ export default async function page({ params, searchParams }) {
   // );
   data = existingAnime?.episodes;
 
-  if (!existingAnime?.info || !existingAnime?.episodes) {
+  if (!existingAnime?.info?.results?.data || !existingAnime?.episodes) {
     const res = await fetch(
       `https://vimal.animoon.me/api/info?id=${idToCheck}`
     );

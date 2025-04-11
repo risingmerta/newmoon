@@ -47,7 +47,7 @@ export async function generateMetadata({ params }) {
     const animeCollection = db.collection(animeCollectionName.trim());
     existingAnime = await animeCollection.findOne({ _id: idToCheck });
 
-    if (!existingAnime?.info) {
+    if (!existingAnime?.info?.results?.data) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }) {
     await client.close();
     console.log("MongoDB connection closed");
   }
-  // if (!existingAnime || !existingAnime?.info?.results?.data?.title) {
+  // if (!existingAnime || !existingAnime?.info?.results?.data?.results?.data?.title) {
   //   return {
   //     title: "Anime not found - Animoon",
   //     description: "The requested anime could not be found.",
@@ -133,11 +133,12 @@ export default async function Page({ params }) {
     // Check if anime from spotlights exists in the animeInfo collection
     const animeCollection = db.collection(animeCollectionName.trim());
     existingAnime = await animeCollection.findOne({ _id: idToCheck });
-    if (!existingAnime?.info) {
+    if (!existingAnime?.info?.results?.data) {
       const res = await fetch(
         `https://vimal.animoon.me/api/info?id=${idToCheck}`
       );
       const dat = await res.json();
+      existingAnime = dat;
 
       const rest = await fetch(
         `https://vimal.animoon.me/api/episodes/${idToCheck}`
