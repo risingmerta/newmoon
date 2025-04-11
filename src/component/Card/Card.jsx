@@ -126,7 +126,7 @@ export default function Card({
               </span>
             ) : null}
           </div>
-          <img src={transformURL(data.poster)} alt="anime-card" className="anime-card-img" />
+          <img src={data.poster} alt="anime-card" className="anime-card-img" />
         </div>
         <div className="card-details">
           <span className="card-title">

@@ -214,7 +214,7 @@ export default function Details(props) {
           <div className="details-header-primary">
             <img
               className="details-container-background"
-              src={transformURL(gnt?.poster)}
+              src={gnt?.poster}
               alt="pop"
               isAnimated={false}
             />
@@ -223,7 +223,7 @@ export default function Details(props) {
                 <div className="anime-image-wrapper">
                   <img
                     className="anime-details-poster"
-                    src={transformURL(gnt?.poster)}
+                    src={gnt?.poster}
                     alt="pop"
                   />
                 </div>

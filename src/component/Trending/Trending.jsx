@@ -55,7 +55,7 @@ export default function Trending(props) {
             }`}
             prefetch
           >
-            <img src={transformURL(el.poster)} className="trending-slide-img" alt={title} />
+            <img src={el.poster} className="trending-slide-img" alt={title} />
           </Link>
         </div>
       </SwiperSlide>

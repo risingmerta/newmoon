@@ -143,7 +143,7 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
                 <img
                   src={
                     // existingAnime[idx].poster ||
-                    transformURL(existingAnime[idx]?.poster)
+                    existingAnime[idx]?.poster
                   }
                   alt={anime.title}
                 />
@@ -153,7 +153,7 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
               className="carousel-img previ"
               src={
                 // anime.poster ||
-                transformURL(anime.poster)
+                anime.poster
               }
               alt={title}
             />
@@ -161,7 +161,7 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
               className="carousel-img afteri"
               src={
                 // existingAnime[idx].poster ||
-                transformURL(existingAnime[idx]?.poster)
+                existingAnime[idx]?.poster
               }
               alt={title}
             />

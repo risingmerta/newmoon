@@ -27,7 +27,7 @@ export default function ContentList(props) {
     return (
       <li key={el.id} className="d-flex a-center">
         <Link href={`/${el.id}`}>
-          <img src={transformURL(el.poster)} alt={title} isAnimated={false} />
+          <img src={el.poster} alt={title} isAnimated={false} />
         </Link>
 
         <div className="anime-details d-flex-fd-column">

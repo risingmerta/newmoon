@@ -49,7 +49,7 @@ export default function TopTenAnime(props) {
           {el.number}
         </span>
         <div className="top-10-item d-flex a-center">
-          <img src={transformURL(el.poster)} alt="poster" />
+          <img src={el.poster} alt="poster" />
           <div className="anime-details d-flex-fd-column">
             <span className="title">
               <Link

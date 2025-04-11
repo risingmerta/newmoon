@@ -696,7 +696,7 @@ export default function WatchAnime(props) {
               <div className="d-flex new-con">
                 <img
                   className="watch-container-background"
-                  src={transformURL(props.datao.results.data.poster)}
+                  src={props.datao.results.data.poster}
                   alt="pop"
                 />
                 <div className="media-center d-flex">
@@ -831,10 +831,10 @@ export default function WatchAnime(props) {
                           selectedServer={selectedServer}
                           onn1={onn1}
                           onn2={onn2}
-                          onn3={onn3} 
+                          onn3={onn3}
                           getData={getData}
                           currIdx={currIdx}
-                          err={err} 
+                          err={err}
                           subtitles={subtitles}
                           introd={introd}
                           outrod={outrod}
@@ -1219,7 +1219,7 @@ export default function WatchAnime(props) {
                                     >
                                       <img
                                         className="seasonal-background"
-                                        src={transformURL(sea.season_poster)}
+                                        src={sea.season_poster}
                                         alt="pop"
                                       />
                                       {sea.season.length < 15
@@ -1241,13 +1241,13 @@ export default function WatchAnime(props) {
                 <div className="current-anime-details ">
                   <img
                     className="details-container-background"
-                    src={transformURL(props.datao.results.data.poster)}
+                    src={props.datao.results.data.poster}
                     alt="pop"
                   />
                   <div className="anime-details d-flex-fd-column">
                     <img
                       className="anime-details-poster"
-                      src={transformURL(props.datao.results.data.poster)}
+                      src={props.datao.results.data.poster}
                       alt="pop"
                     />
 
