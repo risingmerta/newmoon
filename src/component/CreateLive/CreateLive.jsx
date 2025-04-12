@@ -140,8 +140,8 @@ const CreateLive = (props) => {
       type: props.data?.results?.data.animeInfo.tvInfo.showType,
       duration: props.data?.results?.data.animeInfo.tvInfo.duration,
       description: props.data?.results?.data.animeInfo.Overview,
-      streams: props.streams,
       episodesList: props.episodes,
+      episodeId: props.episodeId,
       episodeNo: 1,
     };
 

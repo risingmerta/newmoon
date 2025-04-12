@@ -12,7 +12,7 @@ const WatchLive = (props) => {
           {props.animeId ? (
             <CreateLive
               data={props.data}
-              streams={props.streams}
+              episodeId={props.episodeId}
               episodes={props.episodes}
               id={props.animeId}
             />
