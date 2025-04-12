@@ -87,13 +87,16 @@ export default function WatchAnime(props) {
 
   const [subIsSelected, setSubIsSelected] = useState(() => {
     const isDubSelected = ls.getItem("subordub") === "false";
-    // Check if dub episodes exist in `props.datao`
+  
     const hasDubEpisodes = props.datao?.results.data.animeInfo.tvInfo.dub > 0;
-
-    // Check if dub data exists in `props.dataStr`
     const hasDubData = props.datajDub?.results;
-
-    // Return the initial state
+    const hasSubData = props.datajSub?.results;
+  
+    // If sub data is not available, force false (aka: dub)
+    if (!hasSubData) {
+      return false;
+    }
+  
     if (isDubSelected) {
       if (hasDubEpisodes && hasDubData) {
         return false;
@@ -104,6 +107,7 @@ export default function WatchAnime(props) {
       return true;
     }
   });
+  
 
   const [selectedServer, setSelectedServer] = useState(0);
   const [bhaiLink, setBhaiLink] = useState(() => {
@@ -303,26 +307,24 @@ export default function WatchAnime(props) {
 
   useEffect(() => {
     setSubIsSelected(() => {
+      // If subtitle data is not available, force dub selection
+      if (!props.datajSub) return false;
+  
       const isDubSelected = ls.getItem("subordub") === "false";
-      // Check if dub episodes exist in `props.datao`
+  
       const hasDubEpisodes =
         props.datao?.results.data.animeInfo.tvInfo?.dub > 0;
-
-      // Check if dub data exists in `props.dataStr`
-      const hasDubData = props.datajDub.results;
-
-      // Return the initial state
+  
+      const hasDubData = props.datajDub?.results;
+  
       if (isDubSelected) {
-        if (hasDubEpisodes && hasDubData) {
-          return false;
-        } else {
-          return true;
-        }
+        return hasDubEpisodes && hasDubData ? false : true;
       } else {
         return true;
       }
     });
-  }, [props.datao]);
+  }, [props.datao, props.datajSub, props.datajDub]);
+  
 
   const [epNumb, setEpNumb] = useState(epiod);
   const backward = () => {
@@ -454,20 +456,20 @@ export default function WatchAnime(props) {
             props.datao?.results.data.animeInfo.tvInfo?.dub > 0;
 
           // Check if dub data exists in `props.dataStr`
-          const hasDubData = props.datajDub.results;
+          const hasDubData = props.datajDub?.results;
 
           // Handle Dub selection
           if (isDubSelected) {
             if (hasDubEpisodes && hasDubData) {
               // Check if there's a dub available in props.dataj
-              const dubLink = props.datajDub.results?.streamingLink.link?.file;
+              const dubLink = props.datajDub?.results?.streamingLink.link?.file;
 
               // If not found in dataj, fallback to gogoDub
               if (dubLink) {
                 return dubLink;
               }
             } else {
-              const subLink = props.datajSub.results?.streamingLink.link?.file;
+              const subLink = props.datajSub?.results?.streamingLink.link?.file;
 
               // If not found in dataj, fallback to gogoSub
               if (subLink) {
@@ -477,7 +479,7 @@ export default function WatchAnime(props) {
           }
           // Handle Sub/Raw selection
           else {
-            const subLink = props.datajSub.results?.streamingLink.link?.file;
+            const subLink = props.datajSub?.results?.streamingLink.link?.file;
 
             // If not found in dataj, fallback to gogoSub
             if (subLink) {
@@ -488,20 +490,20 @@ export default function WatchAnime(props) {
           // Default to an empty string if nothing is found
           return "";
         });
-        setSubtitles(props.datajSub.results?.streamingLink.tracks);
+        setSubtitles(props.datajSub?.results?.streamingLink.tracks);
         setIntrod(
           ls.getItem("subordub") === "false" &&
             // !Array.isArray(props.datajDub)) ||
-            props.datajDub.results
-            ? props.datajDub.results?.streamingLink.intro
-            : props.datajSub.results?.streamingLink.intro
+            props.datajDub?.results
+            ? props.datajDub?.results?.streamingLink.intro
+            : props.datajSub?.results?.streamingLink.intro
         );
         setOutrod(
           ls.getItem("subordub") === "false" &&
             // !Array.isArray(props.datajDub)) ||
-            props.datajDub.results
-            ? props.datajDub.results?.streamingLink.outro
-            : props.datajSub.results?.streamingLink.outro
+            props.datajDub?.results
+            ? props.datajDub?.results?.streamingLink.outro
+            : props.datajSub?.results?.streamingLink.outro
         );
       }
     }
@@ -816,7 +818,8 @@ export default function WatchAnime(props) {
                   </div>
                   <div className="video-player">
                     <div className="hls-container">
-                      {clickedId === props.epId && props.datajSub ? (
+                      {clickedId === props.epId &&
+                      (props.datajSub || props.datajDub) ? (
                         <ArtPlayer
                           data={props.data}
                           epId={props.epId}
@@ -1048,20 +1051,20 @@ export default function WatchAnime(props) {
                                           setSubIsSelected(true) &
                                           setServerName("Vidstreaming") &
                                           setBhaiLink(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.link.file
                                           ) &
                                           // setQuality("")
                                           setSubtitles(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.tracks
                                           ) &
                                           setIntrod(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.intro
                                           ) &
                                           setOutrod(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.outro
                                           )
                                         }
@@ -1081,21 +1084,21 @@ export default function WatchAnime(props) {
                                           setSubIsSelected(true) &
                                           setServerName("Vidcloud") &
                                           setBhaiLink(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.link.file
                                           ) &
                                           // setQuality("")
                                           setSubtitles(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.tracks
                                           ) &
                                           setCurrIdx(1) &
                                           setIntrod(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.intro
                                           ) &
                                           setOutrod(
-                                            props.datajSub.results
+                                            props.datajSub?.results
                                               ?.streamingLink.outro
                                           )
                                         }
@@ -1131,21 +1134,21 @@ export default function WatchAnime(props) {
                                             setSubIsSelected(false) &
                                             setServerName("Vidstreaming") &
                                             setBhaiLink(
-                                              props.datajDub.results
+                                              props.datajDub?.results
                                                 ?.streamingLink.link.file
                                             ) &
                                             // setQuality("")
 
                                             setSubtitles(
-                                              props.datajSub.results
+                                              props.datajSub?.results
                                                 ?.streamingLink.tracks
                                             ) &
                                             setIntrod(
-                                              props.datajDub.results
+                                              props.datajDub?.results
                                                 ?.streamingLink.intro
                                             ) &
                                             setOutrod(
-                                              props.datajDub.results
+                                              props.datajDub?.results
                                                 ?.streamingLink.outro
                                             )
                                           }
@@ -1165,21 +1168,21 @@ export default function WatchAnime(props) {
                                             setSubIsSelected(false) &
                                             setServerName("Vidcloud") &
                                             setBhaiLink(
-                                              props.datajDub.results
+                                              props.datajDub?.results
                                                 ?.streamingLink.link.file
                                             ) &
                                             // setQuality("")
                                             setCurrIdx(1) &
                                             setSubtitles(
-                                              props.datajSub.results
+                                              props.datajSub?.results
                                                 ?.streamingLink.tracks
                                             ) &
                                             setIntrod(
-                                              props.datajDub.results
+                                              props.datajDub?.results
                                                 ?.streamingLink.intro
                                             ) &
                                             setOutrod(
-                                              props.datajDub.results
+                                              props.datajDub?.results
                                                 ?.streamingLink.outro
                                             )
                                           }
