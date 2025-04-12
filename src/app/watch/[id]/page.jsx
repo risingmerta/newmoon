@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
   const param = await params;
   try {
     const mongoUri =
-      "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
+      "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
     const dbName = "mydatabase"; // Change the database name as needed
     const client = new MongoClient(mongoUri);
     await client.connect();
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }) {
 // Main page component
 export default async function page({ params, searchParams }) {
   const mongoUri =
-    "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
+    "mongodb://adminUser:adminPass123@69.62.64.106:27017/kaoriDB?authSource=admin";
   const dbName = "mydatabase"; // Change the database name as needed
   const client = new MongoClient(mongoUri);
   await client.connect();

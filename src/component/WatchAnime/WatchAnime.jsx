@@ -91,7 +91,7 @@ export default function WatchAnime(props) {
     const hasDubEpisodes = props.datao?.results.data.animeInfo.tvInfo.dub > 0;
 
     // Check if dub data exists in `props.dataStr`
-    const hasDubData = props.datajDub.results;
+    const hasDubData = props.datajDub?.results;
 
     // Return the initial state
     if (isDubSelected) {
@@ -114,20 +114,20 @@ export default function WatchAnime(props) {
     const hasDubEpisodes = props.datao?.results.data.animeInfo.tvInfo.dub > 0;
 
     // Check if dub data exists in `props.dataStr`
-    const hasDubData = props.datajDub.results;
+    const hasDubData = props.datajDub?.results;
 
     // Handle Dub selection
     if (isDubSelected) {
       if (hasDubEpisodes && hasDubData) {
         // Check if there's a dub available in props.dataj
-        const dubLink = props.datajDub.results?.streamingLink.link?.file;
+        const dubLink = props.datajDub?.results?.streamingLink.link?.file;
 
         // If not found in dataj, fallback to gogoDub
         if (dubLink) {
           return dubLink;
         }
       } else {
-        const subLink = props.datajSub.results?.streamingLink.link?.file;
+        const subLink = props.datajSub?.results?.streamingLink.link?.file;
 
         // If not found in dataj, fallback to gogoSub
         if (subLink) {
@@ -137,7 +137,7 @@ export default function WatchAnime(props) {
     }
     // Handle Sub/Raw selection
     else {
-      const subLink = props.datajSub.results?.streamingLink.link?.file;
+      const subLink = props.datajSub?.results?.streamingLink.link?.file;
 
       // If not found in dataj, fallback to gogoSub
       if (subLink) {
@@ -150,17 +150,17 @@ export default function WatchAnime(props) {
   });
 
   const [introd, setIntrod] = useState(
-    ls.getItem("subordub") === "false" && props.datajDub.results
-      ? props.datajDub.results?.streamingLink.intro
-      : props.datajSub.results?.streamingLink.intro
+    ls.getItem("subordub") === "false" && props.datajDub?.results
+      ? props.datajDub?.results?.streamingLink.intro
+      : props.datajSub?.results?.streamingLink.intro
   );
   const [outrod, setOutrod] = useState(
-    ls.getItem("subordub") === "false" && props.datajDub.results
-      ? props.datajDub.results?.streamingLink.outro
-      : props.datajSub.results?.streamingLink.outro
+    ls.getItem("subordub") === "false" && props.datajDub?.results
+      ? props.datajDub?.results?.streamingLink.outro
+      : props.datajSub?.results?.streamingLink.outro
   );
   const [subtitles, setSubtitles] = useState(
-    props.datajSub.results?.streamingLink.tracks
+    props.datajSub?.results?.streamingLink.tracks
   );
   const [onn1, setOnn1] = useState(
     ls.getItem("Onn1") ? ls.getItem("Onn1") : "Off"
