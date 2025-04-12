@@ -48,29 +48,7 @@ export async function generateMetadata({ params }) {
       );
       const dat = await res.json();
 
-      const rest = await fetch(
-        `https://vimal.animoon.me/api/episodes/${idToCheck}`
-      );
-      const epis = await rest.json();
-
-      if (
-        dat?.results?.data?.title &&
-        Array.isArray(epis?.results?.episodes) &&
-        epis.results.episodes.length > 0
-      ) {
-        await animeCollection.updateOne(
-          { _id: idToCheck },
-          {
-            $set: {
-              info: dat,
-              episodes: epis,
-            },
-          },
-          { upsert: true }
-        );
-
-        datao = dat;
-      }
+      datao = dat;
     }
 
     const title = existingAnime?.info
@@ -117,7 +95,7 @@ export default async function page({ params, searchParams }) {
   if (
     !existingAnime?.info?.results?.data ||
     !Array.isArray(existingAnime?.episodes?.results?.episodes) ||
-    existingAnime.episodes.results.episodes.length === 0
+    existingAnime?.episodes?.results?.episodes?.length === 0
   ) {
     const res = await fetch(
       `https://vimal.animoon.me/api/info?id=${idToCheck}`
@@ -132,7 +110,7 @@ export default async function page({ params, searchParams }) {
     if (
       dat?.results?.data?.title &&
       Array.isArray(epis?.results?.episodes) &&
-      epis.results.episodes.length > 0
+      epis?.results?.episodes?.length > 0
     ) {
       await animeCollection.updateOne(
         { _id: idToCheck },
