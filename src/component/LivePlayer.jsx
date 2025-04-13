@@ -254,7 +254,7 @@ function ArtPlayer(props) {
     const art = new Artplayer({
       title: "hahahaha",
       container: ".artplayer-app",
-      url: finalUrl,
+      url: props.bhaiLink,
       type: "m3u8",
       // quality: qualities?.length > 0 ? qualities : [],
       plugins: [
@@ -558,31 +558,31 @@ function ArtPlayer(props) {
         clearTimeout(loadingTimeout); // Clear the timeout if the video starts playing
       });
 
-      if (props.currIdx) {
-        // Video is still not ready to play
-        console.log("Switching URL due to excessive loading time");
-        const newUrl = getUpdatedUrl();
-        console.log("Switching to new URL:", newUrl);
+      // if (props.currIdx) {
+      //   // Video is still not ready to play
+      //   console.log("Switching URL due to excessive loading time");
+      //   const newUrl = getUpdatedUrl();
+      //   console.log("Switching to new URL:", newUrl);
 
-        finalUrl = newUrl; // Update final URL
-        art.switchUrl(newUrl); // Switch Artplayer URL
-      }
+      //   finalUrl = newUrl; // Update final URL
+      //   art.switchUrl(newUrl); // Switch Artplayer URL
+      // }
 
-      art.on("loading", (state) => {
-        console.log("duration", art.duration);
+      // art.on("loading", (state) => {
+      //   console.log("duration", art.duration);
 
-        setTimeout(() => {
-          if (art.duration === 0) {
-            // Video is still not ready to play
-            console.log("Switching URL due to excessive loading time");
-            const newUrl = getUpdatedUrl();
-            console.log("Switching to new URL:", newUrl);
+      //   setTimeout(() => {
+      //     if (art.duration === 0) {
+      //       // Video is still not ready to play
+      //       console.log("Switching URL due to excessive loading time");
+      //       const newUrl = getUpdatedUrl();
+      //       console.log("Switching to new URL:", newUrl);
 
-            finalUrl = newUrl; // Update final URL
-            art.switchUrl(newUrl); // Switch Artplayer URL
-          }
-        }, 5000);
-      });
+      //       finalUrl = newUrl; // Update final URL
+      //       art.switchUrl(newUrl); // Switch Artplayer URL
+      //     }
+      //   }, 5000);
+      // });
 
       // Clear the effect when the video becomes ready
       art.on("video:canplay", () => {
@@ -590,29 +590,29 @@ function ArtPlayer(props) {
       });
 
       // Listen for the 'error' event in case of any playback errors
-      art.on("error", (event) => {
-        console.error("Error detected:", event);
+      // art.on("error", (event) => {
+      //   console.error("Error detected:", event);
 
-        if (currentPrefixIndex < prefixes.length) {
-          currentPrefixIndex++;
-          const newUrl = getUpdatedUrl();
-          console.log("Switching to new URL:", newUrl);
+      //   if (currentPrefixIndex < prefixes.length) {
+      //     currentPrefixIndex++;
+      //     const newUrl = getUpdatedUrl();
+      //     console.log("Switching to new URL:", newUrl);
 
-          finalUrl = newUrl; // Update final URL
-          art.switchUrl(newUrl); // Switch Artplayer URL
+      //     finalUrl = newUrl; // Update final URL
+      //     art.switchUrl(newUrl); // Switch Artplayer URL
 
-          // Retry playback
-          setTimeout(() => {
-            art
-              .play()
-              .catch((err) =>
-                console.error("Playback failed after switching URL:", err)
-              );
-          }, 500);
-        } else {
-          console.error("No more prefixes to try. Playback failed.");
-        }
-      });
+      //     // Retry playback
+      //     setTimeout(() => {
+      //       art
+      //         .play()
+      //         .catch((err) =>
+      //           console.error("Playback failed after switching URL:", err)
+      //         );
+      //     }, 500);
+      //   } else {
+      //     console.error("No more prefixes to try. Playback failed.");
+      //   }
+      // });
     }
 
     return () => {

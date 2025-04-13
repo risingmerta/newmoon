@@ -32,16 +32,65 @@ export async function POST(req) {
     }
 
     // Fetch episode streams
-    const existingEpisode = await episodesCollection.findOne({ _id: epId });
+    let dubTruth = "";
+    let datajDub = {};
+    let datajSub = {};
+    let raw = "";
 
-    if (!existingEpisode) {
-      return new Response(
-        JSON.stringify({ error: "Episode stream data not found" }),
-        { status: 404, headers: { "Content-Type": "application/json" } }
+    try {
+      const res = await fetch(
+        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
       );
+      const strdat = await res.json();
+      datajDub = strdat;
+    } catch (error) {
+      console.error("Error fetching dub stream data: ", error);
+      datajDub = [];
     }
 
-    const streams = existingEpisode.streams || []; // Ensure streams is an array
+    try {
+      const res = await fetch(
+        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
+      );
+      const strdat = await res.json();
+      datajSub = strdat;
+    } catch (error) {
+      console.error("Error fetching sub stream data: ", error);
+      datajSub = [];
+    }
+
+    if (!datajSub?.results?.streamingLink?.link?.file) {
+      try {
+        const res = await fetch(
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
+        );
+        const strdat = await res.json();
+        datajSub = strdat;
+        raw = "yes";
+      } catch (error) {
+        console.error("Error fetching raw stream data: ", error);
+      }
+    }
+
+    // Ensure streams array exists
+    const streams = [];
+
+    // Push data into streams
+    if (datajDub?.results?.streamingLink?.link?.file) {
+      streams.push({
+        type: "dub",
+        data: datajDub,
+      });
+    }
+
+    if (datajSub?.results?.streamingLink?.link?.file) {
+      streams.push({
+        type: raw === "yes" ? "raw" : "sub",
+        data: datajSub,
+      });
+    }
+
+    // Optionally assign back to existingEpisode
 
     // Check if a room with the same id already exists
     const existingRoom = await liveRoomsCollection.findOne({ id });
@@ -50,18 +99,17 @@ export async function POST(req) {
       // Update only the specific fields instead of replacing the entire document
       await liveRoomsCollection.updateOne(
         { id },
-        { $set: { episodeNo: episodeNumber, streams } } // Only updates these fields
+        { $set: { episodeNo: episodeNumber, episodeId: epId } } // Only updates these fields
       );
 
       return new Response(
         JSON.stringify({
           message: "Room updated successfully",
-          updated: { id, epId, episodeNo: episodeNumber, streams },
+          updated: { id, epId, episodeNo: episodeNumber, episodeId: epId , streams},
         }),
         { status: 200, headers: { "Content-Type": "application/json" } }
       );
     }
-
   } catch (error) {
     console.error("Error inserting or updating data:", error);
     return new Response(

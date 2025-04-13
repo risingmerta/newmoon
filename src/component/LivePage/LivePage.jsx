@@ -388,25 +388,33 @@ export default function LivePage(props) {
       );
 
       const data = await response.json();
+      setGtri(data.updated);
       console.log(data.message || data.error);
+
+      // ✅ Check stream data
+      if (data.updated?.streams) {
+        console.log("Streams received:", data.updated.streams);
+      } else {
+        console.log("No streams in response.");
+      }
     } catch (error) {
       console.error("Error creating room:", error);
     }
 
-    try {
-      const response = await fetch(`/api/liveRoom?id=${props.id}`);
+    // try {
+    //   const response = await fetch(`/api/liveRoom?id=${props.id}`);
 
-      if (response.status === 404) {
-        console.log("No cached data found.");
-        return null;
-      }
+    //   if (response.status === 404) {
+    //     console.log("No cached data found.");
+    //     return null;
+    //   }
 
-      const data = await response.json();
-      setGtri(data);
-    } catch (error) {
-      console.error("Error fetching cached data:", error);
-      return null;
-    }
+    //   const data = await response.json();
+    //   setGtri(data);
+    // } catch (error) {
+    //   console.error("Error fetching cached data:", error);
+    //   return null;
+    // }
   };
 
   useEffect(() => {
@@ -523,7 +531,7 @@ export default function LivePage(props) {
                   {message === "Not started yet!" ? (
                     <div className="timl-P">
                       <img
-                        src={transformURL(props.data?.poster)}
+                        src={props.data?.poster}
                         alt="Background"
                         className="background-image"
                       />
@@ -555,7 +563,7 @@ export default function LivePage(props) {
                       epId={props.data?.episodesList?.results?.episodes[0]?.id}
                       anId={props.data.animeId}
                       epNumb={1}
-                      bhaiLink={bhaiLink}
+                      bhaiLink={"https://proxy.animoon.me/m3u8-proxy?url=" +bhaiLink} 
                       // trutie={trutie}
                       epNum={1}
                       selectedServer={selectedServer}
@@ -634,11 +642,7 @@ export default function LivePage(props) {
 
             <div className="kenpa-1">
               <div>
-                <img
-                  className="kenpa-img"
-                  src={transformURL(props.data?.poster)}
-                  alt=""
-                />
+                <img className="kenpa-img" src={props.data?.poster} alt="" />
               </div>
               <div className="kenpa-soul">
                 <div className="kenpa-name">{props.data?.name}</div>
@@ -646,7 +650,7 @@ export default function LivePage(props) {
                   <div className="kenpa-sts-1">{props.data?.rating}</div>
                   <div className="kenpa-sts-2">{props.data?.quality}</div>
                   <div className="kenpa-sts-3">
-                    <div> 
+                    <div>
                       <FaClosedCaptioning />
                     </div>
                     <div>{props.data?.episodes.sub}</div>
