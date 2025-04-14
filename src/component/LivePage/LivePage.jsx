@@ -486,6 +486,8 @@ export default function LivePage(props) {
     }
   }, [pio, gtri]);
 
+  console.log("***",lio,selectedEpId)
+
   return (
     <>
       {/* <div>{JSON.stringify(gtri)}</div> */}
