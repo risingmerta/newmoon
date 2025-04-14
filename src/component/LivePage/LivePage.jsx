@@ -401,12 +401,12 @@ export default function LivePage(props) {
     }
 
     try {
-      const response = await fetch(`/api/liveUpdate?id=${props.id}`);
+      const response = await fetch(`/api/liveUpdate?id=${props.id}&epId=${epId}&episodeNo=${epi}`);
       const data = await response.json();
     
       if (response.status === 404) {
         console.log("No cached data found.");
-      } else {
+      } else { 
         console.log("Refetched room data:", data);
         setGtri(data);
       }
