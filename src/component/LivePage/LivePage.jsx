@@ -385,7 +385,7 @@ export default function LivePage(props) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         }
-      );
+      ); 
 
       const data = await response.json();
       console.log(data.message || data.error);
@@ -434,49 +434,56 @@ export default function LivePage(props) {
   useEffect(() => {
     if (pio) {
       chang();
-
-      let datajDub = gtri?.streams?.dub || []; // Ensure it's an array
-      let datajSub = gtri?.streams?.sub || [];
+  
+      // First, safely map streams array into an object by type
+      const streamMap = {};
+      gtri?.streams?.forEach((stream) => {
+        streamMap[stream.type] = stream.data;
+      });
+  
+      let datajDub = streamMap.dub || {};
+      let datajSub = streamMap.sub || {};
       let raw = "";
-
-      // Check if the data exists before accessing properties
+  
       const subLink = datajSub?.results?.streamingLink?.link?.file || "";
       const dubLink = datajDub?.results?.streamingLink?.link?.file || "";
-
+  
+      // If no sub, fallback to raw
       if (!subLink) {
-        datajSub = gtri?.streams?.raw || [];
+        datajSub = streamMap.raw || {};
         raw = "yes";
       }
-
-      // Update `bhaiLink` safely
+  
+      // ✅ Update `bhaiLink`
       setBhaiLink(() => {
         const isDubSelected = props.data?.sub === false;
         const hasDubEpisodes = props.data?.episodes?.dub > 0;
         const hasDubData = datajDub?.results;
-
+  
         if (isDubSelected && hasDubEpisodes && hasDubData) {
-          return dubLink || ""; // Return dub link if available
+          return dubLink || "";
         }
-        return subLink || ""; // Return sub link if available
+        return subLink || "";
       });
-
-      // Update subtitles
+  
+      // ✅ Update subtitles
       setSubtitles(datajSub?.results?.streamingLink?.tracks || []);
-
-      // Update intro and outro safely
+  
+      // ✅ Update intro and outro
       setIntrod(
         props.data?.sub === false && datajDub?.results
           ? datajDub?.results?.streamingLink?.intro
           : datajSub?.results?.streamingLink?.intro || ""
       );
-
+  
       setOutrod(
         props.data?.sub === false && datajDub?.results
           ? datajDub?.results?.streamingLink?.outro
           : datajSub?.results?.streamingLink?.outro || ""
       );
     }
-  }, [pio, gtri]); // Ensure `gtri` is available
+  }, [pio, gtri]);
+  
 
   return (
     <>
