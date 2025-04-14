@@ -584,7 +584,7 @@ export default function LivePage(props) {
                       epId={props.data?.episodesList?.results?.episodes[0]?.id}
                       anId={props.data.animeId}
                       epNumb={1}
-                      bhaiLink={"https://proxy.animoon.me/m3u8-proxy?url=" +bhaiLink} 
+                      bhaiLink={"https://khiv.animoon.me/m3u8-proxy?url=" +bhaiLink} 
                       // trutie={trutie}
                       epNum={1}
                       selectedServer={selectedServer}

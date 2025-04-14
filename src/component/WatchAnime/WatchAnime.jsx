@@ -826,7 +826,7 @@ export default function WatchAnime(props) {
                           anId={props.anId}
                           epNumb={epNumb}
                           bhaiLink={
-                            "https://proxy.animoon.me/m3u8-proxy?url=" +
+                            "https://khiv.animoon.me/m3u8-proxy?url=" +
                             bhaiLink
                           }
                           trutie={trutie}

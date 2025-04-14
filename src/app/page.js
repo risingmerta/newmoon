@@ -4,8 +4,7 @@ import Script from "next/script";
 
 export default async function Page() {
   // Fetch data from the API route
-  const res = await fetch(`https://khiv.animoon.me/api/home`,{cache: 'no-store'});
-
+  
   // Check if the request was successful
   if (!res.ok) {
     console.error("Failed to fetch data");
