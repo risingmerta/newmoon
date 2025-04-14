@@ -91,7 +91,7 @@ const Eplist = (props) => {
     return (
       <div
         onClick={() =>
-          props.chang(el.episode_no, el.id) &
+          props.setSelectedEpId(el.id) &
           props.onClose() &
           props.setPio(true) &
           props.setLio(el.episode_no) & router.refresh()

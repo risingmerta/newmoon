@@ -125,6 +125,7 @@ function useTimer(date, time) {
 
 export default function LivePage(props) {
   const { data: session } = useSession();
+  const [selectedEpId, setSelectedEpId] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const IsLoading = (data) => {
@@ -385,7 +386,7 @@ export default function LivePage(props) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         }
-      ); 
+      );
 
       const data = await response.json();
       console.log(data.message || data.error);
@@ -401,19 +402,20 @@ export default function LivePage(props) {
     }
 
     try {
-      const response = await fetch(`/api/liveUpdate?id=${props.id}&epId=${epId}&episodeNo=${epi}`);
+      const response = await fetch(
+        `/api/liveUpdate?id=${props.id}&epId=${epId}&episodeNo=${epi}`
+      );
       const data = await response.json();
-    
+
       if (response.status === 404) {
         console.log("No cached data found.");
-      } else { 
+      } else {
         console.log("Refetched room data:", data);
         setGtri(data);
       }
     } catch (error) {
       console.error("Error fetching cached data:", error);
     }
-    
 
     // try {
     //   const response = await fetch(`/api/liveRoom?id=${props.id}`);
@@ -433,49 +435,49 @@ export default function LivePage(props) {
 
   useEffect(() => {
     if (pio) {
-      chang();
-  
+      chang(lio,selectedEpId);
+
       // First, safely map streams array into an object by type
       const streamMap = {};
       gtri?.streams?.forEach((stream) => {
         streamMap[stream.type] = stream.data;
       });
-  
+
       let datajDub = streamMap.dub || {};
       let datajSub = streamMap.sub || {};
       let raw = "";
-  
+
       const subLink = datajSub?.results?.streamingLink?.link?.file || "";
       const dubLink = datajDub?.results?.streamingLink?.link?.file || "";
-  
+
       // If no sub, fallback to raw
       if (!subLink) {
         datajSub = streamMap.raw || {};
         raw = "yes";
       }
-  
+
       // ✅ Update `bhaiLink`
       setBhaiLink(() => {
         const isDubSelected = props.data?.sub === false;
         const hasDubEpisodes = props.data?.episodes?.dub > 0;
         const hasDubData = datajDub?.results;
-  
+
         if (isDubSelected && hasDubEpisodes && hasDubData) {
           return dubLink || "";
         }
         return subLink || "";
       });
-  
+
       // ✅ Update subtitles
       setSubtitles(datajSub?.results?.streamingLink?.tracks || []);
-  
+
       // ✅ Update intro and outro
       setIntrod(
         props.data?.sub === false && datajDub?.results
           ? datajDub?.results?.streamingLink?.intro
           : datajSub?.results?.streamingLink?.intro || ""
       );
-  
+
       setOutrod(
         props.data?.sub === false && datajDub?.results
           ? datajDub?.results?.streamingLink?.outro
@@ -483,7 +485,6 @@ export default function LivePage(props) {
       );
     }
   }, [pio, gtri]);
-  
 
   return (
     <>
@@ -494,7 +495,8 @@ export default function LivePage(props) {
           epiod={lio}
           anId={props.data.animeId}
           onClose={() => setShow(false)}
-          chang={chang}
+          setSelectedEpId={setSelectedEpId}
+          // chang={chang}
           setPio={setPio}
           setLio={setLio}
         />
@@ -584,7 +586,9 @@ export default function LivePage(props) {
                       epId={props.data?.episodesList?.results?.episodes[0]?.id}
                       anId={props.data.animeId}
                       epNumb={1}
-                      bhaiLink={"https://khiv.animoon.me/m3u8-proxy?url=" +bhaiLink} 
+                      bhaiLink={
+                        "https://khiv.animoon.me/m3u8-proxy?url=" + bhaiLink
+                      }
                       // trutie={trutie}
                       epNum={1}
                       selectedServer={selectedServer}
