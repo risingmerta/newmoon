@@ -372,7 +372,7 @@ export default function LivePage(props) {
   const getData = () => {};
 
   const err = () => {};
-  const secon = props.secon; 
+  const secon = props.secon;
 
   const [gtri, setGtri] = useState("");
 
@@ -413,8 +413,8 @@ export default function LivePage(props) {
   console.log("+++", gtri);
 
   useEffect(() => {
-    if (pio) {
-      chang(lio,selectedEpId);
+    if ((lio, selectedEpId)) {
+      chang(lio, selectedEpId);
 
       // First, safely map streams array into an object by type
       const streamMap = {};
@@ -463,7 +463,7 @@ export default function LivePage(props) {
           : datajSub?.results?.streamingLink?.outro || ""
       );
     }
-  }, [pio]);
+  }, [lio, selectedEpId]);
 
   console.log("***", lio, selectedEpId);
 
