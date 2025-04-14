@@ -413,57 +413,56 @@ export default function LivePage(props) {
   console.log("+++", gtri);
 
   useEffect(() => {
-    if ((lio, selectedEpId)) {
+    if (pio) {
       chang(lio, selectedEpId);
-
-      // First, safely map streams array into an object by type
-      const streamMap = {};
-      gtri?.streams?.forEach((stream) => {
-        streamMap[stream.type] = stream.data;
-      });
-
-      let datajDub = streamMap.dub || {};
-      let datajSub = streamMap.sub || {};
-      let raw = "";
-
-      // Check if the data exists before accessing properties
-      const subLink = datajSub?.results?.streamingLink?.link?.file || "";
-      const dubLink = datajDub?.results?.streamingLink?.link?.file || "";
-
-      if (!subLink) {
-        datajSub = streamMap.raw || {};
-        raw = "yes";
-      }
-
-      // Update `bhaiLink` safely
-      setBhaiLink(() => {
-        const isDubSelected = props.data?.sub === false;
-        const hasDubEpisodes = props.data?.episodes?.dub > 0;
-        const hasDubData = datajDub?.results;
-
-        if (isDubSelected && hasDubEpisodes && hasDubData) {
-          return dubLink || ""; // Return dub link if available
-        }
-        return subLink || ""; // Return sub link if available
-      });
-
-      // Update subtitles
-      setSubtitles(datajSub?.results?.streamingLink?.tracks || []);
-
-      // Update intro and outro safely
-      setIntrod(
-        props.data?.sub === false && datajDub?.results
-          ? datajDub?.results?.streamingLink?.intro
-          : datajSub?.results?.streamingLink?.intro || ""
-      );
-
-      setOutrod(
-        props.data?.sub === false && datajDub?.results
-          ? datajDub?.results?.streamingLink?.outro
-          : datajSub?.results?.streamingLink?.outro || ""
-      );
     }
-  }, [lio, selectedEpId]);
+  }, [pio, lio, selectedEpId]);
+
+  useEffect(() => {
+    if (!gtri?.streams) return;
+
+    const streamMap = {};
+    gtri.streams.forEach((stream) => {
+      streamMap[stream.type] = stream.data;
+    });
+
+    let datajDub = streamMap.dub || {};
+    let datajSub = streamMap.sub || {};
+    let raw = "";
+
+    const subLink = datajSub?.results?.streamingLink?.link?.file || "";
+    const dubLink = datajDub?.results?.streamingLink?.link?.file || "";
+
+    if (!subLink) {
+      datajSub = streamMap.raw || {};
+      raw = "yes";
+    }
+
+    setBhaiLink(() => {
+      const isDubSelected = props.data?.sub === false;
+      const hasDubEpisodes = props.data?.episodes?.dub > 0;
+      const hasDubData = datajDub?.results;
+
+      if (isDubSelected && hasDubEpisodes && hasDubData) {
+        return dubLink || "";
+      }
+      return subLink || "";
+    });
+
+    setSubtitles(datajSub?.results?.streamingLink?.tracks || []);
+
+    setIntrod(
+      props.data?.sub === false && datajDub?.results
+        ? datajDub?.results?.streamingLink?.intro
+        : datajSub?.results?.streamingLink?.intro || ""
+    );
+
+    setOutrod(
+      props.data?.sub === false && datajDub?.results
+        ? datajDub?.results?.streamingLink?.outro
+        : datajSub?.results?.streamingLink?.outro || ""
+    );
+  }, [gtri]);
 
   console.log("***", lio, selectedEpId);
 
