@@ -372,7 +372,7 @@ export default function LivePage(props) {
   const getData = () => {};
 
   const err = () => {};
-  const secon = props.secon;
+  const secon = props.secon; 
 
   const [gtri, setGtri] = useState("");
 
@@ -463,7 +463,7 @@ export default function LivePage(props) {
           : datajSub?.results?.streamingLink?.outro || ""
       );
     }
-  }, [pio, gtri]);
+  }, [pio]);
 
   console.log("***", lio, selectedEpId);
 
