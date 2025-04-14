@@ -6,7 +6,7 @@ import Script from "next/script";
 
 export default async function page() {
   const mongoUri =
-    "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
+    "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
   const dbName = "mydatabase"; // Change the database name as needed
   const client = new MongoClient(mongoUri);
   await client.connect();

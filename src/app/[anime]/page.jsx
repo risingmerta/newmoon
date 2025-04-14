@@ -5,7 +5,7 @@ import Advertize from "@/component/Advertize/Advertize";
 import Script from "next/script";
 
 const mongoUri =
-  "mongodb://adminUser:adminPass123@127.0.0.1:27017/kaoriDB?authSource=admin";
+  "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
 const dbName = "mydatabase";
 const homeCollectionName = "animoon-home";
 const animeCollectionName = "animeInfo";
