@@ -11,18 +11,26 @@ export async function POST(req) {
     const episodeNo = url.searchParams.get("episodeNo");
 
     if (!id || !epId || episodeNo == null) {
-      return new Response(JSON.stringify({ error: "Missing required query parameters: id, epId, or episodeNo" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Missing required query parameters: id, epId, or episodeNo",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     const episodeNumber = Number(episodeNo);
     if (isNaN(episodeNumber)) {
-      return new Response(JSON.stringify({ error: "Invalid episodeNo, must be a number" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Invalid episodeNo, must be a number" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     let datajDub = {};
@@ -30,7 +38,9 @@ export async function POST(req) {
     let raw = "";
 
     try {
-      const res = await fetch(`https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`);
+      const res = await fetch(
+        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
+      );
       datajDub = await res.json();
     } catch (error) {
       console.error("Error fetching dub stream data:", error);
@@ -38,7 +48,9 @@ export async function POST(req) {
     }
 
     try {
-      const res = await fetch(`https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`);
+      const res = await fetch(
+        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
+      );
       datajSub = await res.json();
     } catch (error) {
       console.error("Error fetching sub stream data:", error);
@@ -47,7 +59,9 @@ export async function POST(req) {
 
     if (!datajSub?.results?.streamingLink?.link?.file) {
       try {
-        const res = await fetch(`https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`);
+        const res = await fetch(
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
+        );
         datajSub = await res.json();
         raw = "yes";
       } catch (error) {
@@ -74,20 +88,33 @@ export async function POST(req) {
       );
     }
 
-    return new Response(JSON.stringify({
-      message: existingRoom ? "Room updated successfully" : "Stream fetched successfully",
-      updated: { id, epId, episodeNo: episodeNumber, episodeId: epId, streams },
-    }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-
+    return new Response(
+      JSON.stringify({
+        message: existingRoom
+          ? "Room updated successfully"
+          : "Stream fetched successfully",
+        updated: {
+          id,
+          epId,
+          episodeNo: episodeNumber,
+          episodeId: epId,
+          streams,
+        },
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     console.error("Error inserting or updating data:", error);
-    return new Response(JSON.stringify({ error: "Failed to store data", details: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Failed to store data", details: error.message }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
 
@@ -98,12 +125,17 @@ export async function GET(req) {
 
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
+    const epId = url.searchParams.get("epId");
+    const episodeNo = url.searchParams.get("episodeNo");
 
     if (!id) {
-      return new Response(JSON.stringify({ error: "Missing required query parameter: id" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Missing required query parameter: id" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     const room = await liveRoomsCollection.findOne({ id });
@@ -123,7 +155,9 @@ export async function GET(req) {
     const streams = [];
 
     try {
-      const res = await fetch(`https://vimal.animoon.me/api/stream?id=${episodeId}&server=hd-2&type=dub`);
+      const res = await fetch(
+        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
+      );
       datajDub = await res.json();
       if (datajDub?.results?.streamingLink?.link?.file) {
         streams.push({ type: "dub", data: datajDub });
@@ -133,7 +167,9 @@ export async function GET(req) {
     }
 
     try {
-      const res = await fetch(`https://vimal.animoon.me/api/stream?id=${episodeId}&server=hd-2&type=sub`);
+      const res = await fetch(
+        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
+      );
       datajSub = await res.json();
     } catch (error) {
       console.error("Error fetching sub stream data:", error);
@@ -141,7 +177,9 @@ export async function GET(req) {
 
     if (!datajSub?.results?.streamingLink?.link?.file) {
       try {
-        const res = await fetch(`https://vimal.animoon.me/api/stream?id=${episodeId}&server=hd-2&type=raw`);
+        const res = await fetch(
+          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
+        );
         datajSub = await res.json();
         raw = "yes";
       } catch (error) {
@@ -157,12 +195,14 @@ export async function GET(req) {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-
   } catch (error) {
     console.error("Error fetching room data:", error);
-    return new Response(JSON.stringify({ error: "Failed to fetch data", details: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Failed to fetch data", details: error.message }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
