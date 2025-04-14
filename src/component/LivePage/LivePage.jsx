@@ -388,7 +388,6 @@ export default function LivePage(props) {
       );
 
       const data = await response.json();
-      setGtri(data.updated);
       console.log(data.message || data.error);
 
       // ✅ Check stream data
@@ -400,6 +399,21 @@ export default function LivePage(props) {
     } catch (error) {
       console.error("Error creating room:", error);
     }
+
+    try {
+      const response = await fetch(`/api/liveUpdate?id=${props.id}`);
+      const data = await response.json();
+    
+      if (response.status === 404) {
+        console.log("No cached data found.");
+      } else {
+        console.log("Refetched room data:", data);
+        setGtri(data);
+      }
+    } catch (error) {
+      console.error("Error fetching cached data:", error);
+    }
+    
 
     // try {
     //   const response = await fetch(`/api/liveRoom?id=${props.id}`);
