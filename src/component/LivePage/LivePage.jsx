@@ -412,7 +412,20 @@ export default function LivePage(props) {
 
   useEffect(() => {
     if (pio) {
-      chang(lio,selectedEpId);
+      chang();
+
+      let datajDub = gtri?.streams?.dub || []; // Ensure it's an array
+      let datajSub = gtri?.streams?.sub || [];
+      let raw = "";
+
+      // Check if the data exists before accessing properties
+      const subLink = datajSub?.results?.streamingLink?.link?.file || "";
+      const dubLink = datajDub?.results?.streamingLink?.link?.file || "";
+
+      if (!subLink) {
+        datajSub = gtri?.streams?.raw || [];
+        raw = "yes";
+      }
 
       // Update `bhaiLink` safely
       setBhaiLink(() => {
@@ -442,9 +455,7 @@ export default function LivePage(props) {
           : datajSub?.results?.streamingLink?.outro || ""
       );
     }
-  }, [pio, gtri]);
-
-  console.log("***",lio,selectedEpId)
+  }, [pio, gtri]); // Ensure `gtri` is available
 
   return (
     <>
@@ -455,8 +466,7 @@ export default function LivePage(props) {
           epiod={lio}
           anId={props.data.animeId}
           onClose={() => setShow(false)}
-          setSelectedEpId={setSelectedEpId}
-          // chang={chang}
+          chang={chang}
           setPio={setPio}
           setLio={setLio}
         />

@@ -80,7 +80,7 @@ export async function POST(req) {
     }
 
     const existingRoom = await liveRoomsCollection.findOne({ id });
-
+ 
     if (existingRoom) {
       await liveRoomsCollection.updateOne(
         { id },
