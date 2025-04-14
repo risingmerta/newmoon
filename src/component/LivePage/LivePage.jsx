@@ -410,9 +410,11 @@ export default function LivePage(props) {
     }
   };
 
+  console.log("+++", gtri);
+
   useEffect(() => {
     if (pio) {
-      chang(lio,selectedEpId);
+      chang(lio, selectedEpId);
 
       let datajDub = gtri?.streams?.dub || []; // Ensure it's an array
       let datajSub = gtri?.streams?.sub || [];
@@ -457,7 +459,7 @@ export default function LivePage(props) {
     }
   }, [pio, gtri]);
 
-  console.log("***",lio,selectedEpId)
+  console.log("***", lio, selectedEpId);
 
   return (
     <>
