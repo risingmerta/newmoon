@@ -414,10 +414,16 @@ export default function LivePage(props) {
 
   useEffect(() => {
     if (pio) {
-      chang(lio, selectedEpId);
+      chang(lio,selectedEpId);
 
-      let datajDub = gtri?.streams?.dub || []; // Ensure it's an array
-      let datajSub = gtri?.streams?.sub || [];
+      // First, safely map streams array into an object by type
+      const streamMap = {};
+      gtri?.streams?.forEach((stream) => {
+        streamMap[stream.type] = stream.data;
+      });
+
+      let datajDub = streamMap.dub || {};
+      let datajSub = streamMap.sub || {};
       let raw = "";
 
       // Check if the data exists before accessing properties
@@ -425,7 +431,7 @@ export default function LivePage(props) {
       const dubLink = datajDub?.results?.streamingLink?.link?.file || "";
 
       if (!subLink) {
-        datajSub = gtri?.streams?.raw || [];
+        datajSub = streamMap.raw || {};
         raw = "yes";
       }
 
