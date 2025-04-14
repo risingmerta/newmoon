@@ -88,7 +88,7 @@ export async function POST(req) {
       );
     }
 
-    return new Response(
+    return new Response( 
       JSON.stringify({
         message: existingRoom
           ? "Room updated successfully"

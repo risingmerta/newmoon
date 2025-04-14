@@ -412,7 +412,7 @@ export default function LivePage(props) {
 
   useEffect(() => {
     if (pio) {
-      chang();
+      chang(lio,selectedEpId);
 
       let datajDub = gtri?.streams?.dub || []; // Ensure it's an array
       let datajSub = gtri?.streams?.sub || [];
@@ -455,7 +455,9 @@ export default function LivePage(props) {
           : datajSub?.results?.streamingLink?.outro || ""
       );
     }
-  }, [pio, gtri]); // Ensure `gtri` is available
+  }, [pio, gtri]);
+
+  console.log("***",lio,selectedEpId)
 
   return (
     <>
@@ -466,6 +468,7 @@ export default function LivePage(props) {
           epiod={lio}
           anId={props.data.animeId}
           onClose={() => setShow(false)}
+          setSelectedEpId={setSelectedEpId}
           chang={chang}
           setPio={setPio}
           setLio={setLio}
