@@ -390,88 +390,46 @@ export default function LivePage(props) {
 
       const data = await response.json();
       console.log(data.message || data.error);
-
-      // ✅ Check stream data
-      if (data.updated?.streams) {
-        console.log("Streams received:", data.updated.streams);
-      } else {
-        console.log("No streams in response.");
-      }
     } catch (error) {
       console.error("Error creating room:", error);
     }
 
     try {
-      const response = await fetch(
-        `/api/liveUpdate?id=${props.id}&epId=${epId}&episodeNo=${epi}`
-      );
-      const data = await response.json();
+      const response = await fetch(`/api/liveRoom?id=${props.id}`);
 
       if (response.status === 404) {
         console.log("No cached data found.");
-      } else {
-        console.log("Refetched room data:", data);
-        setGtri(data);
+        return null;
       }
+
+      const data = await response.json();
+      setGtri(data);
     } catch (error) {
       console.error("Error fetching cached data:", error);
+      return null;
     }
-
-    // try {
-    //   const response = await fetch(`/api/liveRoom?id=${props.id}`);
-
-    //   if (response.status === 404) {
-    //     console.log("No cached data found.");
-    //     return null;
-    //   }
-
-    //   const data = await response.json();
-    //   setGtri(data);
-    // } catch (error) {
-    //   console.error("Error fetching cached data:", error);
-    //   return null;
-    // }
   };
 
   useEffect(() => {
     if (pio) {
       chang(lio,selectedEpId);
 
-      // First, safely map streams array into an object by type
-      const streamMap = {};
-      gtri?.streams?.forEach((stream) => {
-        streamMap[stream.type] = stream.data;
-      });
-
-      let datajDub = streamMap.dub || {};
-      let datajSub = streamMap.sub || {};
-      let raw = "";
-
-      const subLink = datajSub?.results?.streamingLink?.link?.file || "";
-      const dubLink = datajDub?.results?.streamingLink?.link?.file || "";
-
-      // If no sub, fallback to raw
-      if (!subLink) {
-        datajSub = streamMap.raw || {};
-        raw = "yes";
-      }
-
-      // ✅ Update `bhaiLink`
+      // Update `bhaiLink` safely
       setBhaiLink(() => {
         const isDubSelected = props.data?.sub === false;
         const hasDubEpisodes = props.data?.episodes?.dub > 0;
         const hasDubData = datajDub?.results;
 
         if (isDubSelected && hasDubEpisodes && hasDubData) {
-          return dubLink || "";
+          return dubLink || ""; // Return dub link if available
         }
-        return subLink || "";
+        return subLink || ""; // Return sub link if available
       });
 
-      // ✅ Update subtitles
+      // Update subtitles
       setSubtitles(datajSub?.results?.streamingLink?.tracks || []);
 
-      // ✅ Update intro and outro
+      // Update intro and outro safely
       setIntrod(
         props.data?.sub === false && datajDub?.results
           ? datajDub?.results?.streamingLink?.intro

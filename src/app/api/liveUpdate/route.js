@@ -84,7 +84,7 @@ export async function POST(req) {
     if (existingRoom) {
       await liveRoomsCollection.updateOne(
         { id },
-        { $set: { episodeNo: episodeNumber, episodeId: epId } }
+        { $set: { episodeNo: episodeNumber, episodeId: epId ,streams } }
       );
     }
 
@@ -110,99 +110,7 @@ export async function POST(req) {
     console.error("Error inserting or updating data:", error);
     return new Response(
       JSON.stringify({ error: "Failed to store data", details: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-  }
-}
-
-export async function GET(req) {
-  try {
-    const db = await connectDB();
-    const liveRoomsCollection = db.collection("liveRooms");
-
-    const url = new URL(req.url);
-    const id = url.searchParams.get("id");
-    const epId = url.searchParams.get("epId");
-    const episodeNo = url.searchParams.get("episodeNo");
-
-    if (!id) {
-      return new Response(
-        JSON.stringify({ error: "Missing required query parameter: id" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
-
-    const room = await liveRoomsCollection.findOne({ id });
-
-    if (!room) {
-      return new Response(JSON.stringify({ error: "Room not found" }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    const { episodeId } = room;
-
-    let datajDub = {};
-    let datajSub = {};
-    let raw = "";
-    const streams = [];
-
-    try {
-      const res = await fetch(
-        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=dub`
-      );
-      datajDub = await res.json();
-      if (datajDub?.results?.streamingLink?.link?.file) {
-        streams.push({ type: "dub", data: datajDub });
-      }
-    } catch (error) {
-      console.error("Error fetching dub stream data:", error);
-    }
-
-    try {
-      const res = await fetch(
-        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=sub`
-      );
-      datajSub = await res.json();
-    } catch (error) {
-      console.error("Error fetching sub stream data:", error);
-    }
-
-    if (!datajSub?.results?.streamingLink?.link?.file) {
-      try {
-        const res = await fetch(
-          `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=raw`
-        );
-        datajSub = await res.json();
-        raw = "yes";
-      } catch (error) {
-        console.error("Error fetching raw stream data:", error);
-      }
-    }
-
-    if (datajSub?.results?.streamingLink?.link?.file) {
-      streams.push({ type: raw === "yes" ? "raw" : "sub", data: datajSub });
-    }
-
-    return new Response(JSON.stringify({ room, streams }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error("Error fetching room data:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to fetch data", details: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }
