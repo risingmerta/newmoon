@@ -548,7 +548,10 @@ function ArtPlayer(props) {
       art.on("video:ended", () => {
         if (props.onn2 === "On") {
           props.getData("YES");
+        } else {
+          art.notice.show = art.icons.ended; // or your logic to display it
         }
+        art.notice.show = art.icons.ended; // or your logic to display it
       });
       let isPlaying = false;
       let errorOccurred = false;
