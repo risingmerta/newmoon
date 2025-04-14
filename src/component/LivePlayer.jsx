@@ -229,26 +229,33 @@ function ArtPlayer(props) {
   const getInstance = async (art) => {
     if (typeof gtr !== "undefined" && gtr === "yes") {
       art.currentTime = timeDifference;
+
+      if (timeDifference < art.duration) {
+        art.play();
+      }
     }
 
     art.on("ready", () => {
       setGtr("yes");
       art.currentTime = timeDifference;
       ls.setItem(`duran-${props.anId}`, art.duration);
-      art.play();
-    });
 
-    // art.on("seek", (time) => {
-    //   if (art.currentTime < time) {
-    //     setGtr("yes");
-    //   }
-    //   if (timeDifference < art.duration) {
-    //     if (art.currentTime < time) {
-    //       art.currentTime = timeDifference;
-    //     }
-    //   }
-    // });
+      if (timeDifference < art.duration) {
+        art.play();
+      }
+    });
   };
+
+  // art.on("seek", (time) => {
+  //   if (art.currentTime < time) {
+  //     setGtr("yes");
+  //   }
+  //   if (timeDifference < art.duration) {
+  //     if (art.currentTime < time) {
+  //       art.currentTime = timeDifference;
+  //     }
+  //   }
+  // });
 
   useEffect(() => {
     const art = new Artplayer({
