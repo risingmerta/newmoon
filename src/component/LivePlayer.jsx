@@ -482,9 +482,9 @@ function ArtPlayer(props) {
       if (props.onn2 === "On") {
         props.getData("YES");
       } else {
-        art.pause();
+        art.stop();
       }
-      art.pause();
+      art.stop();
     });
 
     const dltr = ls.getItem("artplayer_settings");
