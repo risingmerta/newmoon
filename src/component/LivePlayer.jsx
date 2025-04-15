@@ -478,6 +478,15 @@ function ArtPlayer(props) {
       art.play();
     });
 
+    art.on("video:ended", () => {
+      if (props.onn2 === "On") {
+        props.getData("YES");
+      } else {
+        art.pause();
+      }
+      art.pause();
+    });
+
     const dltr = ls.getItem("artplayer_settings");
     if (dltr) {
       let currentT = JSON.parse(dltr).times[ls.getItem(`newW-${props.epId}`)]
@@ -549,9 +558,8 @@ function ArtPlayer(props) {
         if (props.onn2 === "On") {
           props.getData("YES");
         } else {
-          art.notice.show = art.icons.ended; // or your logic to display it
+          art.pause();
         }
-        art.notice.show = art.icons.ended; // or your logic to display it
       });
       let isPlaying = false;
       let errorOccurred = false;
