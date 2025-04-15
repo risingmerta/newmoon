@@ -23,14 +23,17 @@ export default function Profito() {
   }, [session]);
 
   const date = new Date(session?.user?.timeOfJoining);
-  const formattedDate = `${date.getDate()}-${date.toLocaleString("default", { month: "long" })}-${date.getFullYear()}`;
+  const formattedDate = `${date.getDate()}-${date.toLocaleString("default", {
+    month: "long",
+  })}-${date.getFullYear()}`;
 
   const handleSave = async () => {
     const userId = session?.user?.id;
     const updatedFields = {};
 
     if (newEmail !== session?.user?.email) updatedFields.email = newEmail;
-    if (newUsername !== session?.user?.username) updatedFields.username = newUsername;
+    if (newUsername !== session?.user?.username)
+      updatedFields.username = newUsername;
     if (newAvatar !== session?.user?.avatar) updatedFields.avatar = newAvatar;
     if (newPassword.trim() !== "") updatedFields.password = newPassword; // Only send if password is entered
 
@@ -132,13 +135,13 @@ export default function Profito() {
         <div className="cofs">
           <div className={`profile-image`}>
             <img
-              src={session?.user.avatar.replace(
-                "https://cdn.noitatnemucod.net/avatar/100x100/",
-                "https://img.flawlessfiles.com/_r/100x100/100/avatar/"
-              )}
+              src={newAvatar || session?.user?.avatar}
               className="profile-img"
               alt="Profile"
             />
+            <div className="cof-pen" onClick={() => setShowModal(true)}>
+              <FaPen />
+            </div>
           </div>
         </div>
 
