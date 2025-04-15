@@ -123,6 +123,7 @@
   cursor: pointer;
 }
 
+/* imptnihyniiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii */
 .avatar-modal {
   position: fixed;
   top: 0;
@@ -138,17 +139,27 @@
 
 .modal-content {
   background-color: #1e1e1e;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 16px;
   max-width: 600px;
   width: 90%;
   color: #fff;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   max-height: 80vh;
 }
 
+.modal-content h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
 .avatar-selection {
-  margin-top: 1rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 1rem;
 }
 
 .avatar-category {
@@ -183,10 +194,10 @@
 }
 
 .modal-footer {
-  margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+  margin-top: auto;
 }
 
 .modal-footer button {

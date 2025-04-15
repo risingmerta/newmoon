@@ -169,7 +169,9 @@ export default function Profito() {
               </div>
               <div className="modal-footer">
                 <button onClick={() => setShowModal(false)}>Close</button>
-                <button onClick={handleSave}>Save</button>
+                <button onClick={() => handleSave() & setShowModal(false)}>
+                  Save
+                </button>
               </div>
             </div>
           </div>
