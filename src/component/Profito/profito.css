@@ -130,23 +130,25 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7); /* semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 1rem;
+  overflow-y: auto;
 }
 
 .modal-content {
   background-color: #1e1e1e;
   padding: 1.5rem;
   border-radius: 16px;
+  width: 100%;
   max-width: 600px;
-  width: 90%;
   color: #fff;
   display: flex;
   flex-direction: column;
-  max-height: 80vh;
+  max-height: 90vh;
 }
 
 .modal-content h3 {
@@ -176,6 +178,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  justify-content: center;
 }
 
 .avatar-image {
@@ -197,6 +200,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+  flex-wrap: wrap;
   margin-top: auto;
 }
 
@@ -214,8 +218,6 @@
 .modal-footer button:hover {
   background-color: #00c4d6;
 }
-
-
 
 /* Media queries for responsiveness */
 @media (min-width: 600px) {
@@ -248,12 +250,30 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+/* Mobile adjustments */
+@media (max-width: 480px) {
   .profile-header {
     font-size: 20px;
   }
   .profile-content {
     background: none;
     padding: 0;
+  }
+  .modal-content {
+    padding: 1rem;
+  }
+
+  .avatar-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .modal-footer {
+    justify-content: center;
+  }
+
+  .modal-footer button {
+    width: 100%;
+    max-width: 200px;
   }
 }
