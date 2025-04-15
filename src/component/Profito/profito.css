@@ -268,12 +268,16 @@
     height: 60px;
   }
 
+  .avatar-category h4 {
+    margin-left: 10px;
+  }
+
   .modal-footer {
     justify-content: center;
   }
 
   .modal-footer button {
     width: 100%;
-    max-width: 200px;
+    max-width: 150px;
   }
 }
