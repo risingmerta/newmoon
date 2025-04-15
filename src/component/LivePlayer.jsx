@@ -227,15 +227,15 @@ function ArtPlayer(props) {
   }, [gtr]); // ✅ `gtr` is the dependency
 
   const getInstance = async (art) => {
-    if (typeof gtr !== "undefined" && gtr === "yes") {
-      if (timeDifference < art.duration) {
-        art.currentTime = timeDifference;
-        art.play();
-      } else {
-        art.currentTime = art.duration;
-        art.pause();
-      }
-    }
+    // if (typeof gtr !== "undefined" && gtr === "yes") {
+    //   if (timeDifference < art.duration) {
+    //     art.currentTime = timeDifference;
+    //     art.play();
+    //   } else {
+    //     art.currentTime = art.duration;
+    //     art.pause();
+    //   }
+    // }
 
     art.on("ready", () => {
       setGtr("yes");
@@ -477,12 +477,12 @@ function ArtPlayer(props) {
       getInstance(art);
     }
 
-    art.on("ready", () => {
-      setGtr("yes");
-      art.currentTime = timeDifference;
-      ls.setItem(`duran-${props.anId}`, art.duration);
-      art.play();
-    });
+    // art.on("ready", () => {
+    //   setGtr("yes");
+    //   art.currentTime = timeDifference;
+    //   ls.setItem(`duran-${props.anId}`, art.duration);
+    //   art.play();
+    // });
 
     art.on("video:ended", () => {
       if (props.onn2 === "On") {
