@@ -249,7 +249,11 @@ function ArtPlayer(props) {
 
     art.on("video:ended", () => {
       console.info("video ended");
-      art.loading.hide();
+      art.icons.state = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24">
+          <path fill="#00f2fe" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Zm-1-13v6l4-3z"/>
+        </svg>
+      `;
     });
   };
 
@@ -444,31 +448,31 @@ function ArtPlayer(props) {
 <path fill="#00f2fe" d="M9.5 9.325v5.35q0 .575.525.875t1.025-.05l4.15-2.65q.475-.3.475-.85t-.475-.85L11.05 8.5q-.5-.35-1.025-.05t-.525.875ZM12 22q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22Z"></path> \
 </svg> \
 ',
-        // loading: `
-        //   <svg width="64" height="64" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        //     <rect width="24" height="24" fill="none"></rect>
-        //     <path
-        //       fill="white"
-        //       d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z"
-        //       opacity="0.3"
-        //     ></path>
-        //     <path fill="white" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z">
-        //       <animateTransform
-        //         attributeName="transform"
-        //         type="rotate"
-        //         from="0 12 12"
-        //         to="360 12 12"
-        //         dur="0.9s"
-        //         repeatCount="indefinite"
-        //       />
-        //     </path>
-        //   </svg>
-        // `,
-        //         ended: `
-        // <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
-        //   <path fill="#00d084" d="M12 2a10 10 0 1 0 10 10h-2a8 8 0 1 1-2.34-5.66L16 8h6V2l-2.35 2.35A9.93 9.93 0 0 0 12 2Z"/>
-        // </svg>
-        // `,
+        loading: `
+          <svg width="64" height="64" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" fill="none"></rect>
+            <path
+              fill="white"
+              d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z"
+              opacity="0.3"
+            ></path>
+            <path fill="white" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z">
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 12 12"
+                to="360 12 12"
+                dur="0.9s"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
+        `,
+        ended: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+          <path fill="#00d084" d="M12 2a10 10 0 1 0 10 10h-2a8 8 0 1 1-2.34-5.66L16 8h6V2l-2.35 2.35A9.93 9.93 0 0 0 12 2Z"/>
+        </svg>
+        `,
       },
     });
 
