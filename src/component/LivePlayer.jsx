@@ -202,44 +202,40 @@ function ArtPlayer(props) {
   }
 
   const [art, setArt] = useState(null); // Store Artplayer instance
-
   const [gtr, setGtr] = useState(""); // State to track 'yes' or 'no'
+
   const startTime = new Date(`${props.date} ${props.time}`).getTime();
   const now = Date.now();
   const diff = Math.floor((now - startTime) / 1000);
   const [timeDifference, setTimeDifference] = useState(diff);
 
   useEffect(() => {
-    if (gtr === "yes") {
-      const startTime = new Date(`${props.date} ${props.time}`).getTime();
-      const now = Date.now();
-      const diff = Math.floor((now - startTime) / 1000); // Convert to seconds
-      art.currentTime = diff;
-      console.log("gtrr", diff);
+    const startTime = new Date(`${props.date} ${props.time}`).getTime();
+    const now = Date.now();
+    const diff = Math.floor((now - startTime) / 1000);
+
+    if (gtr === "yes" && art) {
+      if (diff < art.duration) {
+        art.currentTime = diff;
+        art.play();
+        console.log("gtrr", diff);
+      } else {
+        art.currentTime = art.duration;
+        art.pause();
+        console.log("gtrr - video ended", diff);
+      }
       setTimeDifference(diff);
-      setGtr(""); // Reset gtr to avoid unnecessary re-renders
+      setGtr("");
     } else {
-      const startTime = new Date(`${props.date} ${props.time}`).getTime();
-      const now = Date.now();
-      const diff = Math.floor((now - startTime) / 1000); // Convert to seconds
       setTimeDifference(diff);
     }
-  }, [gtr]); // ✅ `gtr` is the dependency
+  }, [gtr, art]);
 
   const getInstance = async (art) => {
-    // if (typeof gtr !== "undefined" && gtr === "yes") {
-    //   if (timeDifference < art.duration) {
-    //     art.currentTime = timeDifference;
-    //     art.play();
-    //   } else {
-    //     art.currentTime = art.duration;
-    //     art.pause();
-    //   }
-    // }
+    setArt(art);
 
     art.on("ready", () => {
       setGtr("yes");
-
       ls.setItem(`duran-${props.anId}`, art.duration);
 
       if (timeDifference < art.duration) {
@@ -249,6 +245,15 @@ function ArtPlayer(props) {
         art.currentTime = art.duration;
         art.pause();
       }
+    });
+
+    art.on("video:ended", () => {
+      console.info("video ended");
+      art.icons.state = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24">
+          <path fill="#00f2fe" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Zm-1-13v6l4-3z"/>
+        </svg>
+      `;
     });
   };
 
