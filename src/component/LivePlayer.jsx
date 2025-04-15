@@ -15,43 +15,6 @@ function ArtPlayer(props) {
     ? props.subtitles.filter((sub) => sub.kind === "captions")
     : "";
   // Create the subtitle selector based on available subtitles
-
-  const qualities =
-    props.quality && props.quality.length
-      ? props.quality?.map((source) => ({
-          url: source.url,
-          html: source.quality, // This will be displayed in the quality switch menu
-          isM3U8: source.isM3U8,
-          default: source.quality === "1080p", // Mark 1080p as the default quality
-        }))
-      : [];
-
-  // Handle case where qualities array is empty
-  const selectedUrl =
-    qualities?.length > 0
-      ? qualities.find((q) => q.default)?.url || qualities[0].url
-      : ""; // Fallback to empty string if no sources available
-
-  let finalUrl = selectedUrl || props.bhaiLink || "";
-
-  if (finalUrl === "") {
-    console.warn("No valid URL available.");
-  }
-
-  function playM3u8(video, url, art) {
-    if (Hls.isSupported()) {
-      if (art.hls) art.hls.destroy();
-      const hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(video);
-      art.hls = hls;
-      art.on("destroy", () => hls.destroy());
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = url;
-    } else {
-      art.notice.show = "Unsupported playback format: m3u8";
-    }
-  }
   const localStorageWrapper = () => {
     if (typeof window !== "undefined" && window.localStorage) {
       return {
@@ -133,40 +96,6 @@ function ArtPlayer(props) {
     ls.setItem("Recent-animes", props.anId);
   }
 
-  // List of new full subdomains (including domain extensions)
-
-  const newSubdomains = [
-    "lightningflash39.live",
-    "sunshinerays93.live",
-    "stormywind74.xyz",
-    "sunburst66.pro",
-    "frostbite27.pro",
-    "rainstorm92.xyz",
-    "mistyvalley31.live",
-  ];
-
-  let currentPrefixIndex = 0; // Start with the first subdomain
-
-  // Function to update the URL by replacing any existing subdomain and domain with a new one
-  const updateUrl = (url) => {
-    return url.replace(/:\/\/[^/]+/, `://${newSubdomains[currentPrefixIndex]}`);
-  };
-
-  // Example usage
-
-  finalUrl = updateUrl(finalUrl); // First replacement
-
-  const originalUrl = finalUrl;
-
-  // Function to cycle through different subdomains dynamically
-  const getUpdatedUrl = () => {
-    currentPrefixIndex = (currentPrefixIndex + 1) % newSubdomains.length; // Move to next subdomain
-    return originalUrl.replace(
-      /:\/\/[^/]+/,
-      `://${newSubdomains[currentPrefixIndex]}`
-    );
-  };
-
   const chapters = [];
 
   if (props.introd?.end) {
@@ -186,7 +115,7 @@ function ArtPlayer(props) {
   }
 
   if (dltt) {
-    if (JSON.parse(dltt).times[finalUrl]) {
+    if (JSON.parse(dltt).times[props.bhaiLink]) {
       if (ls.getItem(props.anId.toString())) {
         console.log(ls.getItem(props.anId.toString()));
         let vals = ls.getItem(props.anId.toString()).split(",");
@@ -246,27 +175,7 @@ function ArtPlayer(props) {
         art.play();
       }
     });
-
-    // art.on("video:ended", () => {
-    //   console.info("video ended");
-    //   art.icons.state = `
-    //     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24">
-    //       <path fill="#00f2fe" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Zm-1-13v6l4-3z"/>
-    //     </svg>
-    //   `;
-    // });
   };
-
-  // art.on("seek", (time) => {
-  //   if (art.currentTime < time) {
-  //     setGtr("yes");
-  //   }
-  //   if (timeDifference < art.duration) {
-  //     if (art.currentTime < time) {
-  //       art.currentTime = timeDifference;
-  //     }
-  //   }
-  // });
 
   useEffect(() => {
     const art = new Artplayer({
@@ -274,26 +183,18 @@ function ArtPlayer(props) {
       container: ".artplayer-app",
       url: props.bhaiLink,
       type: "m3u8",
-      // quality: qualities?.length > 0 ? qualities : [],
       plugins: [
         artplayerPluginHlsControl({
           quality: {
-            // Show qualitys in control
             control: false,
-            // Show qualitys in setting
             setting: true,
-            // Get the quality name from level
             getName: (level) => level.height + "P",
-            // I18n
             title: "Quality",
             auto: "Auto",
           },
           audio: {
-            // Show audios in control
             control: true,
-            // Show audios in setting
             setting: true,
-            // Get the audio name from track
             getName: (track) => track.name,
             // I18n
             title: "Audio",
@@ -423,25 +324,6 @@ function ArtPlayer(props) {
           },
         },
       ],
-
-      // highlight: [
-      //   {
-      //     time: parseInt(props.introd?.start) || 0,
-      //     text: "Opening Start",
-      //   },
-      //   {
-      //     time: parseInt(props.introd?.end) || 0,
-      //     text: "Opening End",
-      //   },
-      //   {
-      //     time: parseInt(props.outrod?.start) || 0,
-      //     text: "Ending Start",
-      //   },
-      //   {
-      //     time: parseInt(props.outrod?.end) || 0,
-      //     text: "Ending End",
-      //   },
-      // ],
       icons: {
         state:
           '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"> \
@@ -468,11 +350,6 @@ function ArtPlayer(props) {
             </path>
           </svg>
         `,
-        ended: `
-        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
-          <path fill="#00d084" d="M12 2a10 10 0 1 0 10 10h-2a8 8 0 1 1-2.34-5.66L16 8h6V2l-2.35 2.35A9.93 9.93 0 0 0 12 2Z"/>
-        </svg>
-        `,
       },
     });
 
@@ -481,14 +358,6 @@ function ArtPlayer(props) {
     if (getInstance && typeof getInstance === "function") {
       getInstance(art);
     }
-
-    // art.on("ready", () => {
-    //   setGtr("yes");
-    //   art.currentTime = timeDifference;
-    //   ls.setItem(`duran-${props.anId}`, art.duration);
-    //   art.play();
-    // });
-
     art.on("video:ended", () => {
       if (props.onn2 === "On") {
         props.getData("YES");
@@ -497,7 +366,6 @@ function ArtPlayer(props) {
       }
       art.stop();
     });
-
     const dltr = ls.getItem("artplayer_settings");
     if (dltr) {
       let currentT = JSON.parse(dltr).times[ls.getItem(`newW-${props.epId}`)]
@@ -521,44 +389,29 @@ function ArtPlayer(props) {
         }
       });
       art.on("subtitleAfterUpdate", (cue) => {
-        // Log the subtitle container content
         const subtitleContainer = art.template.$subtitle;
         console.info(subtitleContainer.innerHTML);
-
-        // Select all subtitle lines inside .art-subtitle-line[data-group="0"]
         let subtitleLines = document.querySelectorAll(
           '.art-subtitle-line[data-group="0"]'
         );
-
-        // Clear existing subtitles before updating
         subtitleContainer.innerHTML = "";
-
-        // Loop through each subtitle line and append it as a new div
         subtitleLines.forEach((line) => {
           const newDiv = document.createElement("div");
           const txt = document.createElement("textarea");
-
           txt.innerHTML = line.innerHTML.trim(); // Decode HTML entities
           newDiv.innerHTML = txt.value; // Set decoded content
-
-          newDiv.classList.add("art-subtitle-line"); // Retain class for styling
-
-          // Apply inline styles to add background only behind the text
+          newDiv.classList.add("art-subtitle-line");
           newDiv.style.display = "inline-block"; // Make it fit text width
           newDiv.style.background = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black
-          newDiv.style.padding = "4px 0"; // Add padding for better visibility
-          // newDiv.style.borderRadius = "4px"; // Round edges
+          newDiv.style.padding = "4px 0"; 
           newDiv.style.margin = "2px 0"; // Spacing between lines
-
           subtitleContainer.appendChild(newDiv); // Append the div
         });
-
         console.log(
           "Updated Subtitle with Background:",
           subtitleContainer.innerHTML
         );
       });
-
       art.on("resize", () => {
         art.subtitle.style({
           fontSize: art.height * 0.05 + "px",
@@ -575,8 +428,6 @@ function ArtPlayer(props) {
       let isPlaying = false;
       let errorOccurred = false;
       const timeoutDuration = 10000; // 10 seconds
-
-      // Set a timeout to check if the video starts playing and has a valid duration
       const loadingTimeout = setTimeout(() => {
         if (!isPlaying && (art.duration === 0 || isNaN(art.duration))) {
           console.error(
@@ -585,70 +436,14 @@ function ArtPlayer(props) {
           props.err("yes happened");
         }
       }, timeoutDuration);
-
-      // Listen for the 'playing' event to detect if the video starts playing
       art.on("playing", () => {
         isPlaying = true;
-        clearTimeout(loadingTimeout); // Clear the timeout if the video starts playing
+        clearTimeout(loadingTimeout);
       });
-
-      // if (props.currIdx) {
-      //   // Video is still not ready to play
-      //   console.log("Switching URL due to excessive loading time");
-      //   const newUrl = getUpdatedUrl();
-      //   console.log("Switching to new URL:", newUrl);
-
-      //   finalUrl = newUrl; // Update final URL
-      //   art.switchUrl(newUrl); // Switch Artplayer URL
-      // }
-
-      // art.on("loading", (state) => {
-      //   console.log("duration", art.duration);
-
-      //   setTimeout(() => {
-      //     if (art.duration === 0) {
-      //       // Video is still not ready to play
-      //       console.log("Switching URL due to excessive loading time");
-      //       const newUrl = getUpdatedUrl();
-      //       console.log("Switching to new URL:", newUrl);
-
-      //       finalUrl = newUrl; // Update final URL
-      //       art.switchUrl(newUrl); // Switch Artplayer URL
-      //     }
-      //   }, 5000);
-      // });
-
-      // Clear the effect when the video becomes ready
       art.on("video:canplay", () => {
         console.log("Video is ready, no need to switch URL");
       });
-
-      // Listen for the 'error' event in case of any playback errors
-      // art.on("error", (event) => {
-      //   console.error("Error detected:", event);
-
-      //   if (currentPrefixIndex < prefixes.length) {
-      //     currentPrefixIndex++;
-      //     const newUrl = getUpdatedUrl();
-      //     console.log("Switching to new URL:", newUrl);
-
-      //     finalUrl = newUrl; // Update final URL
-      //     art.switchUrl(newUrl); // Switch Artplayer URL
-
-      //     // Retry playback
-      //     setTimeout(() => {
-      //       art
-      //         .play()
-      //         .catch((err) =>
-      //           console.error("Playback failed after switching URL:", err)
-      //         );
-      //     }, 500);
-      //   } else {
-      //     console.error("No more prefixes to try. Playback failed.");
-      //   }
-      // });
     }
-
     return () => {
       if (art && art.destroy) {
         art.destroy(false);
