@@ -211,11 +211,48 @@ function ArtPlayer(props) {
             hls.loadSource(url);
             hls.attachMedia(video);
             art.hls = hls;
+
             art.on("destroy", () => hls.destroy());
+
+            // hls.on(Hls.Events.ERROR, (event, data) => {
+            //   console.error("HLS.js error:", data);
+            // });
+            video.addEventListener("timeupdate", () => {
+              const currentTime = Math.round(video.currentTime);
+              const duration = Math.round(video.duration);
+              if (duration > 0) {
+                if (currentTime >= duration) {
+                  art.pause();
+                  if (currentEpisodeIndex < episodes?.length - 1 && autoNext) {
+                    playNext(
+                      episodes[currentEpisodeIndex + 1].id.match(
+                        /ep=(\d+)/
+                      )?.[1]
+                    );
+                  }
+                }
+              }
+            });
           } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
             video.src = url;
+            video.addEventListener("timeupdate", () => {
+              const currentTime = Math.round(video.currentTime);
+              const duration = Math.round(video.duration);
+              if (duration > 0) {
+                if (currentTime >= duration) {
+                  art.pause();
+                  if (currentEpisodeIndex < episodes?.length - 1 && autoNext) {
+                    playNext(
+                      episodes[currentEpisodeIndex + 1].id.match(
+                        /ep=(\d+)/
+                      )?.[1]
+                    );
+                  }
+                }
+              }
+            });
           } else {
-            art.notice.show = "Unsupported playback format: m3u8";
+            console.log("Unsupported playback format: m3u8");
           }
         },
       },
@@ -403,7 +440,7 @@ function ArtPlayer(props) {
           newDiv.classList.add("art-subtitle-line");
           newDiv.style.display = "inline-block"; // Make it fit text width
           newDiv.style.background = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black
-          newDiv.style.padding = "4px 0"; 
+          newDiv.style.padding = "4px 0";
           newDiv.style.margin = "2px 0"; // Spacing between lines
           subtitleContainer.appendChild(newDiv); // Append the div
         });
