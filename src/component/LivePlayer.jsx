@@ -228,20 +228,26 @@ function ArtPlayer(props) {
 
   const getInstance = async (art) => {
     if (typeof gtr !== "undefined" && gtr === "yes") {
-      art.currentTime = timeDifference;
-
       if (timeDifference < art.duration) {
+        art.currentTime = timeDifference;
         art.play();
+      } else {
+        art.currentTime = art.duration;
+        art.pause();
       }
     }
 
     art.on("ready", () => {
       setGtr("yes");
-      art.currentTime = timeDifference;
+
       ls.setItem(`duran-${props.anId}`, art.duration);
 
       if (timeDifference < art.duration) {
+        art.currentTime = timeDifference;
         art.play();
+      } else {
+        art.currentTime = art.duration;
+        art.pause();
       }
     });
   };
