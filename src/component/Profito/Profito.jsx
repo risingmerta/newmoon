@@ -15,6 +15,7 @@ export default function Profito() {
   const [showModal, setShowModal] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [changep, setChangep] = useState(false);
 
   useEffect(() => {
     if (session?.user) {
@@ -28,8 +29,6 @@ export default function Profito() {
   const formattedDate = `${date.getDate()}-${date.toLocaleString("default", {
     month: "long",
   })}-${date.getFullYear()}`;
-
-  const [changep, setChangep] = useState(false);
 
   const handleSave = async () => {
     const userId = session?.user?.id;
@@ -52,13 +51,13 @@ export default function Profito() {
       }
     }
 
-    setError(""); // clear old error
+    setError(""); // Clear old error
 
     if (newEmail !== session?.user?.email) updatedFields.email = newEmail;
     if (newUsername !== session?.user?.username)
       updatedFields.username = newUsername;
     if (newAvatar !== session?.user?.avatar) updatedFields.avatar = newAvatar;
-    if (newPassword.trim() !== "") updatedFields.password = newPassword; // Only send if password is entered
+    if (newPassword.trim() !== "") updatedFields.password = newPassword;
 
     if (Object.keys(updatedFields).length === 0) {
       alert("No changes detected");
@@ -100,7 +99,7 @@ export default function Profito() {
       </div>
       <div className="profile-content">
         <div className="cofs">
-          <div className={`rofile-image`}>
+          <div className="rofile-image">
             <img
               src={newAvatar || session?.user?.avatar}
               className="profile-img"
@@ -137,10 +136,12 @@ export default function Profito() {
             <div className="field-label">JOINED</div>
             <div className="field-value">{formattedDate}</div>
           </div>
-          <div className="paske" onClick={setChangep(true)}>
+
+          <div className="paske" onClick={() => setChangep(true)}>
             <FaKey /> Change Password
           </div>
-          {changep && (
+
+          {changep ? (
             <>
               <div className="profile-field">
                 <div className="field-label">NEW PASSWORD</div>
@@ -149,8 +150,6 @@ export default function Profito() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  name="password"
-                  // placeholder="fill current password to keep current password"
                   required
                 />
               </div>
@@ -161,14 +160,11 @@ export default function Profito() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  name="password"
-                  // placeholder="fill current password to keep current password"
                   required
                 />
               </div>
             </>
-          )}
-          {!changep && (
+          ) : (
             <div className="profile-field">
               <div className="field-label">PASSWORD</div>
               <input
@@ -176,21 +172,22 @@ export default function Profito() {
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                name="password"
-                // placeholder="fill current password to keep current password"
                 required
               />
             </div>
           )}
+
           {error && (
             <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
           )}
+
           <div className="save-button" onClick={handleSave}>
             Save
           </div>
         </div>
+
         <div className="cofs">
-          <div className={`profile-image`}>
+          <div className="profile-image">
             <img
               src={newAvatar || session?.user?.avatar}
               className="profile-img"
@@ -226,7 +223,12 @@ export default function Profito() {
               </div>
               <div className="modal-footer">
                 <button onClick={() => setShowModal(false)}>Close</button>
-                <button onClick={() => handleSave() & setShowModal(false)}>
+                <button
+                  onClick={() => {
+                    handleSave();
+                    setShowModal(false);
+                  }}
+                >
                   Save
                 </button>
               </div>
