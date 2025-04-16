@@ -35,7 +35,7 @@ export async function POST(req) {
     const db = await connectDB();
     const users = db.collection("users");
 
-    // Update user in MongoDB
+    // Update user in MongoDB 
     const result = await users.updateOne(
       { _id: new ObjectId(userId) },
       { $set: updateData }
