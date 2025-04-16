@@ -1,117 +1,66 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
 import Link from "next/link";
 import Card from "../Card/Card";
-import {
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-  FaAngleLeft,
-  FaAngleRight,
-  FaHeart,
-} from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import "./watchList.css";
-import { useSession } from "next-auth/react";
 
-const TYPE_MAP = {
-  1: "Watching",
-  2: "On-Hold",
-  3: "Plan to Watch",
-  4: "Dropped",
-  5: "Completed",
+// Utility function to fetch and combine data from all options
+const localStorageWrapper = () => {
+  if (typeof window !== "undefined" && window.localStorage) {
+    return {
+      getItem: (key) => localStorage.getItem(key),
+      setItem: (key, value) => localStorage.setItem(key, value),
+      removeItem: (key) => localStorage.removeItem(key),
+      clear: () => localStorage.clear(),
+    };
+  } else {
+    // Handle the case when localStorage is not available
+    return {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+      clear: () => {},
+    };
+  }
 };
 
-const WatchList = ({ type, ipage }) => {
-  const { data: session } = useSession();
-  console.log(session);
-  console.log("sess", session?.user?.id);
-  const userId = session?.user?.id;
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(parseInt(ipage) || 1);
-  const [totalPages, setTotalPages] = useState(1);
+// Usage
+const ls = localStorageWrapper();
 
-  useEffect(() => {
-    setPage(parseInt(ipage) || 1);
-  }, [ipage]);
+const getCombinedData = (type) => {
+  const options = [
+    { key: "Watching", value: "1" },
+    { key: "On-Hold", value: "2" },
+    { key: "Plan to Watch", value: "3" },
+    { key: "Dropped", value: "4" },
+    { key: "Completed", value: "5" },
+  ];
 
-  useEffect(() => {
-    if (!userId) return; // Ensures userId is available before running migration & fetching
+  let combinedData = [];
 
-    const migrateAndFetch = async () => {
-      await migrateLocalStorageToMongoDB(userId);
-      fetchWatchlist(userId, type, page);
-    };
-
-    migrateAndFetch();
-  }, [userId, type, page]);
-
-  const fetchWatchlist = useCallback(async (userId, type, page) => {
-    if (!userId) return;
-
-    const typeLabel = TYPE_MAP[type];
-
-    const url = typeLabel
-      ? `/api/watchlist?userId=${userId}&type=${encodeURIComponent(
-          typeLabel
-        )}&page=${page}&pageSize=24`
-      : `/api/watchlist?userId=${userId}&page=${page}&pageSize=24`;
-
-    try {
-      const res = await fetch(url);
-      if (res.ok) {
-        const { data, totalPages } = await res.json();
-        setData(data);
-        setTotalPages(totalPages);
-      }
-    } catch (error) {
-      console.error("Error fetching watchlist:", error);
+  options.forEach((option) => {
+    if (!type || type === option.value) {
+      const key = `animeData_${option.key}`;
+      const data = ls.getItem(key)
+        ? JSON.parse(ls.getItem(key))
+        : [];
+      combinedData = [...combinedData, ...data];
     }
-  }, []);
+  });
 
-  const migrateLocalStorageToMongoDB = async (userId) => {
+  // Sort combined data by timestamp in descending order (most recent first)
+  combinedData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-    let migrationPromises = [];
+  return combinedData;
+};
 
-    for (const key in TYPE_MAP) {
-      const localData = localStorage.getItem(`animeData_${key}`);
-      if (localData) {
-        const animeList = JSON.parse(localData);
+const WatchList = (props) => {
+  const data = getCombinedData(props.type);
+  const cards = data?.map((data, idx) => {
+    return <Card key={data.id} data={data} delay={idx * 0.05} itsMe={"true"} />;
+  });
 
-        // Convert key (number) to type label
-        const typeLabel = TYPE_MAP[key];
-
-        const uploadPromises = animeList.map((anime) =>
-          fetch("/api/watchlist", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              anime: { ...anime, type: typeLabel, userId },
-            }),
-          })
-        );
-
-        migrationPromises.push(Promise.all(uploadPromises));
-
-        // Remove localStorage after migration completes
-        Promise.all(uploadPromises).then(() =>
-          localStorage.removeItem(`animeData_${key}`)
-        );
-      }
-    }
-
-    await Promise.all(migrationPromises);
-  };
-
-  const currentPage = parseInt(page) || 1;
-  let useArr = [];
-  if (totalPages <= 3) {
-    useArr = Array.from({ length: totalPages }, (_, i) => i + 1);
-  } else if (currentPage < 3) {
-    useArr = [1, 2, 3];
-  } else if (currentPage >= totalPages - 1) {
-    useArr = [totalPages - 2, totalPages - 1, totalPages];
-  } else {
-    useArr = [currentPage - 1, currentPage, currentPage + 1];
-  }
   const getOptionName = (type) => {
     switch (type) {
       case "1":
@@ -138,128 +87,56 @@ const WatchList = ({ type, ipage }) => {
               <FaHeart />
               Watch List
             </div>
+            <div></div>
           </div>
           <div className="butM">
             <div className="butInnM">
-              <Link
-                href="/user/watch-list"
-                className={`namil ${!type ? "selectedNO" : ""}`}
-              >
+              <Link href="/user/watch-list" className={`namil ${!props.type ? "selectedNO" : ""}`}>
                 All
               </Link>
-              {Object.keys(TYPE_MAP).map((key) => (
-                <Link
-                  key={key}
-                  href={`/user/watch-list?type=${key}`}
-                  className={`oamil ${type === key ? "selectedNO" : ""}`}
-                >
-                  {TYPE_MAP[key]}
-                </Link>
-              ))}
+              <Link href="/user/watch-list?type=1" className={`oamil ${props.type === "1" ? "selectedNO" : ""}`}>
+                Watching
+              </Link>
+              <Link href="/user/watch-list?type=2" className={`oamil ${props.type === "2" ? "selectedNO" : ""}`}>
+                On-Hold
+              </Link>
+              <Link href="/user/watch-list?type=3" className={`oamil ${props.type === "3" ? "selectedNO" : ""}`}>
+                Plan to Watch
+              </Link>
+              <Link href="/user/watch-list?type=4" className={`oamil ${props.type === "4" ? "selectedNO" : ""}`}>
+                Dropped
+              </Link>
+              <Link href="/user/watch-list?type=5" className={`oamil ${props.type === "5" ? "selectedNO" : ""}`}>
+                Completed
+              </Link>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="ddidd">
+          <div className="drd-col">
+            <div className="darg d-flex a-center j-center">
+              {cards.length > 0 ? (
+                cards
+              ) : (
+                <div className="EmLi">
+                  <div className="listEmp">
+                    {getOptionName(props.type)} list is empty
+                  </div>
+                  <div className="adviso">{'<^ Add some animes to the list ^>'}</div>
+                  <div className="flex adviso-1">
+                    <div>\__---</div>
+                    <div className="adviso">/\/\/\/\/\/\</div>
+                    <div>---__/</div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-      <div className="ddidd">
-        <div className="drd-col">
-          <div className="darg d-flex a-center j-center">
-            {data?.length > 0 ? (
-              data?.map((anime, idx) => (
-                <Card
-                  key={anime?.id}
-                  data={anime}
-                  delay={idx * 0.05}
-                  itsMe={"true"}
-                />
-              ))
-            ) : (
-              <div className="EmLi">
-                <div className="listEmp">
-                  {getOptionName(type)} list is empty
-                </div>
-                <div className="adviso">
-                  {"<^ Add some animes to the list ^>"}
-                </div>
-                <div className="flex adviso-1">
-                  <div>\__---</div>
-                  <div className="adviso">/\/\/\/\/\/\</div>
-                  <div>---__/</div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {totalPages > 1 && (
-        <div className="paginA">
-          {currentPage > 1 && (
-            <>
-              <Link
-                href={
-                  type ? `/user/watch-list?type=${type}` : `/user/watch-list`
-                }
-                className="pagin-tile"
-              >
-                <FaAngleDoubleLeft />
-              </Link>
-              <Link
-                href={
-                  type
-                    ? `/user/watch-list?type=${type}&page=${currentPage - 1}`
-                    : `/user/watch-list?page=${currentPage - 1}`
-                }
-                className="pagin-tile"
-              >
-                <FaAngleLeft />
-              </Link>
-            </>
-          )}
-
-          {useArr.map((ii) => (
-            <Link
-              key={ii}
-              href={
-                type
-                  ? ii === 1
-                    ? `/user/watch-list?type=${type}`
-                    : `/user/watch-list?type=${type}&page=${ii}`
-                  : ii === 1
-                  ? `/user/watch-list`
-                  : `/user/watch-list?page=${ii}`
-              }
-              className={`pagin-tile ${ii === currentPage ? "pagin-colo" : ""}`}
-            >
-              {ii}
-            </Link>
-          ))}
-
-          {currentPage < totalPages && (
-            <>
-              <Link
-                href={
-                  type
-                    ? `/user/watch-list?type=${type}&page=${currentPage + 1}`
-                    : `/user/watch-list?page=${currentPage + 1}`
-                }
-                className="pagin-tile"
-              >
-                <FaAngleRight />
-              </Link>
-              <Link
-                href={
-                  type
-                    ? `/user/watch-list?type=${type}&page=${totalPages}`
-                    : `/user/watch-list?page=${totalPages}`
-                }
-                className="pagin-tile"
-              >
-                <FaAngleDoubleRight />
-              </Link>
-            </>
-          )}
-        </div>
-      )}
     </div>
   );
 };
