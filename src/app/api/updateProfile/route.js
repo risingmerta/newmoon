@@ -33,7 +33,7 @@ export async function POST(req) {
     }
 
     const db = await connectDB();
-    const users = db.collection("users");
+    const users = db.collection("users"); 
 
     // Update user in MongoDB 
     const result = await users.updateOne(

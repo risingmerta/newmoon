@@ -29,6 +29,11 @@ export default function Profito() {
     month: "long",
   })}-${date.getFullYear()}`;
 
+  const [logIsOpen, setLogIsOpen] = useState(false);
+  const sign = (sign) => {
+    setLogIsOpen(sign);
+  };
+
   const handleSave = async () => {
     const userId = session?.user?.id;
     const updatedFields = {};
@@ -57,8 +62,7 @@ export default function Profito() {
     const data = await response.json();
 
     if (response.ok) {
-      setShowMod(true);
-
+      signOut();
       alert("Profile updated successfully");
       setShowModal(false);
     } else {
@@ -68,7 +72,13 @@ export default function Profito() {
 
   return (
     <>
-      {showMod && <SignInSignUpModal />}
+      {!session && (
+        <SignInSignUpModal
+          logIsOpen={logIsOpen}
+          setLogIsOpen={setLogIsOpen}
+          sign={sign}
+        />
+      )}
       <div className="comAll">
         <div className="profile-header">
           <FaUser /> Edit Profile
