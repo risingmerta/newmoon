@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaKey, FaPen, FaUser } from "react-icons/fa";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { imageData } from "@/data/imageData";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import "./profito.css";
 
 export default function Profito() {
@@ -55,13 +55,13 @@ export default function Profito() {
     const data = await response.json();
 
     if (response.ok) {
-      if (updatedFields.email || updatedFields.password) {
-        await signIn("credentials", {
-          email: newEmail,
-          password: newPassword || "",
-          redirect: false,
-        });
-      }
+      // if (updatedFields.email || updatedFields.password) {
+      //   await signIn("credentials", {
+      //     email: newEmail,
+      //     password: newPassword || "",
+      //     redirect: false,
+      //   });
+      // }
 
       alert("Profile updated successfully");
       setShowModal(false);
