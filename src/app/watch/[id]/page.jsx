@@ -22,6 +22,7 @@ async function fetchDataFromAPI(url, revalidate) {
 
 // Generate metadata dynamically based on the anime info
 export async function generateMetadata({ params }) {
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
   const param = await params;
   try {
     const mongoUri =
@@ -54,17 +55,15 @@ export async function generateMetadata({ params }) {
     const title = existingAnime?.info
       ? existingAnime?.info?.results?.data?.title
       : datao?.results?.data?.title;
-
     return {
-      title: `Watch ${title} English Sub/Dub online free on Animoon.me`,
-      description: `Animoon is the best site to watch ${title} SUB online, or you can even watch underrated anime on Animoon.`,
+      title: `Watch ${title} English Sub/Dub online free on ${siteName}`,
+      description: `${siteName} is the best site to watch ${title} SUB online, or you can even watch underrated anime on ${siteName}.`,
     };
   } catch (error) {
     console.error("Error fetching metadata: ", error);
     return {
-      title: "Watch Anime Online Free on Animoon.me",
-      description:
-        "Animoon is the best site to watch anime in high quality with both sub and dub options.",
+      title: `Watch Anime Online Free on ${siteName}`,
+      description: `${siteName} is the best site to watch anime in high quality with both sub and dub options.`,
     };
   }
 }

@@ -5,12 +5,13 @@ import Script from "next/script";
 import React from "react";
 
 export async function generateMetadata({ searchParams }) {
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
   const searchParam = await searchParams;
   const idd = searchParam.heading;
 
   return {
-    title: `Watch ${idd} Anime English Sub/Dub online free on Animoon.me`,
-    description: `Animoon is the best site to watch ${idd} Anime SUB online, or you can even watch ${idd} Anime DUB in HD quality. You can also watch under rated anime on Animoon website.`,
+    title: `Watch ${idd} Anime English Sub/Dub online free on ${siteName}`,
+    description: `${siteName} is the best site to watch ${idd} Anime SUB online, or you can even watch ${idd} Anime DUB in HD quality. You can also watch under rated anime on ${siteName} website.`,
   };
 }
 

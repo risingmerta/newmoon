@@ -7,13 +7,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 // const hostname = headers().get("host") || "";
 // const siteName = hostname.split('.')[0].toCapitalLize();
-
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION;
+const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
 export const metadata = {
-  title: "Animoon - Watch free Anime Online English Sub/Dub",
-  description: `Animoon is the best site to watch Anime SUB online, or you can even watch Anime DUB in HD quality. You can also find UnderRated anime on Animoon website.`,
+  title: `${siteName} - Watch free Anime Online English Sub/Dub`,
+  description: `${siteName} is the best site to watch Anime SUB online, or you can even watch Anime DUB in HD quality. You can also find UnderRated anime on ${siteName} website.`,
   verification: {
-    google: "qwnQljuFScz5pMwy3mHv8BC3aZh5E9J8SYfpKwpgw1E",
-    "google-adsense-account": "ca-pub-9295326902131480",
+    google: googleVerification,
+    "google-adsense-account": adsenseId,
   },
 };
 

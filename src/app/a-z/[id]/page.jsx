@@ -4,15 +4,16 @@ import Script from "next/script";
 import React from "react";
 
 export async function generateMetadata({ params }) {
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
   const idd = "Anime";
 
   return {
-    title: `Watch ${idd} English Sub/Dub online free on Animoon, free Anime Streaming`,
-    description: `Animoon is the best site to watch
+    title: `Watch ${idd} English Sub/Dub online free on ${siteName}, free Anime Streaming`,
+    description: `${siteName} is the best site to watch
                     ${idd} SUB online, or you can even
                     watch ${idd} DUB in HD quality. You
                     can also watch underrated anime
-                    on Animoon website.`,
+                    on ${siteName} website.`,
   };
 }
 

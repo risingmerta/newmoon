@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import "./footer.css";
 import SocialLinks from "../Navbar/Social";
@@ -29,17 +29,19 @@ export default function Footer(props) {
   }
   const links = getAlphabets();
 
-  const [siteName, setSiteName] = useState("Animoon");
+  // const [siteName, setSiteName] = useState("Animoon");
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const hostname = window.location.hostname; // Get the full domain
-      const subdomain = hostname.split(".")[0]; // Extract subdomain
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const hostname = window.location.hostname; // Get the full domain
+  //     const subdomain = hostname.split(".")[0]; // Extract subdomain
 
-      // Change text based on subdomain
-      setSiteName(subdomain);
-    }
-  }, []);
+  //     // Change text based on subdomain
+  //     setSiteName(subdomain);
+  //   }
+  // }, []);
+
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
 
   return (
     <div className="footer-container d-flex-fd-column j-center">
@@ -72,10 +74,10 @@ export default function Footer(props) {
       </div>
       <div className="copyright-text">
         <p>
-          Animoon does not store any files on our server; we only link to the
+          {siteName} does not store any files on our server; we only link to the
           media which is hosted on 3rd party services.
         </p>
-        <p>&copy; Animoon All rights reserved.</p>
+        <p>&copy; {siteName} All rights reserved.</p>
       </div>
     </div>
   );

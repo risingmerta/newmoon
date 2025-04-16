@@ -57,6 +57,7 @@ async function fetchAndStoreAnime(db, idToCheck) {
 // ───────────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }) {
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
   const idToCheck = params.anime;
 
   const client = new MongoClient(mongoUri);
@@ -78,10 +79,10 @@ export async function generateMetadata({ params }) {
   const title =
     animeDoc?.info?.results?.data?.title ?? "Anime not found - Animoon";
 
-  return {
-    title: `Watch ${title} English Sub/Dub online free on Animoon.me`,
-    description: `Animoon is the best site to watch ${title} SUB online, or you can even watch ${title} DUB in HD quality. You can also watch underrated anime on Animoon.`,
-  };
+    return {
+      title: `Watch ${title} English Sub/Dub online free on ${siteName}`,
+      description: `${siteName} is the best site to watch ${title} SUB online, or you can even watch ${title} DUB in HD quality. You can also watch underrated anime on ${siteName}.`,
+    };
 }
 
 // ───────────────────────────────────────────────────────────
