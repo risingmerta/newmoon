@@ -62,7 +62,7 @@ export default function Profito() {
     const data = await response.json();
 
     if (response.ok) {
-      await signOut();
+      await signOut({ redirect: false });
       alert("Profile updated successfully");
       setShowModal(false);
     } else {
