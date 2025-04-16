@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaKey, FaPen, FaUser } from "react-icons/fa";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { imageData } from "@/data/imageData";
 // import { signIn } from "next-auth/react";
 import "./profito.css";
@@ -62,7 +62,7 @@ export default function Profito() {
     const data = await response.json();
 
     if (response.ok) {
-      signOut();
+      await signOut();
       alert("Profile updated successfully");
       setShowModal(false);
     } else {
