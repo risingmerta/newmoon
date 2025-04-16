@@ -13,6 +13,8 @@ export default function Profito() {
   const [newPassword, setNewPassword] = useState("");
   const [newAvatar, setNewAvatar] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (session?.user) {
@@ -27,9 +29,30 @@ export default function Profito() {
     month: "long",
   })}-${date.getFullYear()}`;
 
+  const [changep, setChangep] = useState(false);
+
   const handleSave = async () => {
     const userId = session?.user?.id;
     const updatedFields = {};
+
+    if (changep) {
+      if (newPassword.trim() === "" || confirmPassword.trim() === "") {
+        setError("Please fill both password fields.");
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        setError("Passwords do not match.");
+        return;
+      }
+    } else {
+      if (!newPassword) {
+        setError("Please fill password field.");
+        return;
+      }
+    }
+
+    setError(""); // clear old error
 
     if (newEmail !== session?.user?.email) updatedFields.email = newEmail;
     if (newUsername !== session?.user?.username)
@@ -114,20 +137,54 @@ export default function Profito() {
             <div className="field-label">JOINED</div>
             <div className="field-value">{formattedDate}</div>
           </div>
-          <div className="paske">
+          <div className="paske" onClick={setChangep(true)}>
             <FaKey /> Change Password
           </div>
-          <div className="profile-field">
-            <div className="field-label">NEW PASSWORD</div>
-            <input
-              className="field-input"
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              name="password"
-              placeholder="Leave empty to keep current password"
-            />
-          </div>
+          {changep && (
+            <>
+              <div className="profile-field">
+                <div className="field-label">NEW PASSWORD</div>
+                <input
+                  className="field-input"
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  name="password"
+                  // placeholder="fill current password to keep current password"
+                  required
+                />
+              </div>
+              <div className="profile-field">
+                <div className="field-label">CONFIRM PASSWORD</div>
+                <input
+                  className="field-input"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  name="password"
+                  // placeholder="fill current password to keep current password"
+                  required
+                />
+              </div>
+            </>
+          )}
+          {!changep && (
+            <div className="profile-field">
+              <div className="field-label">PASSWORD</div>
+              <input
+                className="field-input"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                name="password"
+                // placeholder="fill current password to keep current password"
+                required
+              />
+            </div>
+          )}
+          {error && (
+            <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+          )}
           <div className="save-button" onClick={handleSave}>
             Save
           </div>
