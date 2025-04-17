@@ -6,6 +6,7 @@ import { useState } from "react";
 import Profilo from "../Profilo/Profilo";
 import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 
 export default function MonetizePage() {
   const { data: session } = useSession();
