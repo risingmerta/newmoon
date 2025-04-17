@@ -17,22 +17,16 @@ export default function MonetizePage() {
 
   const [profiIsOpen, setProfiIsOpen] = useState(false);
   const [logIsOpen, setLogIsOpen] = useState(false);
-  const sign = (sign) => {
-    setLogIsOpen(sign);
-  };
 
-  const lang = (lang) => {
-    setSelectL(lang);
-  };
+  const sign = (sign) => setLogIsOpen(sign);
+  const lang = (lang) => setSelectL(lang);
 
   const handleSave = async () => {
     if (!directLink && !refLink) {
       return alert("Please fill at least one link.");
     }
 
-    if (!session) {
-      return;
-    }
+    if (!session) return;
 
     try {
       const res = await fetch("/api/save-links", {
@@ -65,20 +59,19 @@ export default function MonetizePage() {
         setProfiIsOpen={setProfiIsOpen}
         profiIsOpen={profiIsOpen}
       />
-      {profiIsOpen ? (
+
+      {profiIsOpen && (
         <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} />
-      ) : (
-        ""
       )}
-      {logIsOpen ? (
+
+      {logIsOpen && (
         <SignInSignUpModal
           logIsOpen={logIsOpen}
           setLogIsOpen={setLogIsOpen}
           sign={sign}
         />
-      ) : (
-        ""
       )}
+
       <div className="container">
         <h1 className="heading">💸 Start Earning with Animoon + Adsterra</h1>
         <p className="text">
@@ -103,6 +96,14 @@ export default function MonetizePage() {
             placeholder="Paste your direct ad link here"
             className="input"
           />
+          <div className="videoWrapper">
+            <iframe
+              src="https://www.youtube.com/embed/a9RXktchr6o"
+              title="How To Create ADSTERRA DIRECT LINK As A Beginner (2024)"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
 
         <div className="box">
@@ -115,6 +116,14 @@ export default function MonetizePage() {
             placeholder="Paste your referral link here"
             className="input"
           />
+          <div className="videoWrapper">
+            <iframe
+              src="https://www.youtube.com/embed/vH9Q7A4yrMo"
+              title="How to Sign Up for Adsterra Affiliate Program (Tutorial)"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
 
         <button className="saveButton" onClick={handleSave}>
@@ -140,9 +149,8 @@ export default function MonetizePage() {
           Made with ❤️ by <strong style={{ color: "#c084fc" }}>Animoon</strong>
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+
+      <Footer />
     </>
   );
 }
