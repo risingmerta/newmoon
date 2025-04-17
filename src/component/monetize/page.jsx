@@ -94,16 +94,14 @@ export default function MonetizePage() {
             placeholder="Paste your direct ad link here"
             className="input"
           />
-          {directLink && (
+          <div className="videoWrapper">
             <iframe
-              src={directLink}
-              width="100%"
-              height="250"
+              src="https://www.youtube.com/embed/a9RXktchr6o"
+              title="How To Create ADSTERRA DIRECT LINK As A Beginner (2024)"
               frameBorder="0"
-              sandbox="allow-scripts allow-same-origin"
-              title="Direct Ad Preview"
-            />
-          )}
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
 
         <div className="box">
