@@ -87,16 +87,16 @@ export default function WatchAnime(props) {
 
   const [subIsSelected, setSubIsSelected] = useState(() => {
     const isDubSelected = ls.getItem("subordub") === "false";
-  
+
     const hasDubEpisodes = props.datao?.results.data.animeInfo.tvInfo.dub > 0;
     const hasDubData = props.datajDub?.results;
     const hasSubData = props.datajSub?.results;
-  
+
     // If sub data is not available, force false (aka: dub)
     if (!hasSubData) {
       return false;
     }
-  
+
     if (isDubSelected) {
       if (hasDubEpisodes && hasDubData) {
         return false;
@@ -107,7 +107,6 @@ export default function WatchAnime(props) {
       return true;
     }
   });
-  
 
   const [selectedServer, setSelectedServer] = useState(0);
   const [bhaiLink, setBhaiLink] = useState(() => {
@@ -309,14 +308,14 @@ export default function WatchAnime(props) {
     setSubIsSelected(() => {
       // If subtitle data is not available, force dub selection
       if (!props.datajSub) return false;
-  
+
       const isDubSelected = ls.getItem("subordub") === "false";
-  
+
       const hasDubEpisodes =
         props.datao?.results.data.animeInfo.tvInfo?.dub > 0;
-  
+
       const hasDubData = props.datajDub?.results;
-  
+
       if (isDubSelected) {
         return hasDubEpisodes && hasDubData ? false : true;
       } else {
@@ -324,7 +323,6 @@ export default function WatchAnime(props) {
       }
     });
   }, [props.datao, props.datajSub, props.datajDub]);
-  
 
   const [epNumb, setEpNumb] = useState(epiod);
   const backward = () => {
@@ -412,6 +410,21 @@ export default function WatchAnime(props) {
         adContainer.innerHTML = `
         <iframe
           src="/ad"
+          style="width: 100%; height: 100px; border: none; overflow: hidden;"
+          scrolling="no"
+        ></iframe>
+      `;
+      }
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-containerss");
+      if (adContainer) {
+        adContainer.innerHTML = `
+        <iframe
+          src="/ad2"
           style="width: 100%; height: 100px; border: none; overflow: hidden;"
           scrolling="no"
         ></iframe>
@@ -683,6 +696,10 @@ export default function WatchAnime(props) {
           <LoadingSpinner />
         ) : (
           <div>
+            <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
+              {/* Ad container */}
+              <div id="ad-containers"></div>
+            </div>
             <div style={{ marginTop: "65px" }} className="watch-container">
               <div className="flex gap-1 items-center pecif">
                 <Link href={"/"} onClick={handleNavigation}>
@@ -826,8 +843,7 @@ export default function WatchAnime(props) {
                           anId={props.anId}
                           epNumb={epNumb}
                           bhaiLink={
-                            "https://khiv.animoon.me/m3u8-proxy?url=" +
-                            bhaiLink
+                            "https://khiv.animoon.me/m3u8-proxy?url=" + bhaiLink
                           }
                           trutie={trutie}
                           epNum={epiod}
