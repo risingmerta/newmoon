@@ -697,12 +697,12 @@ export default function WatchAnime(props) {
         ) : (
           <div>
             <div style={{ marginTop: "65px" }} className="watch-container">
-              <div
+              {/* <div
                 style={{ width: "100%", height: "100px", overflow: "hidden" }}
-              >
-                {/* Ad container */}
-                <div id="ad-containers"></div>
-              </div>
+              > */}
+              {/* Ad container */}
+              <div id="ad-containers"></div>
+              {/* </div> */}
               <div className="flex gap-1 items-center pecif">
                 <Link href={"/"} onClick={handleNavigation}>
                   <div className="omo">Home</div>
