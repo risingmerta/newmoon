@@ -241,6 +241,7 @@ export default function Details(props) {
 
       <div className="details-container">
         <div className="details-header">
+          <div id="ad-container2"></div>
           <div className="details-header-primary">
             <img
               className="details-container-background"
@@ -248,7 +249,6 @@ export default function Details(props) {
               alt="pop"
               isAnimated={false}
             />
-            <div id="ad-container2"></div>
             <div className="anime-details d-flex">
               <div className="anime-details-containN">
                 <div className="anime-image-wrapper">

@@ -1,0 +1,96 @@
+.container {
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    background-color: #1e1e1e;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+  }
+  
+  h1 {
+    color: #4ade80;
+    text-align: center;
+    font-size: 28px;
+  }
+  
+  p {
+    color: #ccc;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .box {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 20px 0;
+  }
+  
+  .box h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    background: #3a3a3a;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .button,
+  .saveButton {
+    display: block;
+    width: 100%;
+    background-color: #22c55e;
+    color: black;
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .button:hover,
+  .saveButton:hover {
+    background-color: #16a34a;
+  }
+  
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    margin-top: 20px;
+  }
+  
+  .note {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 10px;
+    color: #aaa;
+  }
+  
+  .status {
+    text-align: center;
+    font-size: 14px;
+    color: #4ade80;
+    margin-top: 12px;
+  }
+  

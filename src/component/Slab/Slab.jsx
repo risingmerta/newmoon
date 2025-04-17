@@ -4,17 +4,18 @@ import { FaBell, FaCog, FaHeart, FaHistory, FaUser } from "react-icons/fa";
 import Link from "next/link";
 import "./slab.css";
 import { useSession } from "next-auth/react";
+import { FaSackDollar } from "react-icons/fa6";
 
 export default function Slab(props) {
-
   const { data: session } = useSession();
   return (
     <div className="allpit">
-      <img className="allpit-background" src={session?.user.avatar.replace(
-                "https://cdn.noitatnemucod.net/avatar/100x100/",
-                "https://img.flawlessfiles.com/_r/100x100/100/avatar/"
-              )} alt="pop" />
-      <div className="hiik">Hi, {session?.user.username}</div>
+      <img
+        className="allpit-background"
+        src={session?.user?.avatar}
+        alt="pop"
+      />
+      <div className="hiik">Hi, {session?.user?.username}</div>
       <div className="linkok">
         <Link
           href={"/user/profile"}
@@ -62,6 +63,15 @@ export default function Slab(props) {
             <FaCog />
           </div>
           <div className="namino">Settings</div>
+        </Link>
+        <Link
+          href={"/user/monetize"}
+          className={`newPo ${props.slabId === "monetize" ? "impot" : ""}`}
+        >
+          <div className="iconix">
+            <FaSackDollar />
+          </div>
+          <div className="namino">Monetize</div>
         </Link>
       </div>
     </div>
