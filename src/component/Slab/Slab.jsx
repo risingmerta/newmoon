@@ -64,7 +64,7 @@ export default function Slab(props) {
           </div>
           <div className="namino">Settings</div>
         </Link>
-        <Link
+        {/* <Link
           href={"/user/monetize"}
           className={`newPo ${props.slabId === "monetize" ? "impot" : ""}`}
         >
@@ -72,7 +72,7 @@ export default function Slab(props) {
             <FaSackDollar />
           </div>
           <div className="namino">Monetize</div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

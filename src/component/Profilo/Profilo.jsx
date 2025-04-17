@@ -13,11 +13,12 @@ import {
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FaSackDollar } from "react-icons/fa6";
 
 export default function Profilo(props) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Loading state for sign-out
-    const router = useRouter();
+  const router = useRouter();
   const handleSignOut = async () => {
     setLoading(true); // Start loading
     router.refresh(); // This will reload the current page
@@ -65,6 +66,10 @@ export default function Profilo(props) {
         <Link href={"/user/settings"} className="profD">
           <FaCog />
           Settings
+        </Link>
+        <Link href={"/monetize"} className="profD">
+          <FaSackDollar />
+          Monetize
         </Link>
         <div className="logD" onClick={handleSignOut} disabled={loading}>
           {loading ? "Loging Out..." : "Logout"}

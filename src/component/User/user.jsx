@@ -59,7 +59,7 @@ export default function User(props) {
         {props.id === "watch-list" ? <WatchList type={props.type} ipage={props.page}/> : ""}
         {props.id === "settings" ? <Settings /> : ""}
         {props.id === "notification" ? <Notification /> : ""}
-        {props.id === "monetize" ? <MonetizePage/> : ""}
+        {/* {props.id === "monetize" ? <MonetizePage/> : ""} */}
         <div>
           <Footer />
         </div>
