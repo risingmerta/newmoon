@@ -13,7 +13,7 @@ export async function POST(req) {
     const collection = db.collection("profile");
 
     const result = await collection.updateOne(
-      { userId },
+      { _id: userId }, // use userId as _id
       {
         $set: {
           directLink,
