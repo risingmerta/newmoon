@@ -43,6 +43,21 @@ const Home = ({ data, existingAnime }) => {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container3");
+      if (adContainer) {
+        adContainer.innerHTML = `
+          <iframe
+            src="/ad3"
+            style="width: 100%; height: 100px; border: none; overflow: hidden;"
+            scrolling="no"
+          ></iframe>
+        `;
+      }
+    }
+  }, [pathname]);
+
   return (
     <div>
       <SessionProvider>
@@ -73,10 +88,14 @@ const Home = ({ data, existingAnime }) => {
             selectL={selectL}
           />
           {/* "//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"*/}
-          <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
-            {/* Ad container */}
-            <div id="ad-container"></div>
-          </div>
+          {/* <div style={{ width: "100%", height: "100px", overflow: "hidden" }}> */}
+          {/* Ad container */}
+          <div id="ad-container"></div>
+          {/* </div> */}
+          {/* <div style={{ width: "100%", height: "100px", overflow: "hidden" }}> */}
+          {/* Ad container */}
+          <div id="ad-container3"></div>
+          {/* </div> */}
 
           <Trending data={data?.trending || []} selectL={selectL} />
           <Share ShareUrl="https://animoon.me/" />

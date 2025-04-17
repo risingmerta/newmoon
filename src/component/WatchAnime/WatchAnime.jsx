@@ -433,6 +433,21 @@ export default function WatchAnime(props) {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container3");
+      if (adContainer) {
+        adContainer.innerHTML = `
+        <iframe
+          src="/ad3"
+          style="width: 100%; height: 100px; border: none; overflow: hidden;"
+          scrolling="no"
+        ></iframe>
+      `;
+      }
+    }
+  }, [pathname]);
+
   const err = (data) => {
     if (data) {
       if (serverName === "Vidstreaming") {
@@ -1343,10 +1358,11 @@ export default function WatchAnime(props) {
               </div>
             </div>
 
-            <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
-              {/* Ad container */}
-              <div id="ad-container"></div>
-            </div>
+            {/* <div style={{ width: "100%", height: "100px", overflow: "hidden" }}> */}
+            {/* Ad container */}
+            <div id="ad-container"></div>
+            {/* </div> */}
+            <div id="ad-container3"></div>
 
             <Share
               style={{

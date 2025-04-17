@@ -10,6 +10,7 @@ import Navbar from "../Navbar/Navbar";
 import Profilo from "../Profilo/Profilo";
 import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import Footer from "../Footer/Footer";
+import { usePathname } from "next/navigation";
 
 export default function SearchResults(props) {
   const [selectL, setSelectL] = useState("en");
@@ -31,6 +32,23 @@ export default function SearchResults(props) {
       }, [20000]);
     }
   };
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container2");
+      if (adContainer) {
+        adContainer.innerHTML = `
+              <iframe
+                src="/ad2"
+                style="width: 100%; height: 100px; border: none; overflow: hidden;"
+                scrolling="no"
+              ></iframe>
+            `;
+      }
+    }
+  }, [pathname]);
   return (
     <>
       <div>
@@ -58,6 +76,7 @@ export default function SearchResults(props) {
           ) : (
             ""
           )}
+          <div id="ad-container2"></div>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
@@ -76,6 +95,8 @@ export default function SearchResults(props) {
               </div>
             </div>
           )}
+
+          <div id="ad-container2"></div>
 
           <div>
             <Footer />

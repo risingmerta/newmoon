@@ -6,13 +6,14 @@ const Page = () => {
     <div>
       {/* Ad Script */}
       <Script
-        src="//pl26400286.profitableratecpm.com/5d494585d0e04105f2b8a95589379c5d/invoke.js"
+        src="//disgustingmad.com/a8364aeaeff99fac8326528d16cd0941/invoke.js"
         strategy="afterInteractive"
-        async 
+        async
+        // data-cfasync="false"
       />
 
       {/* Ad Container */}
-      <div id="container-5d494585d0e04105f2b8a95589379c5d" />
+      <div id="container-a8364aeaeff99fac8326528d16cd0941" />
     </div>
   );
 };

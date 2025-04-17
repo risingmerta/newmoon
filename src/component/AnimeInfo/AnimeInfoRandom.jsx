@@ -205,6 +205,36 @@ export default function Details(props) {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container2");
+      if (adContainer) {
+        adContainer.innerHTML = `
+            <iframe
+              src="/ad2"
+              style="width: 100%; height: 100px; border: none; overflow: hidden;"
+              scrolling="no"
+            ></iframe>
+          `;
+      }
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container3");
+      if (adContainer) {
+        adContainer.innerHTML = `
+            <iframe
+              src="/ad3"
+              style="width: 100%; height: 100px; border: none; overflow: hidden;"
+              scrolling="no"
+            ></iframe>
+          `;
+      }
+    }
+  }, [pathname]);
+
   return (
     <>
       <SignInSignUpModal setLogIsOpen={setLogIsOpen} logIsOpen={logIsOpen} />
@@ -218,6 +248,7 @@ export default function Details(props) {
               alt="pop"
               isAnimated={false}
             />
+            <div id="ad-container2"></div>
             <div className="anime-details d-flex">
               <div className="anime-details-containN">
                 <div className="anime-image-wrapper">
@@ -410,10 +441,11 @@ export default function Details(props) {
           </div>
         </div>
       </div>
-      <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
-        {/* Ad container */}
-        <div id="ad-container"></div>
-      </div>
+      {/* <div style={{ width: "100%", height: "100px", overflow: "hidden" }}> */}
+      {/* Ad container */}
+      <div id="ad-container"></div>
+      {/* </div> */}
+      <div id="ad-container3"></div>
     </>
   );
 }

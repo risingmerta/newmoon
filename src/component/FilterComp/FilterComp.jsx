@@ -245,6 +245,23 @@ const FilterComp = (props) => {
 
   const [fullPath, setFullPath] = useState("");
 
+    const pathname = usePathname();
+  
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const adContainer = document.getElementById("ad-container2");
+        if (adContainer) {
+          adContainer.innerHTML = `
+              <iframe
+                src="/ad2"
+                style="width: 100%; height: 100px; border: none; overflow: hidden;"
+                scrolling="no"
+              ></iframe>
+            `;
+        }
+      }
+    }, [pathname]);
+
   useEffect(() => {
     let currentPath = window.location.pathname + window.location.search;
 
@@ -309,6 +326,7 @@ const FilterComp = (props) => {
           ) : (
             ""
           )}
+          <div id="ad-container2"></div>
           <div>
             <div className="filter-container">
               <h2>Filter</h2>
@@ -460,6 +478,7 @@ const FilterComp = (props) => {
               </div>
             </div>
           </div>
+          <div id="ad-container2"></div>
           <div>
             <Footer />
           </div>
