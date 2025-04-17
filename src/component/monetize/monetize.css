@@ -1,6 +1,6 @@
 .container {
   max-width: 600px;
-  margin: 40px auto;
+  margin: 100px auto;
   padding: 30px;
   background-color: #000;
   border-radius: 20px;
@@ -88,4 +88,13 @@
   font-size: 14px;
   color: #4ade80;
   margin-top: 12px;
+}
+
+@media screen and (max-width: 1150px) {
+  .container {
+    padding: 10px;
+  }
+  .box {
+    padding: 10px;
+  }
 }

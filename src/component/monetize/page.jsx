@@ -139,6 +139,9 @@ export default function MonetizePage() {
           Made with ❤️ by <strong style={{ color: "#c084fc" }}>Animoon</strong>
         </div>
       </div>
+      <div>
+        <Footer />
+      </div>
     </>
   );
 }
