@@ -22,8 +22,8 @@ export default function MonetizePage() {
   const lang = (lang) => setSelectL(lang);
 
   const handleSave = async () => {
-    if (!directLink && !refLink) {
-      return alert("Please fill at least one link.");
+    if (!directLink) {
+      return alert("Please enter your Direct Adsterra Link.");
     }
 
     if (!session) return;
@@ -59,11 +59,9 @@ export default function MonetizePage() {
         setProfiIsOpen={setProfiIsOpen}
         profiIsOpen={profiIsOpen}
       />
-
       {profiIsOpen && (
         <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} />
       )}
-
       {logIsOpen && (
         <SignInSignUpModal
           logIsOpen={logIsOpen}
@@ -96,18 +94,20 @@ export default function MonetizePage() {
             placeholder="Paste your direct ad link here"
             className="input"
           />
-          <div className="videoWrapper">
+          {directLink && (
             <iframe
-              src="https://www.youtube.com/embed/a9RXktchr6o"
-              title="How To Create ADSTERRA DIRECT LINK As A Beginner (2024)"
+              src={directLink}
+              width="100%"
+              height="250"
               frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
+              sandbox="allow-scripts allow-same-origin"
+              title="Direct Ad Preview"
+            />
+          )}
         </div>
 
         <div className="box">
-          <h2 className="boxTitle">🤝 3. Refer Friends and Earn More</h2>
+          <h2 className="boxTitle">🤝 3. (Optional) Refer Friends</h2>
           <label>Your Adsterra Referral Link:</label>
           <input
             type="text"
@@ -116,14 +116,16 @@ export default function MonetizePage() {
             placeholder="Paste your referral link here"
             className="input"
           />
-          <div className="videoWrapper">
+          {refLink && (
             <iframe
-              src="https://www.youtube.com/embed/vH9Q7A4yrMo"
-              title="How to Sign Up for Adsterra Affiliate Program (Tutorial)"
+              src={refLink}
+              width="100%"
+              height="250"
               frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
+              sandbox="allow-scripts allow-same-origin"
+              title="Referral Link Preview"
+            />
+          )}
         </div>
 
         <button className="saveButton" onClick={handleSave}>
@@ -150,7 +152,9 @@ export default function MonetizePage() {
         </div>
       </div>
 
-      <Footer />
+      <div>
+        <Footer />
+      </div>
     </>
   );
 }

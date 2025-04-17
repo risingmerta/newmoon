@@ -1,13 +1,12 @@
-import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoClient";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const { directLink, refLink, userId } = body;
+    const { directLink = "", refLink = "", userId } = await req.json();
 
-    if (!userId || (!directLink && !refLink)) {
-      return NextResponse.json({ success: false, message: "Missing data" }, { status: 400 });
+    if (!userId || !directLink) {
+      return NextResponse.json({ success: false, message: "Missing required fields." });
     }
 
     const db = await connectDB();
@@ -17,8 +16,8 @@ export async function POST(req) {
       { userId },
       {
         $set: {
-          directLink: directLink || "",
-          refLink: refLink || "",
+          directLink,
+          refLink,
         },
       },
       { upsert: true }
@@ -27,6 +26,6 @@ export async function POST(req) {
     return NextResponse.json({ success: true, result });
   } catch (err) {
     console.error("Error saving links:", err);
-    return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Server error" });
   }
 }
