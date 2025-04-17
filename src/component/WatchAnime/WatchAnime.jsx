@@ -420,7 +420,7 @@ export default function WatchAnime(props) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const adContainer = document.getElementById("ad-containerss");
+      const adContainer = document.getElementById("ad-containers");
       if (adContainer) {
         adContainer.innerHTML = `
         <iframe
@@ -696,11 +696,13 @@ export default function WatchAnime(props) {
           <LoadingSpinner />
         ) : (
           <div>
-            <div style={{ width: "100%", height: "100px", overflow: "hidden" }}>
-              {/* Ad container */}
-              <div id="ad-containers"></div>
-            </div>
             <div style={{ marginTop: "65px" }} className="watch-container">
+              <div
+                style={{ width: "100%", height: "100px", overflow: "hidden" }}
+              >
+                {/* Ad container */}
+                <div id="ad-containers"></div>
+              </div>
               <div className="flex gap-1 items-center pecif">
                 <Link href={"/"} onClick={handleNavigation}>
                   <div className="omo">Home</div>
