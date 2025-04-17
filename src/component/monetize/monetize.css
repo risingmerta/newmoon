@@ -1,0 +1,91 @@
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #000;
+  border-radius: 20px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.heading {
+  color: #4ade80;
+  text-align: center;
+  font-size: 28px;
+}
+
+.text {
+  color: #ccc;
+  font-size: 14px;
+  text-align: center;
+}
+
+.box {
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.boxTitle {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: #fff;
+  border-radius: 8px;
+  margin-top: 5px;
+  margin-bottom: 12px;
+}
+
+.saveButton {
+  width: 100%;
+  background-color: #22c55e;
+  color: black;
+  font-weight: bold;
+  padding: 12px;
+  text-align: center;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  background-color: #3b82f6;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  margin-top: 12px;
+}
+
+.note {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 10px;
+  color: #aaa;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+  margin-top: 20px;
+}
+
+.status {
+  text-align: center;
+  font-size: 14px;
+  color: #4ade80;
+  margin-top: 12px;
+}

@@ -1,8 +1,8 @@
 "use client";
 
+import "./monetize.css";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import styles from "./monetize.module.css";
 
 export default function MonetizePage() {
   const { data: session } = useSession();
@@ -39,56 +39,64 @@ export default function MonetizePage() {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>💸 Start Earning with Animoon + Adsterra</h1>
-      <p>Earn from your streams + refer friends to earn even more!</p>
+    <div className="container">
+      <h1 className="heading">💸 Start Earning with Animoon + Adsterra</h1>
+      <p className="text">
+        Earn from your streams + refer friends to earn even more!
+      </p>
 
-      <div className={styles.box}>
-        <h2>🎥 1. Earn from Live Streaming</h2>
-        <p>Share your live stream link anywhere — the more people watch, the more you earn!</p>
+      <div className="box">
+        <h2 className="boxTitle">🎥 1. Earn from Live Streaming</h2>
+        <p className="text">
+          Share your live stream link anywhere — the more people watch, the
+          more you earn!
+        </p>
       </div>
 
-      <div className={styles.box}>
-        <h2>🔗 2. Add Your Direct Adsterra Link</h2>
+      <div className="box">
+        <h2 className="boxTitle">🔗 2. Add Your Direct Adsterra Link</h2>
         <label>Your Adsterra Direct Link:</label>
         <input
           type="text"
           value={directLink}
           onChange={(e) => setDirectLink(e.target.value)}
           placeholder="Paste your direct ad link here"
+          className="input"
         />
       </div>
 
-      <div className={styles.box}>
-        <h2>🤝 3. Refer Friends and Earn More</h2>
+      <div className="box">
+        <h2 className="boxTitle">🤝 3. Refer Friends and Earn More</h2>
         <label>Your Adsterra Referral Link:</label>
         <input
           type="text"
           value={refLink}
           onChange={(e) => setRefLink(e.target.value)}
           placeholder="Paste your referral link here"
+          className="input"
         />
       </div>
 
-      <button className={styles.saveButton} onClick={handleSave}>
+      <button className="saveButton" onClick={handleSave}>
         💾 Save My Links
       </button>
 
-      {status && <p className={styles.status}>{status}</p>}
+      {status && <p className="status">{status}</p>}
 
       <a
-        className={styles.button}
+        className="button"
         href="https://publishers.adsterra.com/referral"
         target="_blank"
       >
         🚀 Join Adsterra & Get Your Link
       </a>
 
-      <p className={styles.note}>
-        Save your links above. Share live streams with your audience or friends to start earning!
+      <p className="note">
+        Save your links above. Share live streams with your audience or friends
+        to start earning!
       </p>
 
-      <div className={styles.footer}>
+      <div className="footer">
         Made with ❤️ by <strong style={{ color: "#c084fc" }}>Animoon</strong>
       </div>
     </div>
