@@ -134,7 +134,7 @@ export default function MonetizePage() {
 
         <a
           className="button"
-          href="https://publishers.adsterra.com/referral"
+          href="https://beta.publishers.adsterra.com/referral/XbbeibecUR"
           target="_blank"
         >
           🚀 Join Adsterra & Get Your Link
