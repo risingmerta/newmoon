@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import AnimeCollection from "@/component/MainContainer/AnimeCollectionJikan";
 

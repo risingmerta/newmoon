@@ -33,8 +33,8 @@ export default function GenreSidebar(props) {
     }
   };
 
-    const pathname = usePathname();
-  
+  const pathname = usePathname();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const adContainer = document.getElementById("ad-container");
@@ -98,8 +98,8 @@ export default function GenreSidebar(props) {
               {/* <div
                 style={{ width: "100%", height: "100px", overflow: "hidden" }}
               > */}
-                {/* Ad container */}
-                <div id="ad-container"></div>
+              {/* Ad container */}
+              <div id="ad-container"></div>
               {/* </div> */}
               <div id="ad-container3"></div>
               <Share

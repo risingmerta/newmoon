@@ -9,7 +9,7 @@ import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import Profilo from "../Profilo/Profilo";
 import { SessionProvider } from "next-auth/react";
 import Footer from "../Footer/Footer";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const FilterComp = (props) => {
   const genresString = props.genres;
