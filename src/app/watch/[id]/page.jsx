@@ -503,6 +503,8 @@ export default async function page({ params, searchParams }) {
     dati = null;
   }
 
+  console.log( "0_0", dati);
+
   const dataStr = { sub: [], dub: [] }; // Separate arrays for sub and dub URLs
   let gogoSub = [];
   let gogoDub = [];
