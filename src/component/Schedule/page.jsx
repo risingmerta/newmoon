@@ -7,83 +7,82 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import {
-  startOfWeek,
   addDays,
   format,
-  addWeeks,
-  subWeeks,
   getMonth,
   getYear,
+  startOfDay,
 } from 'date-fns';
 
 export default function WeekSwiper() {
-  const [referenceDate, setReferenceDate] = useState(new Date());
+  const [referenceDate, setReferenceDate] = useState(startOfDay(new Date()));
 
-  const getWeekDates = (refDate) => {
-    const weekStart = startOfWeek(refDate, { weekStartsOn: 1 }); // Monday
-    return Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
-  };
+  // Create a long sliding window (e.g., 30 days before and after)
+  const totalDays = 60;
+  const startDate = addDays(referenceDate, -30);
+  const allDates = Array.from({ length: totalDays }, (_, i) =>
+    addDays(startDate, i)
+  );
 
-  const getWeekLabel = (weekDates) => {
-    const first = weekDates[0];
-    const last = weekDates[weekDates.length - 1];
+  // Determine initial slide so that today is at the leftmost
+  const initialSlide = allDates.findIndex(date =>
+    format(date, 'yyyy-MM-dd') === format(referenceDate, 'yyyy-MM-dd')
+  );
 
-    const sameMonth = getMonth(first) === getMonth(last);
-    const sameYear = getYear(first) === getYear(last);
+  const getMonthLabel = (startDate: Date, endDate: Date) => {
+    const sameMonth = getMonth(startDate) === getMonth(endDate);
+    const sameYear = getYear(startDate) === getYear(endDate);
 
     if (sameMonth && sameYear) {
-      return format(first, 'MMMM yyyy');
+      return format(startDate, 'MMMM yyyy');
     } else if (!sameMonth && sameYear) {
-      return `${format(first, 'MMM')} - ${format(last, 'MMM yyyy')}`;
+      return `${format(startDate, 'MMM')} - ${format(endDate, 'MMM yyyy')}`;
     } else {
-      return `${format(first, 'MMM yyyy')} - ${format(last, 'MMM yyyy')}`;
+      return `${format(startDate, 'MMM yyyy')} - ${format(endDate, 'MMM yyyy')}`;
     }
   };
 
-  const handlePrev = () => {
-    setReferenceDate((prev) => subWeeks(prev, 1));
-  };
-
-  const handleNext = () => {
-    setReferenceDate((prev) => addWeeks(prev, 1));
-  };
-
-  const weekDates = getWeekDates(referenceDate);
-  const label = getWeekLabel(weekDates);
+  const label = getMonthLabel(
+    allDates[initialSlide],
+    allDates[initialSlide + 6]
+  );
 
   return (
     <div className="w-full max-w-screen-lg mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-4">
-        <button
-          onClick={handlePrev}
-          className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
-        >
-          Previous Week
-        </button>
-        <h2 className="text-xl font-bold text-center">{label}</h2>
-        <button
-          onClick={handleNext}
-          className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
-        >
-          Next Week
-        </button>
+        <h2 className="text-xl font-bold text-center w-full">{label}</h2>
       </div>
 
       <Swiper
         slidesPerView={7}
-        slidesPerGroup={1}
+        slidesPerGroup={1} // slide one at a time
         spaceBetween={10}
         modules={[Navigation]}
         navigation
+        initialSlide={initialSlide}
       >
-        {weekDates.map((date, idx) => (
-          <SwiperSlide key={idx}>
-            <div className="p-4 bg-white rounded shadow text-center">
-              <div className="text-sm font-medium">{format(date, 'EEEE')}</div>
-              <div className="text-lg font-semibold">{format(date, 'dd MMM')}</div>
-            </div>
-          </SwiperSlide>
-        ))}
+        {allDates.map((date, idx) => {
+          const isToday =
+            format(date, 'yyyy-MM-dd') ===
+            format(startOfDay(new Date()), 'yyyy-MM-dd');
+
+          return (
+            <SwiperSlide key={idx}>
+              <div
+                className={`p-4 rounded shadow text-center ${
+                  isToday ? 'bg-blue-500 text-white' : 'bg-white'
+                }`}
+              >
+                <div className="text-sm font-medium">
+                  {format(date, 'EEEE')}
+                </div>
+                <div className="text-lg font-semibold">
+                  {format(date, 'dd MMM')}
+                </div>
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );
