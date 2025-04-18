@@ -453,32 +453,38 @@ export default async function page({ params, searchParams }) {
   let dati;
 
   try {
-    const respi = await fetch(`https://vimal.animoon.me/api/schedule/${idToCheck}`);
-  
+    const respi = await fetch(
+      `https://vimal.animoon.me/api/schedule/${idToCheck}`
+    );
+
     if (!respi.ok) {
       throw new Error(`HTTP error! Status: ${respi.status}`);
     }
-  
+
     const datih = await respi.json();
     const scheduleDateTime = datih?.results?.nextEpisodeSchedule;
-  
+
     if (scheduleDateTime) {
-      const dateOnly = scheduleDateTime.split(' ')[0]; // Extract "YYYY-MM-DD"
-  
+      const dateOnly = scheduleDateTime.split(" ")[0]; // Extract "YYYY-MM-DD"
+
       // Fetch from 'animoon-schedule' collection using the date as _id
-      const scheduleDoc = await db.collection('animoon-schedule').findOne({ _id: dateOnly });
-  
+      const schColl = "animoon-schedule";
+      const SchCollection = db.collection(schColl.trim());
+      const scheduleDoc = await SchCollection.findOne({ _id: dateOnly });
+
       if (scheduleDoc) {
         // Convert the entire MongoDB document to a string and then back to JSON
         const scheduleJSON = JSON.parse(JSON.stringify(scheduleDoc));
-  
+
         // Find the schedule entry that matches the idToCheck
-        const matchingSchedule = scheduleJSON.schedule.find((item) => item.id === idToCheck);
-  
+        const matchingSchedule = scheduleJSON.schedule.find(
+          (item) => item.id === idToCheck
+        );
+
         if (matchingSchedule) {
           // Prepare data to pass as props
           dati = {
-            schedule: scheduleJSON,
+            schedule: matchingSchedule,
           };
         } else {
           console.warn(`No matching schedule found for id: ${idToCheck}`);
@@ -489,16 +495,13 @@ export default async function page({ params, searchParams }) {
         dati = null;
       }
     } else {
-      console.warn('No nextEpisodeSchedule found in API response');
+      console.warn("No nextEpisodeSchedule found in API response");
       dati = null;
     }
   } catch (error) {
-    console.error('Failed to fetch schedule data:', error.message);
+    console.error("Failed to fetch schedule data:", error.message);
     dati = null;
   }
-  
-  
-  
 
   const dataStr = { sub: [], dub: [] }; // Separate arrays for sub and dub URLs
   let gogoSub = [];
