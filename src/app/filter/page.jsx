@@ -81,10 +81,10 @@ export default async function page({ searchParams }) {
 
   return (
     <div className="flirt">
-      <Script
+      {/* <Script
         strategy="afterInteractive"
         src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
-      />
+      /> */}
       <FilterComp
         data={data}
         filteredAnimes={filteredAnimes}

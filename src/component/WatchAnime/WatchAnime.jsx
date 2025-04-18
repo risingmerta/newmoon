@@ -748,7 +748,7 @@ export default function WatchAnime(props) {
                 style={{ width: "100%", height: "100px", overflow: "hidden" }}
               > */}
               {/* Ad container */}
-              <div id="ad-containers"></div>
+              {/* <div id="ad-containers"></div> */}
               {/* </div> */}
               <div className="flex gap-1 items-center pecif">
                 <Link href={"/"} onClick={handleNavigation}>
