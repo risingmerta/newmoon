@@ -1,18 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import React, { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
-import {
-  addDays,
-  format,
-  getMonth,
-  getYear,
-  startOfDay,
-} from 'date-fns';
+import { addDays, format, getMonth, getYear, startOfDay } from "date-fns";
 
 export default function WeekSwiper() {
   const [referenceDate, setReferenceDate] = useState(startOfDay(new Date()));
@@ -25,20 +19,23 @@ export default function WeekSwiper() {
   );
 
   // Determine initial slide so that today is at the leftmost
-  const initialSlide = allDates.findIndex(date =>
-    format(date, 'yyyy-MM-dd') === format(referenceDate, 'yyyy-MM-dd')
+  const initialSlide = allDates.findIndex(
+    (date) => format(date, "yyyy-MM-dd") === format(referenceDate, "yyyy-MM-dd")
   );
 
-  const getMonthLabel = (startDate: Date, endDate: Date) => {
+  const getMonthLabel = (startDate, endDate) => {
     const sameMonth = getMonth(startDate) === getMonth(endDate);
     const sameYear = getYear(startDate) === getYear(endDate);
 
     if (sameMonth && sameYear) {
-      return format(startDate, 'MMMM yyyy');
+      return format(startDate, "MMMM yyyy");
     } else if (!sameMonth && sameYear) {
-      return `${format(startDate, 'MMM')} - ${format(endDate, 'MMM yyyy')}`;
+      return `${format(startDate, "MMM")} - ${format(endDate, "MMM yyyy")}`;
     } else {
-      return `${format(startDate, 'MMM yyyy')} - ${format(endDate, 'MMM yyyy')}`;
+      return `${format(startDate, "MMM yyyy")} - ${format(
+        endDate,
+        "MMM yyyy"
+      )}`;
     }
   };
 
@@ -63,21 +60,21 @@ export default function WeekSwiper() {
       >
         {allDates.map((date, idx) => {
           const isToday =
-            format(date, 'yyyy-MM-dd') ===
-            format(startOfDay(new Date()), 'yyyy-MM-dd');
+            format(date, "yyyy-MM-dd") ===
+            format(startOfDay(new Date()), "yyyy-MM-dd");
 
           return (
             <SwiperSlide key={idx}>
               <div
                 className={`p-4 rounded shadow text-center ${
-                  isToday ? 'bg-blue-500 text-white' : 'bg-white'
+                  isToday ? "bg-blue-500 text-white" : "bg-white"
                 }`}
               >
                 <div className="text-sm font-medium">
-                  {format(date, 'EEEE')}
+                  {format(date, "EEEE")}
                 </div>
                 <div className="text-lg font-semibold">
-                  {format(date, 'dd MMM')}
+                  {format(date, "dd MMM")}
                 </div>
               </div>
             </SwiperSlide>
