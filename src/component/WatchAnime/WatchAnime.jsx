@@ -205,7 +205,7 @@ export default function WatchAnime(props) {
       message = `🚀 Estimated the next episode will come at ${formattedDate}`;
     }
   } else {
-    message = "❗ The next episode schedule is unavailable.";
+    message = "";
   }
 
   console.log(message); // Output the message
@@ -1074,12 +1074,14 @@ export default function WatchAnime(props) {
                             REPORT
                           </div>
                         </div>
-                        <div className="allum reps-all">
-                          <div className="reps-tex">{message}</div>
-                          {/* <div className="rep-butt" onClick={() => report()}>
+                        {message && (
+                          <div className="allum reps-all">
+                            <div className="reps-tex">{message}</div>
+                            {/* <div className="rep-butt" onClick={() => report()}>
                             REPORT
                           </div> */}
-                        </div>
+                          </div>
+                        )}
                         <div className="flex compIno">
                           <div className="flex flex-col items-center epIno containIno flex-wrap">
                             <div className="ino1">You are watching</div>
