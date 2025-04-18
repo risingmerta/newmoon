@@ -487,19 +487,19 @@ export default async function page({ params, searchParams }) {
             schedule: matchingSchedule,
           };
         } else {
-          console.warn(`No matching schedule found for id: ${idToCheck}`);
+          console.log(`No matching schedule found for id: ${idToCheck}`);
           dati = null;
         }
       } else {
-        console.warn(`No schedule document found for date: ${dateOnly}`);
+        console.log(`No schedule document found for date: ${dateOnly}`);
         dati = null;
       }
     } else {
-      console.warn("No nextEpisodeSchedule found in API response");
+      console.log("No nextEpisodeSchedule found in API response");
       dati = null;
     }
   } catch (error) {
-    console.error("Failed to fetch schedule data:", error.message);
+    console.log("Failed to fetch schedule data:", error.message);
     dati = null;
   }
 
