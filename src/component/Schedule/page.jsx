@@ -58,18 +58,24 @@ export default function WeekSwiper() {
           onClick={handlePrev}
           className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
         >
-          Previous
+          Previous Week
         </button>
         <h2 className="text-xl font-bold text-center">{label}</h2>
         <button
           onClick={handleNext}
           className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
         >
-          Next
+          Next Week
         </button>
       </div>
 
-      <Swiper slidesPerView={7} spaceBetween={10} modules={[Navigation]}>
+      <Swiper
+        slidesPerView={7}
+        slidesPerGroup={1}
+        spaceBetween={10}
+        modules={[Navigation]}
+        navigation
+      >
         {weekDates.map((date, idx) => (
           <SwiperSlide key={idx}>
             <div className="p-4 bg-white rounded shadow text-center">
@@ -81,5 +87,4 @@ export default function WeekSwiper() {
       </Swiper>
     </div>
   );
-};
-
+}
