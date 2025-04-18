@@ -459,11 +459,45 @@ export default async function page({ params, searchParams }) {
       throw new Error(`HTTP error! Status: ${respi.status}`);
     }
   
-    dati = await respi.json();
+    const datih = await respi.json();
+    const scheduleDateTime = datih?.results?.nextEpisodeSchedule;
+  
+    if (scheduleDateTime) {
+      const dateOnly = scheduleDateTime.split(' ')[0]; // Extract "YYYY-MM-DD"
+  
+      // Fetch from 'animoon-schedule' collection using the date as _id
+      const scheduleDoc = await db.collection('animoon-schedule').findOne({ _id: dateOnly });
+  
+      if (scheduleDoc) {
+        // Convert the entire MongoDB document to a string and then back to JSON
+        const scheduleJSON = JSON.parse(JSON.stringify(scheduleDoc));
+  
+        // Find the schedule entry that matches the idToCheck
+        const matchingSchedule = scheduleJSON.schedule.find((item) => item.id === idToCheck);
+  
+        if (matchingSchedule) {
+          // Prepare data to pass as props
+          dati = {
+            schedule: scheduleJSON,
+          };
+        } else {
+          console.warn(`No matching schedule found for id: ${idToCheck}`);
+          dati = null;
+        }
+      } else {
+        console.warn(`No schedule document found for date: ${dateOnly}`);
+        dati = null;
+      }
+    } else {
+      console.warn('No nextEpisodeSchedule found in API response');
+      dati = null;
+    }
   } catch (error) {
     console.error('Failed to fetch schedule data:', error.message);
-    dati = null; // or set a fallback value if needed
+    dati = null;
   }
+  
+  
   
 
   const dataStr = { sub: [], dub: [] }; // Separate arrays for sub and dub URLs
