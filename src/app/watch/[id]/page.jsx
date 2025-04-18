@@ -596,7 +596,7 @@ export default async function page({ params, searchParams }) {
         anId={param.id}
         subPrio={subPrio}
         dataStr={dataStr}
-        schedule={dati.schedule}
+        schedule={dati?.schedule}
         datajDub={datajDub}
         datajSub={datajSub}
         datao={datao}

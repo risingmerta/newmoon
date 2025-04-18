@@ -182,7 +182,7 @@ export default function WatchAnime(props) {
 
   if (props.schedule?.releaseDate && props.schedule?.time) {
     // Combine release date and time
-    const dateStr = `${props.schedule.releaseDate}T${props.schedule.time}:00`; // Convert to ISO format (2025-04-28T00:45:00)
+    const dateStr = `${props.schedule?.releaseDate}T${props.schedule?.time}:00`; // Convert to ISO format (2025-04-28T00:45:00)
 
     // Create a Date object from the combined string
     const nextEpisodeDate = new Date(dateStr);
@@ -191,7 +191,7 @@ export default function WatchAnime(props) {
     if (isNaN(nextEpisodeDate)) {
       message = "🚨 There was an error with the episode schedule date.";
     } else {
-      const formattedDate = nextEpisodeDate.toLocaleString("en-US", {
+      const formattedDate = nextEpisodeDate?.toLocaleString("en-US", {
         month: "numeric",
         day: "numeric",
         year: "numeric",
