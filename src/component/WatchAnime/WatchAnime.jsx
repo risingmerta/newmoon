@@ -178,6 +178,28 @@ export default function WatchAnime(props) {
 
   let epiod = props.epiod;
 
+  let message;
+
+  if (props.schedule?.success && props.schedule?.results?.nextEpisodeSchedule) {
+    const dateStr = props.schedule?.results.nextEpisodeSchedule.replace(
+      " ",
+      "T"
+    ); // Convert to ISO format
+    const nextEpisodeDate = new Date(dateStr);
+
+    const formattedDate = nextEpisodeDate.toLocaleString("en-US", {
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+
+    message = `🚀 Estimated the next episode will come at ${formattedDate}`;
+  }
+
   const handleOn1 = () => {
     if (onn1 === "Off") {
       ls.setItem("Onn1", "On");
@@ -1041,6 +1063,12 @@ export default function WatchAnime(props) {
                           <div className="rep-butt" onClick={() => report()}>
                             REPORT
                           </div>
+                        </div>
+                        <div className="allum reps-all">
+                          <div className="reps-tex">{message}</div>
+                          {/* <div className="rep-butt" onClick={() => report()}>
+                            REPORT
+                          </div> */}
                         </div>
                         <div className="flex compIno">
                           <div className="flex flex-col items-center epIno containIno flex-wrap">

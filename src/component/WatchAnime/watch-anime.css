@@ -730,6 +730,19 @@ select:enabled {
   font-weight: 300;
 }
 
+.reps-all {
+  background: #00ccff;
+  border-radius: 10px;
+  padding: 5px 10px;
+  align-items: center;
+}
+
+.reps-tex {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 300;
+}
+
 .rep-butt {
   font-size: 13px;
   border: 2px solid rgb(177, 39, 39);

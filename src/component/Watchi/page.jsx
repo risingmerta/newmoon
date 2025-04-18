@@ -10,6 +10,7 @@ const Watchi = (props) => {
         <WatchAnime
           data={props.data}
           anId={props.anId}
+          schedule={props.schedule}
           subPrio={props.subPrio}
           dataStr={props.dataStr}
           datajDub={props.datajDub}

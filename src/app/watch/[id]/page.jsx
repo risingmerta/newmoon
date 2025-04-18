@@ -450,6 +450,22 @@ export default async function page({ params, searchParams }) {
     episodeNumber = currentEpisode ? currentEpisode?.episode_no : 0;
   }
 
+  let dati;
+
+  try {
+    const respi = await fetch(`https://vimal.animoon.me/api/schedule/${idToCheck}`);
+  
+    if (!respi.ok) {
+      throw new Error(`HTTP error! Status: ${respi.status}`);
+    }
+  
+    dati = await respi.json();
+  } catch (error) {
+    console.error('Failed to fetch schedule data:', error.message);
+    dati = null; // or set a fallback value if needed
+  }
+  
+
   const dataStr = { sub: [], dub: [] }; // Separate arrays for sub and dub URLs
   let gogoSub = [];
   let gogoDub = [];
@@ -541,6 +557,7 @@ export default async function page({ params, searchParams }) {
         anId={param.id}
         subPrio={subPrio}
         dataStr={dataStr}
+        schedule={dati}
         datajDub={datajDub}
         datajSub={datajSub}
         datao={datao}
