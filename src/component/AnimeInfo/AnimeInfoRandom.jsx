@@ -197,7 +197,7 @@ export default function Details(props) {
         adContainer.innerHTML = `
             <iframe
               src="/ad"
-              style="width: 100%; height: 100px; border: none; overflow: hidden;"
+              style="width: fit-content; height: 100px; border: none; overflow: hidden;"
               scrolling="no"
             ></iframe>
           `;
@@ -212,7 +212,7 @@ export default function Details(props) {
         adContainer.innerHTML = `
             <iframe
               src="/ad2"
-              style="width: 100%; height: 100px; border: none; overflow: hidden;"
+              style="width: fit-content; height: 100px; border: none; overflow: hidden;"
               scrolling="no"
             ></iframe>
           `;
@@ -227,7 +227,7 @@ export default function Details(props) {
         adContainer.innerHTML = `
             <iframe
               src="/ad3"
-              style="width: 100%; height: 100px; border: none; overflow: hidden;"
+              style="width: fit-content; height: 100px; border: none; overflow: hidden;"
               scrolling="no"
             ></iframe>
           `;
@@ -441,7 +441,7 @@ export default function Details(props) {
           </div>
         </div>
       </div>
-      {/* <div style={{ width: "100%", height: "100px", overflow: "hidden" }}> */}
+      {/* <div style={{ width: "fit-content", height: "100px", overflow: "hidden" }}> */}
       {/* Ad container */}
       <div id="ad-container"></div>
       {/* </div> */}
