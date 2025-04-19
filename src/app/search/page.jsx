@@ -110,7 +110,7 @@ export default async function page({ searchParams }) {
         keyword={searchParam.keyword || ""}
         collectionName={`Search results for`}
       />
-      <Advertize />
+      {/* <Advertize /> */}
     </div>
   );
 }

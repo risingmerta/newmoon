@@ -112,7 +112,7 @@ export default async function page({ params, searchParams }) {
         animeId={searchParam.animeId}
         episodes={episodes}
       />
-      <Advertize />
+      {/* <Advertize /> */}
     </div>
   );
 }

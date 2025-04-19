@@ -107,7 +107,7 @@ export default async function page({ searchParams }) {
         totalDocs={filteredAnimes.results.totalResults}
         collectionName={"Filter Results"}
       />
-      <Advertize />
+      {/* <Advertize /> */}
     </div>
   );
 }

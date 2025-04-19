@@ -45,6 +45,21 @@ const Home = ({ data, existingAnime }) => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container2");
+      if (adContainer) {
+        adContainer.innerHTML = `
+          <iframe
+            src="/ad2"
+            style="width: 100%; height: 100px; border: none; overflow: hidden;"
+            scrolling="no"
+          ></iframe>
+        `;
+      }
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
       const adContainer = document.getElementById("ad-container3");
       if (adContainer) {
         adContainer.innerHTML = `
@@ -98,10 +113,18 @@ const Home = ({ data, existingAnime }) => {
           {/* </div> */}
 
           <Trending data={data?.trending || []} selectL={selectL} />
+          <div id="ad-container2" style="margin: 0 auto;"></div>
+
           <Share ShareUrl="https://animoon.me/" />
+          <div id="ad-container2" style="margin: 0 auto;"></div>
+
           <Featured data={data || {}} selectL={selectL} />
+          <div id="ad-container2" style="margin: 0 auto;"></div>
+
           <MainContainer data={data || {}} selectL={selectL} />
         </div>
+        <div id="ad-container2" style="margin: 0 auto;"></div>
+
         <div>
           <Footer />
         </div>

@@ -326,7 +326,7 @@ const FilterComp = (props) => {
           ) : (
             ""
           )}
-          <div id="ad-container2"></div>
+          <div id="ad-container2" style="margin: 0 auto;"></div>
           <div>
             <div className="filter-container">
               <h2>Filter</h2>

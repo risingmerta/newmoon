@@ -101,7 +101,7 @@ export default async function page({ searchParams }) {
         page={pageParam}
         arise={arise}
       />
-      <Advertize />
+      {/* <Advertize /> */}
     </div>
   );
 }

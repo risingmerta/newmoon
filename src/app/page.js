@@ -20,7 +20,7 @@ export default async function Page() {
         src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
       /> */}
       <Home data={data} existingAnime={existingAnime} />
-      <Advertize />
+      {/* <Advertize /> */}
     </div>
   );
 }

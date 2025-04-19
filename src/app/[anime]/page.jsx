@@ -122,7 +122,7 @@ export default async function Page({ params }) {
         arise={arise}
         id={idToCheck}
       />
-      <Advertize />
+      {/* <Advertize /> */}
     </div>
   );
 }
