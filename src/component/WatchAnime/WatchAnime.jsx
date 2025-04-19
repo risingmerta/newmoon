@@ -1413,12 +1413,16 @@ export default function WatchAnime(props) {
               arise={props.arise}
             />
 
+            <div id="ad-containers" style={{ margin: '0 auto' }}></div>
+
             <Comments
               epiod={props.epiod}
               epId={props.epId}
               anId={props.anId}
               IsLoading={IsLoading}
             />
+
+            <div id="ad-containers" style={{ margin: '0 auto' }}></div>
 
             <RecommendedTopTen
               doIt={"doit"}
@@ -1428,6 +1432,7 @@ export default function WatchAnime(props) {
               IsLoading={IsLoading}
               omin={omin}
             />
+            <div id="ad-containers" style={{ margin: '0 auto' }}></div>
           </div>
         )}
       </SessionProvider>

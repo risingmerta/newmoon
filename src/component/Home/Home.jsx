@@ -122,8 +122,8 @@ const Home = ({ data, existingAnime }) => {
           <div id="ad-container2" style={{ margin: '0 auto' }}></div>
 
           <MainContainer data={data || {}} selectL={selectL} />
+          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
         </div>
-        <div id="ad-container2" style={{ margin: '0 auto' }}></div>
 
         <div>
           <Footer />

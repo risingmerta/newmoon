@@ -44,6 +44,36 @@ export default function RecommendedTopTen(props) {
     }
   };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container2");
+      if (adContainer) {
+        adContainer.innerHTML = `
+              <iframe
+                src="/ad2"
+                style="width: fit-content; height: 100px; border: none; overflow: hidden;"
+                scrolling="no"
+              ></iframe>
+            `;
+      }
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adContainer = document.getElementById("ad-container3");
+      if (adContainer) {
+        adContainer.innerHTML = `
+              <iframe
+                src="/ad3"
+                style="width: fit-content; height: 100px; border: none; overflow: hidden;"
+                scrolling="no"
+              ></iframe>
+            `;
+      }
+    }
+  }, [pathname]);
+
   return (
     <>
       <SessionProvider>
@@ -81,7 +111,7 @@ export default function RecommendedTopTen(props) {
                 ShareUrl={props.ShareUrl}
                 arise={props.arise}
                 selectL={selectL}
-                id={props.id || ''}
+                id={props.id || ""}
                 // firstName={props.firstName}
                 IsLoading={IsLoading}
               />
@@ -115,6 +145,8 @@ export default function RecommendedTopTen(props) {
             </div>
           </>
         )}
+        <div id="ad-container2" style={{ margin: "0 auto" }}></div>
+        <div id="ad-container3" style={{ margin: "0 auto" }}></div>
         <div>
           <Footer />
         </div>
