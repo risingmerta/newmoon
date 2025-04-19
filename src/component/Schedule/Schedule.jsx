@@ -10,13 +10,13 @@ import "./schedule.css";
 import Link from "next/link";
 // import { Link } from "react-router-dom";
 
-const Schedule = () => {
+export default function Schedule(props) {
   const [dates, setDates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [currentActiveIndex, setCurrentActiveIndex] = useState(null);
-  const scheduleData = []
+  const [scheduleData, setscheduleData] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
   const cardRefs = useRef([]);
   const swiperRef = useRef(null);
@@ -65,22 +65,13 @@ const Schedule = () => {
     }
   }, [dates]);
 
-  const fetchSched = async (date) => {
+  const fetchSched = (date) => {
     try {
       setLoading(true);
-
-      // Check if cached data exists
-      const cachedData = localStorage.getItem(`schedule-${date}`);
-      if (cachedData) {
-        const parsedData = JSON.parse(cachedData);
-        setscheduleData(Array.isArray(parsedData) ? parsedData : []);
-      } else {
-        const data = await getSchedInfo(date);
-        setscheduleData(Array.isArray(data) ? data : []);
-        localStorage.setItem(`schedule-${date}`, JSON.stringify(data || []));
-      }
+      const daySchedule = props.schedule.find((entry) => entry._id === date);
+      setscheduleData(daySchedule?.schedule || []);
     } catch (err) {
-      console.error("Error fetching schedule info:", err);
+      console.error("Error processing schedule data:", err);
       setError(err);
     } finally {
       setLoading(false);
@@ -180,7 +171,7 @@ const Schedule = () => {
         <div className="schedule-list">
           {(showAll ? scheduleData : scheduleData.slice(0, 7)).map(
             (item, idx) => (
-              <Link to={`/${item.id}`} key={idx} className="schedule-item">
+              <Link href={`/${item.id}`} key={idx} className="schedule-item">
                 <div className="item-info">
                   <div className="item-time">{item.time || "N/A"}</div>
                   <h3 className="item-title">{item.title || "N/A"}</h3>
@@ -203,6 +194,4 @@ const Schedule = () => {
       )}
     </>
   );
-};
-
-export default Schedule;
+}

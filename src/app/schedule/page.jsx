@@ -1,7 +1,8 @@
 // app/page.tsx or app/page.jsx (depending on your setup)
 
-import React from 'react';
-import { MongoClient } from 'mongodb';
+import React from "react";
+import { MongoClient } from "mongodb";
+import Schedule from "@/component/Schedule/Schedule";
 
 export default async function Page() {
   const mongoUri =
@@ -14,14 +15,14 @@ export default async function Page() {
   const db = client.db(dbName);
   const animeCollection = db.collection("animoon-schedule");
 
-  const animeDocs = await animeCollection.find({}).toArray();
+  let animeDocs = await animeCollection.find({}).toArray();
+  animeDocs = JSON.parse(JSON.stringify(animeDocs));
 
   await client.close();
 
   return (
     <div>
-      <h1>All Animoon Schedule Docs</h1>
-      <pre>{JSON.stringify(animeDocs, null, 2)}</pre>
+      <Schedule schedule={animeDocs} />
     </div>
   );
 }
