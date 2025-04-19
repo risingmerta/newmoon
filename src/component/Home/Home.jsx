@@ -113,7 +113,7 @@ const Home = ({ data, existingAnime }) => {
           {/* </div> */}
 
           <Trending data={data?.trending || []} selectL={selectL} />
-          <div id="ad-container2" style="margin: 0 auto;"></div>
+          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
 
           <Share ShareUrl="https://animoon.me/" />
           <div id="ad-container2" style="margin: 0 auto;"></div>

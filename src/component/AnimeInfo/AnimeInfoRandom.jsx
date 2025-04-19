@@ -240,7 +240,7 @@ export default function Details(props) {
       <SignInSignUpModal setLogIsOpen={setLogIsOpen} logIsOpen={logIsOpen} />
 
       <div className="details-container">
-      <div id="ad-container2" style="margin: 0 auto;"></div>
+      <div id="ad-container2" style={{ margin: '0 auto' }}></div>
         <div className="details-header">
           <div className="details-header-primary">
             <img

@@ -748,7 +748,7 @@ export default function WatchAnime(props) {
                 style={{ width: "100%", height: "100px", overflow: "hidden" }}
               > */}
               {/* Ad container */}
-              <div id="ad-containers" style="margin: 0 auto;"></div>
+              <div id="ad-containers" style={{ margin: '0 auto' }}></div>
 
               {/* </div> */}
               <div className="flex gap-1 items-center pecif">
