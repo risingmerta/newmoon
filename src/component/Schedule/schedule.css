@@ -1,0 +1,295 @@
+.schedule-wrapper {
+  width: 100%;
+  margin-top: 60px;
+}
+
+@media (max-width: 480px) {
+  .schedule-wrapper {
+    margin-top: 40px;
+  }
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 570px) {
+  .schedule-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.schedule-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffbade;
+}
+
+@media (max-width: 478px) {
+  .schedule-title {
+    font-size: 18px;
+  }
+}
+
+.schedule-time {
+  padding: 10px;
+  background: white;
+  color: black;
+  border-radius: 9999px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+@media (max-width: 478px) {
+  .schedule-time {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 275px) {
+  .schedule-time {
+    font-size: 10px;
+  }
+}
+
+.schedule-slider-wrapper {
+  width: 100%;
+  padding-top: 2.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  overflow-x: scroll;
+}
+
+@media (max-width: 480px) {
+  .schedule-slider-wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+  }
+}
+
+.schedule-slider {
+  position: relative;
+  width: 100%;
+}
+
+.schedule-day-card {
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.schedule-day-card:hover {
+  background: #373646;
+}
+
+.schedule-day-card.active {
+  background: #ffbade;
+  color: black;
+}
+
+.day-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@media (max-width: 400px) {
+  .day-name {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 350px) {
+  .day-name {
+    font-size: 12px;
+  }
+}
+
+.day-date {
+  font-size: 14px;
+  color: gray;
+}
+
+.schedule-day-card.active .day-date {
+  color: black;
+}
+
+@media (max-width: 400px) {
+  .day-date {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 350px) {
+  .day-date {
+    font-size: 10px;
+  }
+}
+
+.slider-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.next {
+  right: -15px;
+}
+
+.prev {
+  left: -15px;
+}
+
+.slider-icon {
+  font-size: 12px;
+}
+
+.loader-wrapper,
+.no-data {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.25rem;
+  font-size: 1.25rem;
+}
+
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.25rem;
+  align-items: flex-start;
+}
+
+.schedule-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.schedule-item:hover .item-time,
+.schedule-item:hover .item-title,
+.schedule-item:hover .item-button {
+  color: #ffbade;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  max-width: 500px;
+}
+
+@media (max-width: 400px) {
+  .item-info {
+    gap: 0.5rem;
+  }
+}
+
+.item-time {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff59;
+}
+
+@media (max-width: 600px) {
+  .item-time {
+    font-size: 14px;
+  }
+}
+
+.item-title {
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 600px) {
+  .item-title {
+    font-size: 14px;
+  }
+}
+
+.item-button {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+  max-width: 150px;
+}
+
+.item-button:hover {
+  background: #ffbade;
+}
+
+.item-icon {
+  font-size: 10px;
+  transition: color 0.3s;
+}
+
+.item-button:hover .item-icon {
+  color: black;
+}
+
+.item-episode {
+  font-size: 14px;
+  color: white;
+}
+
+.item-button:hover .item-episode {
+  color: black;
+}
+
+@media (max-width: 275px) {
+  .item-time,
+  .item-title,
+  .item-episode {
+    font-size: 12px;
+  }
+}
+
+.toggle-show {
+  color: white;
+  padding: 1rem 0;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.toggle-show:hover {
+  color: #ffbade;
+}
+
+@media (max-width: 640px) {
+  .toggle-show {
+    font-size: 13px;
+  }
+}
