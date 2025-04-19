@@ -11,6 +11,7 @@ import Profilo from "@/component/Profilo/Profilo";
 import Navbar from "@/component/Navbar/Navbar";
 import SignInSignUpModal from "@/component/SignSignup/SignInSignUpModal";
 import Footer from "@/component/Footer/Footer";
+import { usePathname } from "next/navigation";
 
 export default function RecommendedTopTen(props) {
   // const [dlta, setDlta] = useState([]);
@@ -43,6 +44,8 @@ export default function RecommendedTopTen(props) {
       }, [20000]);
     }
   };
+
+  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
