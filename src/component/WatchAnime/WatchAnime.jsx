@@ -441,10 +441,10 @@ export default function WatchAnime(props) {
       if (adContainer) {
         adContainer.innerHTML = `
         <iframe
-          src="/ad"
-          style="width: 100%; height: 100px; border: none; overflow: hidden;"
-          scrolling="no"
-        ></iframe>
+              src="/ad"
+              style="width: fit-content; height: 100px; border: none; overflow: hidden;"
+              scrolling="no"
+            ></iframe>
       `;
       }
     }
@@ -456,10 +456,10 @@ export default function WatchAnime(props) {
       if (adContainer) {
         adContainer.innerHTML = `
         <iframe
-          src="/ad2"
-          style="width: 100%; height: 100px; border: none; overflow: hidden;"
-          scrolling="no"
-        ></iframe>
+              src="/ad2"
+              style="width: fit-content; height: 100px; border: none; overflow: hidden;"
+              scrolling="no"
+            ></iframe>
       `;
       }
     }
@@ -470,11 +470,11 @@ export default function WatchAnime(props) {
       const adContainer = document.getElementById("ad-container3");
       if (adContainer) {
         adContainer.innerHTML = `
-        <iframe
-          src="/ad3"
-          style="width: 100%; height: 100px; border: none; overflow: hidden;"
-          scrolling="no"
-        ></iframe>
+       <iframe
+              src="/ad3"
+              style="width: fit-content; height: 100px; border: none; overflow: hidden;"
+              scrolling="no"
+            ></iframe>
       `;
       }
     }
@@ -748,7 +748,14 @@ export default function WatchAnime(props) {
                 style={{ width: "100%", height: "100px", overflow: "hidden" }}
               > */}
               {/* Ad container */}
-              <div id="ad-containers" style={{ margin: '0 auto' }}></div>
+              <div
+                id="ad-containers"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              ></div>
 
               {/* </div> */}
               <div className="flex gap-1 items-center pecif">
@@ -1413,7 +1420,14 @@ export default function WatchAnime(props) {
               arise={props.arise}
             />
 
-            <div id="ad-containers" style={{ margin: '0 auto' }}></div>
+            <div
+              id="ad-containers"
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            ></div>
 
             <Comments
               epiod={props.epiod}
@@ -1422,7 +1436,14 @@ export default function WatchAnime(props) {
               IsLoading={IsLoading}
             />
 
-            <div id="ad-containers" style={{ margin: '0 auto' }}></div>
+            <div
+              id="ad-containers"
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            ></div>
 
             <RecommendedTopTen
               doIt={"doit"}
@@ -1432,7 +1453,14 @@ export default function WatchAnime(props) {
               IsLoading={IsLoading}
               omin={omin}
             />
-            <div id="ad-containers" style={{ margin: '0 auto' }}></div>
+            <div
+              id="ad-containers"
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            ></div>
           </div>
         )}
       </SessionProvider>
