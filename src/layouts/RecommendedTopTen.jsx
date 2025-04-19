@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopTenAnime from "@/component/TopTen/TopTenAnime";
 import AnimeCollection from "../component/MainContainer/AnimeCollection";
 import Genre from "@/component/Genre/Genre";
