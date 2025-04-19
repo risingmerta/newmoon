@@ -217,7 +217,7 @@ export default function Details(props) {
             ></iframe>
           `;
       }
-    }
+    } 
   }, [pathname]);
 
   useEffect(() => {
@@ -452,7 +452,7 @@ export default function Details(props) {
       {/* Ad container */}
       <div
         id="ad-container"
-        style={{
+        style={{ 
           width: "100%",
           display: "flex",
           justifyContent: "center",
