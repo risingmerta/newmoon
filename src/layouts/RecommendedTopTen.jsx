@@ -148,8 +148,22 @@ export default function RecommendedTopTen(props) {
             </div>
           </>
         )}
-        <div id="ad-container2" style={{ margin: "0 auto" }}></div>
-        <div id="ad-container3" style={{ margin: "0 auto" }}></div>
+        <div
+          id="ad-container2"
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        ></div>
+        <div
+          id="ad-container3"
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        ></div>
         <div>
           <Footer />
         </div>

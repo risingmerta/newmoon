@@ -240,7 +240,14 @@ export default function Details(props) {
       <SignInSignUpModal setLogIsOpen={setLogIsOpen} logIsOpen={logIsOpen} />
 
       <div className="details-container">
-      <div id="ad-container2" style={{ margin: '0 auto' }}></div>
+        <div
+          id="ad-container2"
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        ></div>
         <div className="details-header">
           <div className="details-header-primary">
             <img
@@ -443,9 +450,23 @@ export default function Details(props) {
       </div>
       {/* <div style={{ width: "fit-content", height: "100px", overflow: "hidden" }}> */}
       {/* Ad container */}
-      <div id="ad-container"></div>
+      <div
+        id="ad-container"
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      ></div>
       {/* </div> */}
-      <div id="ad-container3"></div>
+      <div
+        id="ad-container3"
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      ></div>
     </>
   );
 }
