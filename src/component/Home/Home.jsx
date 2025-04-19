@@ -116,14 +116,14 @@ const Home = ({ data, existingAnime }) => {
           <div id="ad-container2" style={{ margin: '0 auto' }}></div>
 
           <Share ShareUrl="https://animoon.me/" />
-          <div id="ad-container2" style="margin: 0 auto;"></div>
+          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
 
           <Featured data={data || {}} selectL={selectL} />
-          <div id="ad-container2" style="margin: 0 auto;"></div>
+          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
 
           <MainContainer data={data || {}} selectL={selectL} />
         </div>
-        <div id="ad-container2" style="margin: 0 auto;"></div>
+        <div id="ad-container2" style={{ margin: '0 auto' }}></div>
 
         <div>
           <Footer />
