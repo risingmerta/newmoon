@@ -162,41 +162,40 @@ export default function Schedule(props) {
           </button>
         </div>
       </div>
-      <div>
-        {loading ? (
-          <div className="loader-wrapper">
-            <BouncingLoader />
-          </div>
-        ) : !scheduleData || scheduleData.length === 0 ? (
-          <div className="no-data">No data to display</div>
-        ) : error ? (
-          <div className="no-data">Something went wrong</div>
-        ) : (
-          <div className="schedule-list">
-            {(showAll ? scheduleData : scheduleData.slice(0, 7)).map(
-              (item, idx) => (
-                <Link href={`/${item.id}`} key={idx} className="schedule-item">
-                  <div className="item-info">
-                    <div className="item-time">{item.time || "N/A"}</div>
-                    <h3 className="item-title">{item.title || "N/A"}</h3>
-                  </div>
-                  <button className="item-button">
-                    <FontAwesomeIcon icon={faPlay} className="item-icon" />
-                    <p className="item-episode">
-                      Episode {item.episode_no || "N/A"}
-                    </p>
-                  </button>
-                </Link>
-              )
-            )}
-            {scheduleData.length > 7 && (
-              <button onClick={toggleShowAll} className="toggle-show">
-                {showAll ? "Show Less" : "Show More"}
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+
+      {loading ? (
+        <div className="loader-wrapper">
+          <BouncingLoader />
+        </div>
+      ) : !scheduleData || scheduleData.length === 0 ? (
+        <div className="no-data">No data to display</div>
+      ) : error ? (
+        <div className="no-data">Something went wrong</div>
+      ) : (
+        <div className="schedule-list">
+          {(showAll ? scheduleData : scheduleData.slice(0, 7)).map(
+            (item, idx) => (
+              <Link href={`/${item.id}`} key={idx} className="schedule-item">
+                <div className="item-info">
+                  <div className="item-time">{item.time || "N/A"}</div>
+                  <h3 className="item-title">{item.title || "N/A"}</h3>
+                </div>
+                <button className="item-button">
+                  <FontAwesomeIcon icon={faPlay} className="item-icon" />
+                  <p className="item-episode">
+                    Episode {item.episode_no || "N/A"}
+                  </p>
+                </button>
+              </Link>
+            )
+          )}
+          {scheduleData.length > 7 && (
+            <button onClick={toggleShowAll} className="toggle-show">
+              {showAll ? "Show Less" : "Show More"}
+            </button>
+          )}
+        </div>
+      )}
     </>
   );
 }
