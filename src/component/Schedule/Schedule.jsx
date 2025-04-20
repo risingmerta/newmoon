@@ -110,7 +110,6 @@ export default function Schedule(props) {
 
   return (
     <>
-      <div>
         <div className="schedule-wrapper">
           <div className="schedule-header">
             <div className="schedule-title">Estimated Schedule</div>
@@ -202,7 +201,6 @@ export default function Schedule(props) {
             </div>
           )}
         </div>
-      </div>
     </>
   );
 }
