@@ -34,8 +34,9 @@ export default function MainContainer(props) {
             IsLoading={props.IsLoading}
             selectL={props.selectL}
           />
-
-          <Schedule schedule={props.schedule}/>
+          <div>
+            <Schedule schedule={props.schedule} />
+          </div>
 
           {/* Top Upcoming */}
           <AnimeCollection
