@@ -27,7 +27,7 @@
 .schedule-title {
   font-weight: bold;
   font-size: 1.5rem;
-  color: #ffbade;
+  color: var(--theme);
 }
 
 @media (max-width: 478px) {
@@ -98,7 +98,7 @@
 }
 
 .schedule-day-card.active {
-  background: #ffbade;
+  background: var(--theme);
   color: black;
 }
 
@@ -194,7 +194,7 @@
 .schedule-item:hover .item-time,
 .schedule-item:hover .item-title,
 .schedule-item:hover .item-button {
-  color: #ffbade;
+  color: var(--theme);
 }
 
 .item-info {
@@ -248,7 +248,7 @@
 }
 
 .item-button:hover {
-  background: #ffbade;
+  background: var(--theme);
 }
 
 .item-icon {
@@ -285,7 +285,7 @@
 }
 
 .toggle-show:hover {
-  color: #ffbade;
+  color: var(--theme);
 }
 
 @media (max-width: 640px) {

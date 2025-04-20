@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ImFire } from "react-icons/im";
-import "swiper/css";
+import "swiper/css"; 
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
