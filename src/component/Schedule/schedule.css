@@ -176,7 +176,7 @@
 
 .schedule-list {
   display: flex;
-  width: 100%;
+  width: 100% !important;
   flex-direction: column;
   margin-top: 1.25rem;
   align-items: flex-start;
