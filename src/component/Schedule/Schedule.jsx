@@ -110,97 +110,93 @@ export default function Schedule(props) {
 
   return (
     <>
-        <div className="schedule-wrapper">
-          <div className="schedule-header">
-            <div className="schedule-title">Estimated Schedule</div>
-            <p className="schedule-time">
-              ({GMTOffset}) {currentTime.toLocaleDateString()}{" "}
-              {currentTime.toLocaleTimeString()}
-            </p>
-          </div>
+      <div className="schedule-wrapper">
+        <div className="schedule-header">
+          <div className="schedule-title">Estimated Schedule</div>
+          <p className="schedule-time">
+            ({GMTOffset}) {currentTime.toLocaleDateString()}{" "}
+            {currentTime.toLocaleTimeString()}
+          </p>
         </div>
+      </div>
 
-        <div className="schedule-slider-wrapper">
-          <div className="schedule-slider">
-            <Swiper
-              slidesPerView={3}
-              spaceBetween={2}
-              breakpoints={{
-                250: { slidesPerView: 3, spaceBetween: 10 },
-                640: { slidesPerView: 4, spaceBetween: 10 },
-                768: { slidesPerView: 5, spaceBetween: 10 },
-                1024: { slidesPerView: 7, spaceBetween: 10 },
-                1300: { slidesPerView: 7, spaceBetween: 15 },
-              }}
-              modules={[Pagination, Navigation]}
-              navigation={{ nextEl: ".next", prevEl: ".prev" }}
-              onSwiper={(swiper) => (swiperRef.current = swiper)}
-            >
-              {dates &&
-                dates.map((date, index) => (
-                  <SwiperSlide key={index}>
-                    <div
-                      ref={(el) => (cardRefs.current[index] = el)}
-                      onClick={() => toggleActive(index)}
-                      className={`schedule-day-card ${
-                        currentActiveIndex === index ? "active" : ""
-                      }`}
-                    >
-                      <div className="day-name">{date.dayname}</div>
-                      <div className="day-date">
-                        {date.monthName} {date.day}
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
-            <button className="next slider-nav">
-              <FaChevronRight className="slider-icon" />
-            </button>
-            <button className="prev slider-nav">
-              <FaChevronLeft className="slider-icon" />
-            </button>
-          </div>
-        </div>
-        <div>
-          {loading ? (
-            <div className="loader-wrapper">
-              <BouncingLoader />
-            </div>
-          ) : !scheduleData || scheduleData.length === 0 ? (
-            <div className="no-data">No data to display</div>
-          ) : error ? (
-            <div className="no-data">Something went wrong</div>
-          ) : (
-            <div className="schedule-list">
-              {(showAll ? scheduleData : scheduleData.slice(0, 7)).map(
-                (item, idx) => (
-                  <Link
-                    href={`/${item.id}`}
-                    key={idx}
-                    className="schedule-item"
+      <div className="schedule-slider-wrapper">
+        <div className="schedule-slider">
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={2}
+            breakpoints={{
+              250: { slidesPerView: 3, spaceBetween: 10 },
+              640: { slidesPerView: 4, spaceBetween: 10 },
+              768: { slidesPerView: 5, spaceBetween: 10 },
+              1024: { slidesPerView: 7, spaceBetween: 10 },
+              1300: { slidesPerView: 7, spaceBetween: 15 },
+            }}
+            modules={[Pagination, Navigation]}
+            navigation={{ nextEl: ".next", prevEl: ".prev" }}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+          >
+            {dates &&
+              dates.map((date, index) => (
+                <SwiperSlide key={index}>
+                  <div
+                    ref={(el) => (cardRefs.current[index] = el)}
+                    onClick={() => toggleActive(index)}
+                    className={`schedule-day-card ${
+                      currentActiveIndex === index ? "active" : ""
+                    }`}
                   >
-                    <div className="item-info">
-                      <div className="item-time">{item.time || "N/A"}</div>
-                      <h3 className="item-title">{item.title || "N/A"}</h3>
+                    <div className="day-name">{date.dayname}</div>
+                    <div className="day-date">
+                      {date.monthName} {date.day}
                     </div>
-                    <button className="item-button">
-                      <FontAwesomeIcon icon={faPlay} className="item-icon" />
-                      <p className="item-episode">
-                        Episode {item.episode_no || "N/A"}
-                      </p>
-                    </button>
-                  </Link>
-                )
-              )}
-              {scheduleData.length > 7 && (
-                <button onClick={toggleShowAll} className="toggle-show">
-                  {showAll ? "Show Less" : "Show More"}
-                </button>
-              )}
-            </div>
-          )}
+                  </div>
+                </SwiperSlide>
+              ))}
+          </Swiper>
+          <button className="next slider-nav">
+            <FaChevronRight className="slider-icon" />
+          </button>
+          <button className="prev slider-nav">
+            <FaChevronLeft className="slider-icon" />
+          </button>
         </div>
+      </div>
+      <div>
+        {loading ? (
+          <div className="loader-wrapper">
+            <BouncingLoader />
+          </div>
+        ) : !scheduleData || scheduleData.length === 0 ? (
+          <div className="no-data">No data to display</div>
+        ) : error ? (
+          <div className="no-data">Something went wrong</div>
+        ) : (
+          <div className="schedule-list">
+            {(showAll ? scheduleData : scheduleData.slice(0, 7)).map(
+              (item, idx) => (
+                <Link href={`/${item.id}`} key={idx} className="schedule-item">
+                  <div className="item-info">
+                    <div className="item-time">{item.time || "N/A"}</div>
+                    <h3 className="item-title">{item.title || "N/A"}</h3>
+                  </div>
+                  <button className="item-button">
+                    <FontAwesomeIcon icon={faPlay} className="item-icon" />
+                    <p className="item-episode">
+                      Episode {item.episode_no || "N/A"}
+                    </p>
+                  </button>
+                </Link>
+              )
+            )}
+            {scheduleData.length > 7 && (
+              <button onClick={toggleShowAll} className="toggle-show">
+                {showAll ? "Show Less" : "Show More"}
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 }
