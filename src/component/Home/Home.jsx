@@ -14,7 +14,7 @@ import BannerAd from "../Banner/Banner";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 
-const Home = ({ data, existingAnime }) => {
+const Home = ({ data, existingAnime, schedule }) => {
   const [selectL, setSelectL] = useState("en");
   const [profiIsOpen, setProfiIsOpen] = useState(false);
   const [logIsOpen, setLogIsOpen] = useState(false);
@@ -113,16 +113,16 @@ const Home = ({ data, existingAnime }) => {
           {/* </div> */}
 
           <Trending data={data?.trending || []} selectL={selectL} />
-          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
+          <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
           <Share ShareUrl="https://animoon.me/" />
-          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
+          <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
           <Featured data={data || {}} selectL={selectL} />
-          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
+          <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <MainContainer data={data || {}} selectL={selectL} />
-          <div id="ad-container2" style={{ margin: '0 auto' }}></div>
+          <MainContainer data={data || {}} selectL={selectL} schedule={schedule}/>
+          <div id="ad-container2" style={{ margin: "0 auto" }}></div>
         </div>
 
         <div>
