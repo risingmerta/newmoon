@@ -1,19 +1,17 @@
 import Script from "next/script";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <Script
-        src="//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"
+        src="//forecastcremateillogical.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"
         strategy="afterInteractive"
         async
-        // data-cfasync="false"
       />
-      {/* Ad container */}
-      <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c"></div>
+      <div id="container-b29918b4e5fbf3e4c13e32f24c7c143c" />
     </div>
   );
 };
 
-export default page;
+export default Page;
