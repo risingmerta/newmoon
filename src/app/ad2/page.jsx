@@ -4,12 +4,15 @@ import React from "react";
 const Page = () => {
   return (
     <div>
+      {/* Ad Script */}
       <Script
-        src="//forecastcremateillogical.com/a8364aeaeff99fac8326528d16cd0941/invoke.js"
+        src="//pl26400286.profitableratecpm.com/5d494585d0e04105f2b8a95589379c5d/invoke.js"
         strategy="afterInteractive"
-        async
+        async 
       />
-      <div id="container-a8364aeaeff99fac8326528d16cd0941" />
+
+      {/* Ad Container */}
+      <div id="container-5d494585d0e04105f2b8a95589379c5d" />
     </div>
   );
 };
