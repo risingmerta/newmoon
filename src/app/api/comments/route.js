@@ -62,9 +62,12 @@ export async function PATCH(req) {
 
   if (comment) {
     const updateField = action === 'like' ? 'likes' : 'dislikes';
+    const updateData = {};
+    updateData[updateField] = 1;
+
     await db.collection("comments").updateOne(
       { _id: commentId },
-      { $inc: { [updateField]: 1 } }
+      { $inc: updateData } // Increment the like/dislike count
     );
 
     const updatedComment = await db.collection("comments").findOne({ _id: commentId });
@@ -74,3 +77,4 @@ export async function PATCH(req) {
 
   return new Response(JSON.stringify({ error: 'Comment not found' }), { status: 404 });
 }
+
