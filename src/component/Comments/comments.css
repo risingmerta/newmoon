@@ -2,12 +2,14 @@
   padding: 1rem;
   max-width: 600px;
   margin: 0 auto;
+  color: #fff;
 }
 
 .comment-title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: #fff;
 }
 
 .input-wrapper {
@@ -19,9 +21,11 @@
 .comment-input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   border-radius: 6px;
   font-size: 14px;
+  background-color: #f0f0f0;
+  color: #000; /* input text color */
 }
 
 .send-button {
@@ -40,26 +44,24 @@
 .comments-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
-.comment-item {
-  border-left: 4px solid #ccc;
-  padding-left: 12px;
-}
-
-.comment-item.reply {
-  margin-left: 20px;
+.comment-item.flat {
+  padding: 8px 12px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #222;
 }
 
 .comment-text {
   font-size: 14px;
-  color: #333;
+  color: #fff;
 }
 
 .reply-btn {
   font-size: 12px;
-  color: #2563eb;
+  color: #60a5fa;
   background: none;
   border: none;
   padding: 4px 0;

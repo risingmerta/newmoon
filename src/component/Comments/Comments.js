@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import './comments.css'; // 👈 Import the CSS
+import './comments.css';
 
 export default function CommentPage() {
   const [commentText, setCommentText] = useState('');
@@ -29,15 +29,17 @@ export default function CommentPage() {
     }
   };
 
-  const renderComments = (comments, parentId = null) => {
-    return comments
-      .filter((c) => c.parentId === parentId)
-      .map((comment) => (
-        <div
-          key={comment._id}
-          className={`comment-item ${parentId ? 'reply' : ''}`}
-        >
-          <div className="comment-text">{comment.text}</div>
+  const renderComments = () => {
+    return comments.map((comment) => {
+      const parent = comments.find((c) => c._id === comment.parentId);
+      return (
+        <div key={comment._id} className="comment-item flat">
+          <div className="comment-text">
+            {comment.parentId && parent ? (
+              <strong>@{parent.userId}: </strong>
+            ) : null}
+            {comment.text}
+          </div>
           <button
             onClick={() => {
               const reply = prompt("Reply:");
@@ -47,9 +49,9 @@ export default function CommentPage() {
           >
             Reply
           </button>
-          {renderComments(comments, comment._id)}
         </div>
-      ));
+      );
+    });
   };
 
   useEffect(() => {
@@ -76,9 +78,7 @@ export default function CommentPage() {
         </button>
       </div>
 
-      <div className="comments-list">
-        {renderComments(comments)}
-      </div>
+      <div className="comments-list">{renderComments()}</div>
     </div>
   );
 }
