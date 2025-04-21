@@ -1,7 +1,7 @@
 // 📁 app/api/comments/route.js
 import { MongoClient } from "mongodb";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth"; // adjust this to your path
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // adjust this to your path
 
 const mongoUri = "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
 const dbName = "mydatabase";
