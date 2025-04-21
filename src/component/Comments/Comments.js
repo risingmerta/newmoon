@@ -30,7 +30,7 @@ export default function CommentPage() {
   };
 
   const handleLikeDislike = async (commentId, action) => {
-    const res = await fetch(`/api/comments/${commentId}/reaction`, {
+    const res = await fetch(`/api/comments/${commentId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action }),
