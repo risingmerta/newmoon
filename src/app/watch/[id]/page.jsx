@@ -179,8 +179,8 @@ export default async function page({ params, searchParams }) {
       <Watchi
         data={data}
         anId={params.id}
-        subPrio={subPrio}
-        dataStr={dataStr}
+        // subPrio={subPrio}
+        // dataStr={dataStr}
         schedule={dati?.schedule}
         datajDub={datajDub}
         datajSub={datajSub}
@@ -190,8 +190,8 @@ export default async function page({ params, searchParams }) {
         epis={epis}
         dataj={dataj}
         datapp={datapp}
-        gogoDub={gogoDub}
-        gogoSub={gogoSub}
+        // gogoDub={gogoDub}
+        // gogoSub={gogoSub}
         ShareUrl={ShareUrl}
         arise={arise}
         raw={raw}
