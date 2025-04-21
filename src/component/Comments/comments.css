@@ -48,19 +48,66 @@
 }
 
 .comment-item.flat {
-  padding: 8px 12px;
+  padding: 12px 16px;
   border: 1px solid #444;
   border-radius: 6px;
   background: #222;
 }
 
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-user {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-time {
+  font-size: 12px;
+  color: #888;
+}
+
 .comment-text {
   font-size: 14px;
   color: #fff;
+  margin-top: 8px;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.like-btn,
+.dislike-btn {
+  font-size: 14px;
+  padding: 6px 12px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.like-btn:hover,
+.dislike-btn:hover {
+  background-color: #444;
 }
 
 .reply-btn {
-  font-size: 12px;
+  font-size: 14px;
   color: #60a5fa;
   background: none;
   border: none;
