@@ -31,10 +31,7 @@ export default async function page({ searchParams }) {
 
   try {
     // Connect to MongoDB using the connectDB function
-    const client = await connectDB;
-    console.log("Connected to MongoDB");
-
-    const db = client.db("mydatabase");
+    const db = await connectDB();
 
     // Fetch homepage data from MongoDB
     const homeCollection = db.collection(homeCollectionName.trim());
