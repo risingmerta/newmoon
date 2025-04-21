@@ -1,46 +1,42 @@
 import Advertize from "@/component/Advertize/Advertize";
 import GenreSidebar from "@/component/Gridle/page";
-import { MongoClient } from "mongodb";
+import { connectDB } from "@/lib/mongoClient"; // Import connectDB
 import Script from "next/script";
 import React from "react";
 
 export async function generateMetadata({ searchParams }) {
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
   const searchParam = await searchParams;
-  const idd = searchParam.heading;
+  const idd = searchParam.heading || "Anime"; // Default fallback for heading
 
   return {
     title: `Watch ${idd} Anime English Sub/Dub online free on ${siteName}`,
-    description: `${siteName} is the best site to watch ${idd} Anime SUB online, or you can even watch ${idd} Anime DUB in HD quality. You can also watch under rated anime on ${siteName} website.`,
+    description: `${siteName} is the best site to watch ${idd} Anime SUB online, or you can even watch ${idd} Anime DUB in HD quality. You can also watch underrated anime on ${siteName} website.`,
   };
 }
 
 export default async function page({ searchParams }) {
   const searchParam = await searchParams;
   const cate = searchParam.name?.toString() || "default-category"; // Default value fallback
-  const fiki = searchParam.heading?.toString() || "Anime"; // Default fallback
-  const pageParam = searchParam.page ? searchParam.page : "1";
+  const fiki = searchParam.heading?.toString() || "Anime"; // Default fallback for heading
+  const pageParam = searchParam.page ? searchParam.page : "1"; // Default page is 1
   const cacheMaxAge = 345600; // Cache for 4 days (in seconds)
 
-  const mongoUri =
-    "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-  const dbName = "mydatabase";
   const homeCollectionName = "animoon-home";
   const gridCollectionName = cate;
 
-  const client = new MongoClient(mongoUri);
   let data;
   let existingAnime = [];
   let count;
 
   try {
-    // Connect to MongoDB
-    await client.connect();
+    // Connect to MongoDB using the connectDB function
+    const client = await connectDB;
     console.log("Connected to MongoDB");
 
-    const db = client.db(dbName);
+    const db = client.db("mydatabase");
 
-    // Fetch homepage data
+    // Fetch homepage data from MongoDB
     const homeCollection = db.collection(homeCollectionName.trim());
     const document = await homeCollection.findOne({}); // Adjust query as needed
 
@@ -56,7 +52,7 @@ export default async function page({ searchParams }) {
       data = await res.json();
     }
 
-    // Check if anime from spotlights exists in the animeInfo collection
+    // Fetch anime data for the selected category (gridCollectionName) and page
     const animeCollection = db.collection(gridCollectionName.trim());
     existingAnime = await animeCollection.findOne({
       page: parseInt(pageParam),
@@ -66,15 +62,13 @@ export default async function page({ searchParams }) {
       existingAnime = JSON.parse(JSON.stringify(existingAnime)); // Convert BSON to plain object
     }
 
+    // Get the total count of documents in the category collection
     count = await db.collection(gridCollectionName.trim()).countDocuments();
   } catch (error) {
     console.error("Error fetching data from MongoDB or API:", error.message);
-  } finally {
-    await client.close();
-    console.log("MongoDB connection closed");
   }
 
-  // Constructing the shareable URL
+  // Construct the shareable URL for this category and page
   const ShareUrl = `https://animoon.me/grid?name=${cate}&heading=${fiki}`;
   const arise = `${fiki} Anime`;
 

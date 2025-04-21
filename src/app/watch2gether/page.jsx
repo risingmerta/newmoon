@@ -1,29 +1,24 @@
 import React from "react";
 import AllLive from "@/component/AllLive/page";
 import Advertize from "@/component/Advertize/Advertize";
-import { MongoClient } from "mongodb";
+import { connectDB } from "@/lib/mongoClient";
 import Script from "next/script";
 
 export default async function page() {
-  const mongoUri =
-    "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-  const dbName = "mydatabase"; // Change the database name as needed
-  const client = new MongoClient(mongoUri);
-  await client.connect();
-  const db = client.db(dbName);
+  const db = await connectDB();
   const collection = db.collection("liveRooms");
 
-  // Fetch all live rooms if no specific ID is provided
   const liveRooms = await collection.find({}).toArray();
-  const live = JSON.stringify(liveRooms)
-  const liveRoom = JSON.parse(live)
+  const live = JSON.stringify(liveRooms);
+  const liveRoom = JSON.parse(live);
+
   return (
     <div>
       {/* <Script
         strategy="afterInteractive"
         src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
       /> */}
-      <AllLive liveRoom={liveRoom}/>
+      <AllLive liveRoom={liveRoom} />
       {/* <Advertize /> */}
     </div>
   );

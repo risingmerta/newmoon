@@ -1,44 +1,29 @@
 import FilterComp from "@/component/FilterComp/FilterComp";
 import React from "react";
-import "./filterpage.css";
-import { MongoClient } from "mongodb";
-import Advertize from "@/component/Advertize/Advertize";
+import { connectDB } from "@/lib/mongoClient";
 import Script from "next/script";
 
-// MongoDB connection detail
+// MongoDB connection details
 export async function generateMetadata({ params }) {
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
   const idd = "Anime";
 
   return {
-    title: `Watch ${idd} English Sub/Dub online free on ${siteName} , free Anime Streaming`,
-    description: `${siteName} is the best site to watch
-                      ${idd} SUB online, or you can even
-                      watch ${idd} DUB in HD quality. You
-                      can also watch under rated anime
-                      on ${siteName} website.`,
+    title: `Watch ${idd} English Sub/Dub online free on ${siteName}, free Anime Streaming`,
+    description: `${siteName} is the best site to watch ${idd} SUB online, or you can even watch ${idd} DUB in HD quality. You can also watch underrated anime on ${siteName} website.`,
   };
 }
-// Main page function
-export default async function page({ searchParams }) {
-  const searchParam = await searchParams;
-  const mongoUri =
-    "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-  const dbName = "mydatabase";
-  const homeCollectionName = "animoon-home";
 
-  const client = new MongoClient(mongoUri);
+// Main page function
+export default async function Page({ searchParams }) {
+  const searchParam = await searchParams;
+  const homeCollectionName = "animoon-home";
   let data;
 
   try {
-    // Connect to MongoDB
-    await client.connect();
-    console.log("Connected to MongoDB");
-
-    const db = client.db(dbName);
-
-    // Fetch homepage data
+    const db = await connectDB();
     const homeCollection = db.collection(homeCollectionName.trim());
+
     const document = await homeCollection.findOne({}); // Adjust query as needed
 
     if (document) {
@@ -54,9 +39,6 @@ export default async function page({ searchParams }) {
     }
   } catch (error) {
     console.error("Error fetching data from MongoDB or API:", error.message);
-  } finally {
-    await client.close();
-    console.log("MongoDB connection closed");
   }
 
   const res = await fetch(
@@ -76,15 +58,12 @@ export default async function page({ searchParams }) {
       searchParam.sort ? `&sort=${searchParam.sort}` : ""
     }${searchParam.genres ? `&genres=${searchParam.genres}` : ""}`
   );
+  
   const filteredAnimes = await res.json();
-  console.log(filteredAnimes.results.data);
 
   return (
     <div className="flirt">
-      {/* <Script
-        strategy="afterInteractive"
-        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
-      /> */}
+      {/* <Script strategy="afterInteractive" src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js" /> */}
       <FilterComp
         data={data}
         filteredAnimes={filteredAnimes}

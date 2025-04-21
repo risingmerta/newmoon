@@ -1,8 +1,4 @@
-import { MongoClient } from "mongodb";
-
-const mongoUri =
-  "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-const dbName = "mydatabase";
+import { connectDB } from "@/lib/mongoClient"; // Import the connectDB utility
 
 export async function GET(req) {
   try {
@@ -41,32 +37,23 @@ export async function GET(req) {
       );
     }
 
-    // Connect to MongoDB
-    const client = new MongoClient(mongoUri);
-    try {
-      await client.connect();
-      console.log("Connected to MongoDB");
+    // Connect to MongoDB using the connectDB utility
+    const db = await connectDB(); // Use connectDB here
+    const episodesCollection = db.collection("episo");
+    const savi = `streams.${cate}`;
 
-      const db = client.db(dbName);
-      const episodesCollection = db.collection("episo");
-      const savi = `streams.${cate}`;
+    // Update MongoDB with the fetched data
+    const result = await episodesCollection.updateOne(
+      { _id: id },
+      { $set: { [savi]: apiData } }, // Ensure correct update format
+      { upsert: true } // Create document if it doesn't exist
+    );
 
-      // Update MongoDB with the fetched data
-      const result = await episodesCollection.updateOne(
-        { _id: id },
-        { $set: { [savi]: apiData } }, // Ensure correct update format
-        { upsert: true } // Create document if it doesn't exist
-      );
-
-      console.log(
-        result.modifiedCount > 0
-          ? "Document updated successfully!"
-          : "No document was updated."
-      );
-    } finally {
-      await client.close();
-      console.log("MongoDB connection closed");
-    }
+    console.log(
+      result.modifiedCount > 0
+        ? "Document updated successfully!"
+        : "No document was updated."
+    );
 
     // Return the fetched data
     return new Response(JSON.stringify(apiData), { status: 200 });

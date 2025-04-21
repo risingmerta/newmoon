@@ -1,7 +1,7 @@
 import FilterComp from "@/component/FilterComp/FilterComp";
 import React from "react";
 import "./filterpage.css";
-import { MongoClient } from "mongodb";
+import { connectDB } from "@/lib/mongoClient"; // Import connectDB
 import Advertize from "@/component/Advertize/Advertize";
 import Script from "next/script";
 
@@ -19,25 +19,22 @@ export async function generateMetadata({ params }) {
                       on ${siteName} website.`,
   };
 }
+
 // Main page function
 export default async function page({ searchParams }) {
   const searchParam = await searchParams;
-  const mongoUri =
-    "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-  const dbName = "mydatabase";
   const homeCollectionName = "animoon-home";
 
-  const client = new MongoClient(mongoUri);
   let data;
 
   try {
-    // Connect to MongoDB
-    await client.connect();
+    // Connect to MongoDB using the connectDB function
+    const client = await connectDB;
     console.log("Connected to MongoDB");
 
-    const db = client.db(dbName);
+    const db = client.db("mydatabase");
 
-    // Fetch homepage data
+    // Fetch homepage data from MongoDB
     const homeCollection = db.collection(homeCollectionName.trim());
     const document = await homeCollection.findOne({}); // Adjust query as needed
 
@@ -54,11 +51,9 @@ export default async function page({ searchParams }) {
     }
   } catch (error) {
     console.error("Error fetching data from MongoDB or API:", error.message);
-  } finally {
-    await client.close();
-    console.log("MongoDB connection closed");
   }
 
+  // Fetch filtered anime data from API
   const res = await fetch(
     `https://vimal.animoon.me/api/search?keyword=${searchParam.keyword}
    ${`&page=${searchParam.page || "1"}`}${

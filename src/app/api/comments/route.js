@@ -1,18 +1,6 @@
-import { MongoClient } from "mongodb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // adjust this to your path
-
-const mongoUri = "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-const dbName = "mydatabase";
-
-let client;
-async function connectToDatabase() {
-  if (!client) {
-    client = new MongoClient(mongoUri);
-    await client.connect();
-  }
-  return client.db(dbName);
-}
+import { connectDB } from "@/lib/mongoClient"; // Import the connectDB utility
 
 // Handle Comment Creation (POST)
 export async function POST(req) {
@@ -40,7 +28,7 @@ export async function POST(req) {
     dislikes: 0,
   };
 
-  const db = await connectToDatabase();
+  const db = await connectDB();  // Use connectDB here
   await db.collection("comments").insertOne(comment);
 
   return new Response(JSON.stringify(comment), { status: 201 });
@@ -48,7 +36,7 @@ export async function POST(req) {
 
 // Get Comments (GET)
 export async function GET() {
-  const db = await connectToDatabase();
+  const db = await connectDB();  // Use connectDB here
   const comments = await db.collection("comments").find().toArray();
 
   return new Response(JSON.stringify(comments), { status: 200 });
@@ -70,7 +58,7 @@ export async function PATCH(req) {
     return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400 });
   }
 
-  const db = await connectToDatabase();
+  const db = await connectDB();  // Use connectDB here
   const comments = db.collection("comments");
   const comment = await comments.findOne({ _id: commentId });
 
@@ -133,4 +121,3 @@ export async function PATCH(req) {
   const updatedComment = await comments.findOne({ _id: commentId });
   return new Response(JSON.stringify(updatedComment), { status: 200 });
 }
-

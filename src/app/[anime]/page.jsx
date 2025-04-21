@@ -1,17 +1,14 @@
 import React from "react";
 import RecommendedTopTen from "../../layouts/RecommendedTopTen";
-import { MongoClient } from "mongodb";
-import Advertize from "@/component/Advertize/Advertize";
-import Script from "next/script";
+import { connectDB } from "@/lib/mongoClient";
 
-const mongoUri =
-  "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-const dbName = "mydatabase";
 const homeCollectionName = "animoon-home";
 const animeCollectionName = "animeInfo";
 
+// ───────────────────────────────────────────────────────────
+
 async function fetchHomeData(db) {
-  const homeCollection = db.collection(homeCollectionName.trim());
+  const homeCollection = db.collection(homeCollectionName);
   const document = await homeCollection.findOne({});
   if (document) return document;
 
@@ -20,7 +17,7 @@ async function fetchHomeData(db) {
 }
 
 async function fetchAndStoreAnime(db, idToCheck) {
-  const animeCollection = db.collection(animeCollectionName.trim());
+  const animeCollection = db.collection(animeCollectionName);
   let animeDoc = await animeCollection.findOne({ _id: idToCheck });
 
   const isInfoMissing =
@@ -57,32 +54,27 @@ async function fetchAndStoreAnime(db, idToCheck) {
 // ───────────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }) {
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon";
   const idToCheck = params.anime;
 
-  const client = new MongoClient(mongoUri);
   let data = null;
   let animeDoc = null;
 
   try {
-    await client.connect();
-    const db = client.db(dbName);
-
+    const db = await connectDB();
     data = await fetchHomeData(db);
     animeDoc = await fetchAndStoreAnime(db, idToCheck);
   } catch (err) {
     console.error("Error in generateMetadata:", err.message);
-  } finally {
-    await client.close();
   }
 
   const title =
     animeDoc?.info?.results?.data?.title ?? "Anime not found - Animoon";
 
-    return {
-      title: `Watch ${title} English Sub/Dub online free on ${siteName}`,
-      description: `${siteName} is the best site to watch ${title} SUB online, or you can even watch ${title} DUB in HD quality. You can also watch underrated anime on ${siteName}.`,
-    };
+  return {
+    title: `Watch ${title} English Sub/Dub online free on ${siteName}`,
+    description: `${siteName} is the best site to watch ${title} SUB online, or you can even watch ${title} DUB in HD quality. You can also watch underrated anime on ${siteName}.`,
+  };
 }
 
 // ───────────────────────────────────────────────────────────
@@ -90,20 +82,15 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const idToCheck = params.anime;
 
-  const client = new MongoClient(mongoUri);
   let data = null;
   let animeDoc = null;
 
   try {
-    await client.connect();
-    const db = client.db(dbName);
-
+    const db = await connectDB();
     data = await fetchHomeData(db);
     animeDoc = await fetchAndStoreAnime(db, idToCheck);
   } catch (err) {
     console.error("Error in Page component:", err.message);
-  } finally {
-    await client.close();
   }
 
   const ShareUrl = `https://animoon.me/${idToCheck}`;
@@ -111,10 +98,6 @@ export default async function Page({ params }) {
 
   return (
     <div>
-      {/* <Script
-        strategy="afterInteractive"
-        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
-      /> */}
       <RecommendedTopTen
         uiui={animeDoc}
         data={data}
@@ -122,7 +105,6 @@ export default async function Page({ params }) {
         arise={arise}
         id={idToCheck}
       />
-      {/* <Advertize /> */}
     </div>
   );
 }

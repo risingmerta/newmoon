@@ -1,6 +1,6 @@
 import Advertize from "@/component/Advertize/Advertize";
 import GenreSidebar from "@/component/Gridle/page";
-import { MongoClient } from "mongodb";
+import { connectDB } from "@/lib/mongoClient"; // Import connectDB
 import Script from "next/script";
 import React from "react";
 
@@ -25,23 +25,19 @@ export default async function page({ searchParams }) {
 
   const pageParam = searchParam.page ? searchParam.page : "1";
 
-  const mongoUri =
-    "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-  const dbName = "mydatabase";
   const homeCollectionName = "animoon-home";
   const genreCollectionName = "genre_" + cate;
 
-  const client = new MongoClient(mongoUri);
   let data;
   let existingAnime = [];
   let count;
 
   try {
-    // Connect to MongoDB
-    await client.connect();
+    // Connect to MongoDB using connectDB
+    const client = await connectDB;
     console.log("Connected to MongoDB");
 
-    const db = client.db(dbName);
+    const db = client.db("mydatabase");
 
     // Fetch homepage data
     const homeCollection = db.collection(homeCollectionName.trim());
@@ -72,9 +68,6 @@ export default async function page({ searchParams }) {
     count = await db.collection(genreCollectionName.trim()).countDocuments();
   } catch (error) {
     console.error("Error fetching data from MongoDB or API:", error.message);
-  } finally {
-    await client.close();
-    console.log("MongoDB connection closed");
   }
 
   const cacheMaxAge = 345600; // Cache for 4 days (in seconds)

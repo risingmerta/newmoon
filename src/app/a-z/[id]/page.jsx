@@ -1,98 +1,66 @@
 import SearchResults from "@/component/AZ/az";
-import { MongoClient } from "mongodb";
 import Script from "next/script";
 import React from "react";
+import { connectDB } from "@/lib/mongoClient";
 
 export async function generateMetadata({ params }) {
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon"; // Default if env is missing
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon";
   const idd = "Anime";
 
   return {
     title: `Watch ${idd} English Sub/Dub online free on ${siteName}, free Anime Streaming`,
-    description: `${siteName} is the best site to watch
-                    ${idd} SUB online, or you can even
-                    watch ${idd} DUB in HD quality. You
-                    can also watch underrated anime
-                    on ${siteName} website.`,
+    description: `${siteName} is the best site to watch ${idd} SUB online, or you can even watch ${idd} DUB in HD quality. You can also watch underrated anime on ${siteName} website.`,
   };
 }
 
-export default async function page({ params, searchParams }) {
-  const param = await params;
-  const searchParam = await searchParams;
-  let pageParam = searchParam?.page || "1";
-  let json = "";
-  const cacheMaxAge = 345600; // 4 days in seconds
+export default async function Page({ params, searchParams }) {
+  const pageParam = searchParams?.page || "1";
+  const sortParam = searchParams?.sort?.toString().toLowerCase();
+  const azCollectionName = sortParam ? `az-list_${sortParam}` : "az-list";
 
-  const mongoUri =
-    "mongodb://animoon:Imperial_merta2030@127.0.0.1:27017/?authSource=admin";
-  const dbName = "mydatabase";
-  const azCollectionName = searchParam.sort
-    ? "az-list_" + searchParam.sort.toString().toLowerCase()
-    : "az-list";
-
-  const client = new MongoClient(mongoUri);
   let existingAnime = [];
-  let count;
+  let count = 0;
+  let json = null;
+  const cacheMaxAge = 345600; // 4 days
 
   try {
-    // Connect to MongoDB
-    await client.connect();
-    console.log("Connected to MongoDB");
-
-    const db = client.db(dbName);
-
-    // Fetch homepage data
-
-    // Check if anime from spotlights exists in the animeInfo collection
+    const db = await connectDB();
     const animeCollection = db.collection(azCollectionName.trim());
-    existingAnime = await animeCollection.findOne({
+
+    const result = await animeCollection.findOne({
       page: parseInt(pageParam),
     });
 
-    if (existingAnime) {
-      existingAnime = JSON.parse(JSON.stringify(existingAnime)); // Convert BSON to plain object
+    if (result) {
+      existingAnime = JSON.parse(JSON.stringify(result));
     }
 
-    count = await db.collection(azCollectionName.trim()).countDocuments();
+    count = await animeCollection.countDocuments();
   } catch (error) {
-    console.error("Error fetching data from MongoDB or API:", error.message);
-  } finally {
-    await client.close();
-    console.log("MongoDB connection closed");
+    console.error("MongoDB Error:", error.message);
   }
 
   try {
-    const url = searchParam.sort
-      ? `https://vimal.animoon.me/api/az-list/${searchParam.sort}?page=${
-          searchParam.page || "1"
-        }`
-      : `https://vimal.animoon.me/api/az-list?page=${searchParam.page || "1"}`;
+    const url = sortParam
+      ? `https://vimal.animoon.me/api/az-list/${sortParam}?page=${pageParam}`
+      : `https://vimal.animoon.me/api/az-list?page=${pageParam}`;
 
-    const data = await fetch(url, {
-      cache: "force-cache",
-      headers: {
-        "Cache-Control": `public, max-age=${cacheMaxAge}, stale-while-revalidate=${cacheMaxAge}`,
-      },
-    });
+    const data = await fetch(url);
 
     json = await data.json();
   } catch (error) {
-    console.error("Failed to fetch data:", error);
+    console.error("Fetch Error:", error.message);
   }
 
   return (
     <div>
-      {/* <Script
-        strategy="afterInteractive"
-        src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
-      /> */}
+      {/* <Script strategy="afterInteractive" src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js" /> */}
       <SearchResults
         el={existingAnime}
-        sort={searchParam.sort}
-        page={searchParam.page}
+        sort={sortParam}
+        page={pageParam}
         totalPages={count}
-        para={param.id}
+        para={params?.id}
       />
     </div>
   );
