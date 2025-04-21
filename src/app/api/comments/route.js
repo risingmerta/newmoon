@@ -81,43 +81,56 @@ export async function PATCH(req) {
   const hasLiked = comment.likedBy?.includes(userId);
   const hasDisliked = comment.dislikedBy?.includes(userId);
 
-  // Prepare update
-  const update = { $set: {}, $inc: {}, $pull: {}, $addToSet: {} };
+  const update = {
+    $pull: {},
+    $addToSet: {},
+    $inc: {}
+  };
 
-  if (action === "like") {
+  if (action === 'like') {
     if (hasLiked) {
-      return new Response(JSON.stringify({ message: "Already liked" }), { status: 200 });
-    }
-
-    if (hasDisliked) {
-      update.$pull.dislikedBy = userId;
-      update.$inc.dislikes = -1;
-    }
-
-    update.$addToSet.likedBy = userId;
-    update.$inc.likes = 1;
-
-  } else if (action === "dislike") {
-    if (hasDisliked) {
-      return new Response(JSON.stringify({ message: "Already disliked" }), { status: 200 });
-    }
-
-    if (hasLiked) {
+      // Remove like
       update.$pull.likedBy = userId;
       update.$inc.likes = -1;
-    }
+    } else {
+      // Add like, remove dislike if exists
+      update.$addToSet.likedBy = userId;
+      update.$inc.likes = 1;
 
-    update.$addToSet.dislikedBy = userId;
-    update.$inc.dislikes = 1;
+      if (hasDisliked) {
+        update.$pull.dislikedBy = userId;
+        update.$inc.dislikes = -1;
+      }
+    }
+  } else if (action === 'dislike') {
+    if (hasDisliked) {
+      // Remove dislike
+      update.$pull.dislikedBy = userId;
+      update.$inc.dislikes = -1;
+    } else {
+      // Add dislike, remove like if exists
+      update.$addToSet.dislikedBy = userId;
+      update.$inc.dislikes = 1;
+
+      if (hasLiked) {
+        update.$pull.likedBy = userId;
+        update.$inc.likes = -1;
+      }
+    }
   }
 
-  // Clean up empty operations
-  Object.keys(update).forEach(key => {
-    if (Object.keys(update[key]).length === 0) delete update[key];
-  });
+  // Remove empty update operations
+  for (const key in update) {
+    if (Object.keys(update[key]).length === 0) {
+      delete update[key];
+    }
+  }
 
-  await comments.updateOne({ _id: commentId }, update);
+  if (Object.keys(update).length > 0) {
+    await comments.updateOne({ _id: commentId }, update);
+  }
 
   const updatedComment = await comments.findOne({ _id: commentId });
   return new Response(JSON.stringify(updatedComment), { status: 200 });
 }
+
