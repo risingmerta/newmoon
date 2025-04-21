@@ -56,36 +56,68 @@ export async function GET() {
 
 // Handle Like/Dislike reactions (PATCH)
 export async function PATCH(req) {
-  const url = new URL(req.url);
-  const commentId = url.searchParams.get("commentId"); // Get the commentId from query parameters
-  const { action } = await req.json(); // 'like' or 'dislike'
-
-  if (!commentId) {
-    return new Response(JSON.stringify({ error: 'commentId is required' }), { status: 400 });
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
   }
 
-  if (!action || !['like', 'dislike'].includes(action)) {
-    return new Response(JSON.stringify({ error: 'Invalid action' }), { status: 400 });
+  const url = new URL(req.url);
+  const commentId = url.searchParams.get("commentId");
+  const { action } = await req.json(); // 'like' or 'dislike'
+  const userId = session.user.id;
+
+  if (!commentId || !['like', 'dislike'].includes(action)) {
+    return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400 });
   }
 
   const db = await connectToDatabase();
-  const comment = await db.collection("comments").findOne({ _id: commentId });
+  const comments = db.collection("comments");
+  const comment = await comments.findOne({ _id: commentId });
 
   if (!comment) {
     return new Response(JSON.stringify({ error: 'Comment not found' }), { status: 404 });
   }
 
-  const updateField = action === 'like' ? 'likes' : 'dislikes';
-  const updateData = {};
-  updateData[updateField] = 1; // Increment likes/dislikes by 1
+  const hasLiked = comment.likedBy?.includes(userId);
+  const hasDisliked = comment.dislikedBy?.includes(userId);
 
-  await db.collection("comments").updateOne(
-    { _id: commentId },
-    { $inc: updateData } // Increment the like/dislike count
-  );
+  // Prepare update
+  const update = { $set: {}, $inc: {}, $pull: {}, $addToSet: {} };
 
-  // Fetch the updated comment data
-  const updatedComment = await db.collection("comments").findOne({ _id: commentId });
+  if (action === "like") {
+    if (hasLiked) {
+      return new Response(JSON.stringify({ message: "Already liked" }), { status: 200 });
+    }
 
+    if (hasDisliked) {
+      update.$pull.dislikedBy = userId;
+      update.$inc.dislikes = -1;
+    }
+
+    update.$addToSet.likedBy = userId;
+    update.$inc.likes = 1;
+
+  } else if (action === "dislike") {
+    if (hasDisliked) {
+      return new Response(JSON.stringify({ message: "Already disliked" }), { status: 200 });
+    }
+
+    if (hasLiked) {
+      update.$pull.likedBy = userId;
+      update.$inc.likes = -1;
+    }
+
+    update.$addToSet.dislikedBy = userId;
+    update.$inc.dislikes = 1;
+  }
+
+  // Clean up empty operations
+  Object.keys(update).forEach(key => {
+    if (Object.keys(update[key]).length === 0) delete update[key];
+  });
+
+  await comments.updateOne({ _id: commentId }, update);
+
+  const updatedComment = await comments.findOne({ _id: commentId });
   return new Response(JSON.stringify(updatedComment), { status: 200 });
 }
