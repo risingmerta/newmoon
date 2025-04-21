@@ -14,6 +14,7 @@ async function connectToDatabase() {
   return client.db(dbName);
 }
 
+// Handle Comment Creation (POST)
 export async function POST(req) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -45,6 +46,7 @@ export async function POST(req) {
   return new Response(JSON.stringify(comment), { status: 201 });
 }
 
+// Get Comments (GET)
 export async function GET() {
   const db = await connectToDatabase();
   const comments = await db.collection("comments").find().toArray();
@@ -52,29 +54,38 @@ export async function GET() {
   return new Response(JSON.stringify(comments), { status: 200 });
 }
 
-// Handle Like/Dislike reactions
+// Handle Like/Dislike reactions (PATCH)
 export async function PATCH(req) {
-  const { commentId } = req.url.split('/').pop(); // Extract commentId from URL
+  const url = new URL(req.url);
+  const commentId = url.searchParams.get("commentId"); // Get the commentId from query parameters
   const { action } = await req.json(); // 'like' or 'dislike'
+
+  if (!commentId) {
+    return new Response(JSON.stringify({ error: 'commentId is required' }), { status: 400 });
+  }
+
+  if (!action || !['like', 'dislike'].includes(action)) {
+    return new Response(JSON.stringify({ error: 'Invalid action' }), { status: 400 });
+  }
 
   const db = await connectToDatabase();
   const comment = await db.collection("comments").findOne({ _id: commentId });
 
-  if (comment) {
-    const updateField = action === 'like' ? 'likes' : 'dislikes';
-    const updateData = {};
-    updateData[updateField] = 1;
-
-    await db.collection("comments").updateOne(
-      { _id: commentId },
-      { $inc: updateData } // Increment the like/dislike count
-    );
-
-    const updatedComment = await db.collection("comments").findOne({ _id: commentId });
-
-    return new Response(JSON.stringify(updatedComment), { status: 200 });
+  if (!comment) {
+    return new Response(JSON.stringify({ error: 'Comment not found' }), { status: 404 });
   }
 
-  return new Response(JSON.stringify({ error: 'Comment not found' }), { status: 404 });
-}
+  const updateField = action === 'like' ? 'likes' : 'dislikes';
+  const updateData = {};
+  updateData[updateField] = 1; // Increment likes/dislikes by 1
 
+  await db.collection("comments").updateOne(
+    { _id: commentId },
+    { $inc: updateData } // Increment the like/dislike count
+  );
+
+  // Fetch the updated comment data
+  const updatedComment = await db.collection("comments").findOne({ _id: commentId });
+
+  return new Response(JSON.stringify(updatedComment), { status: 200 });
+}

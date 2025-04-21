@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import './comments.css';
+import { useEffect, useState } from "react";
+import "./comments.css";
 
 export default function CommentPage() {
-  const [commentText, setCommentText] = useState('');
+  const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
 
   const fetchComments = async () => {
-    const res = await fetch('/api/comments');
+    const res = await fetch("/api/comments");
     const data = await res.json();
     setComments(data);
   };
@@ -16,23 +16,23 @@ export default function CommentPage() {
   const postComment = async (text, parentId = null) => {
     if (!text.trim()) return;
 
-    const res = await fetch('/api/comments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text, parentId }),
     });
 
     if (res.ok) {
       const newComment = await res.json();
       setComments((prev) => [...prev, newComment]);
-      setCommentText('');
+      setCommentText("");
     }
   };
 
   const handleLikeDislike = async (commentId, action) => {
-    const res = await fetch(`/api/comments/${commentId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch(`/api/comments/?commentId=${commentId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action }),
     });
 
@@ -53,7 +53,7 @@ export default function CommentPage() {
         <div key={comment._id} className="comment-item flat">
           <div className="comment-header">
             <img
-              src={comment.avatar || '/default-avatar.png'} // Use default avatar if none exists
+              src={comment.avatar || "/default-avatar.png"} // Use default avatar if none exists
               alt={comment.username}
               className="comment-avatar"
             />
@@ -74,13 +74,13 @@ export default function CommentPage() {
 
           <div className="comment-actions">
             <button
-              onClick={() => handleLikeDislike(comment._id, 'like')}
+              onClick={() => handleLikeDislike(comment._id, "like")}
               className="like-btn"
             >
               👍 {comment.likes}
             </button>
             <button
-              onClick={() => handleLikeDislike(comment._id, 'dislike')}
+              onClick={() => handleLikeDislike(comment._id, "dislike")}
               className="dislike-btn"
             >
               👎 {comment.dislikes}
