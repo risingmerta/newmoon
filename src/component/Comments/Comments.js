@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import InputEmoji from "react-input-emoji";
 import "./comments.css";
 
 export default function CommentPage() {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
+  const [replyInputs, setReplyInputs] = useState({}); // track reply input for each comment
 
   const fetchComments = async () => {
     const res = await fetch("/api/comments");
@@ -25,7 +27,11 @@ export default function CommentPage() {
     if (res.ok) {
       const newComment = await res.json();
       setComments((prev) => [...prev, newComment]);
-      setCommentText("");
+      if (parentId) {
+        setReplyInputs((prev) => ({ ...prev, [parentId]: "" }));
+      } else {
+        setCommentText("");
+      }
     }
   };
 
@@ -53,7 +59,7 @@ export default function CommentPage() {
         <div key={comment._id} className="comment-item flat">
           <div className="comment-header">
             <img
-              src={comment.avatar || "/default-avatar.png"} // Use default avatar if none exists
+              src={comment.avatar || "/default-avatar.png"}
               alt={comment.username}
               className="comment-avatar"
             />
@@ -86,15 +92,38 @@ export default function CommentPage() {
               👎 {comment.dislikes}
             </button>
             <button
-              onClick={() => {
-                const reply = prompt("Reply:");
-                if (reply) postComment(reply, comment._id);
-              }}
+              onClick={() =>
+                setReplyInputs((prev) => ({
+                  ...prev,
+                  [comment._id]: prev[comment._id] ? "" : "",
+                }))
+              }
               className="reply-btn"
             >
               Reply
             </button>
           </div>
+
+          {/* Reply Input */}
+          {replyInputs.hasOwnProperty(comment._id) && (
+            <div className="reply-input">
+              <InputEmoji
+                value={replyInputs[comment._id]}
+                onChange={(val) =>
+                  setReplyInputs((prev) => ({ ...prev, [comment._id]: val }))
+                }
+                placeholder="Write a reply..."
+              />
+              <button
+                onClick={() =>
+                  postComment(replyInputs[comment._id], comment._id)
+                }
+                className="send-button"
+              >
+                Send
+              </button>
+            </div>
+          )}
         </div>
       );
     });
@@ -109,17 +138,12 @@ export default function CommentPage() {
       <h1 className="comment-title">Comment Section</h1>
 
       <div className="input-wrapper">
-        <input
-          type="text"
+        <InputEmoji
           value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
+          onChange={setCommentText}
           placeholder="Leave a comment"
-          className="comment-input"
         />
-        <button
-          onClick={() => postComment(commentText)}
-          className="send-button"
-        >
+        <button onClick={() => postComment(commentText)} className="send-button">
           Send
         </button>
       </div>
