@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./advertize.css";
 
-const Advertize = () => {
+const Advertize = (props) => {
   const [time, setTime] = useState(new Date());
   const [adver, setAdver] = useState("false");
 
@@ -38,9 +38,7 @@ const Advertize = () => {
     const currentHour = time.getHours();
 
     const lastDisplayDate = new Date(lastDisplay);
-    const secondsSinceLastDisplay = Math.floor(
-      (time - lastDisplayDate) / 1000
-    );
+    const secondsSinceLastDisplay = Math.floor((time - lastDisplayDate) / 1000);
 
     // Show ad every 30 seconds instead of 1 minute
     const shouldShowAd =
@@ -63,7 +61,9 @@ const Advertize = () => {
     ls.setItem("lastHour", time.getHours().toString());
     ls.setItem("truth", "false");
     window.open(
-      "https://www.highrevenuenetwork.com/hnq4sfr7se?key=fa60dc3aeeb0a08aa0476e80986ad233"
+      props.direct
+        ? props.direct
+        : "https://www.highrevenuenetwork.com/hnq4sfr7se?key=fa60dc3aeeb0a08aa0476e80986ad233"
     );
   }
 
