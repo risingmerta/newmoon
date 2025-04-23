@@ -11,6 +11,8 @@ export default async function Page({ searchParams }) {
   let animeDocs = [];
   let direct = "";
 
+  const searchParam = await searchParams
+
   try {
     const res = await fetch("https://kaori.animoon.me/api/home", {
       cache: "no-store",
@@ -35,7 +37,7 @@ export default async function Page({ searchParams }) {
     const docs = await animeCollection.find({}).toArray();
     animeDocs = JSON.parse(JSON.stringify(docs));
 
-    const referId = typeof searchParams?.refer === "string" ? searchParams.refer : null;
+    const referId =  searchParam.refer;
     if (referId) {
       const userProfile = await profileCollection.findOne({ id: referId });
       if (userProfile?.directLink) {
