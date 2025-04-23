@@ -86,9 +86,6 @@ export default async function page({ params, searchParams }) {
 
   const profileCollection = db.collection("profile");
 
-  const docs = await animeCollection.find({}).toArray();
-  animeDocs = JSON.parse(JSON.stringify(docs));
-
   const referId = searchParam?.refer;
   if (referId) {
     const userProfile = await profileCollection.findOne({ _id: referId });
