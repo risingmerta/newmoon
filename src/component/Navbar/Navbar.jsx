@@ -71,7 +71,7 @@ const Navbar = ({ lang, sign, setProfiIsOpen, refer }) => {
             <FaBars size={25} />
           </div>
           <div>
-            <Link href={`/?refer=${props.refer}`}>
+            <Link href={`/?refer=${refer}`}>
               <div className="logo-container">
                 <div className="logo-icon"></div>
                 <div className="logo-text">{siteName}</div>
@@ -79,13 +79,13 @@ const Navbar = ({ lang, sign, setProfiIsOpen, refer }) => {
             </Link>
           </div>
           <div className="searc">
-            <SearchInput refer={props.refer} />
+            <SearchInput refer={refer} />
           </div>
           <div className="social-links">
-            <Social refer={props.refer} />
+            <Social refer={refer} />
           </div>
           <div className="nav-action">
-            <Action lang={lang} refer={props.refer} />
+            <Action lang={lang} refer={refer} />
           </div>
         </div>
         <div className="nav-end">
@@ -113,7 +113,7 @@ const Navbar = ({ lang, sign, setProfiIsOpen, refer }) => {
       </div>
       {showFloat && (
         <div className="float-ser">
-          <SearchInput float={true} refer={props.refer} />
+          <SearchInput float={true} refer={refer} />
         </div>
       )}
     </div>
