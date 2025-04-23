@@ -7,7 +7,7 @@ export default function Montiz(props) {
   return (
     <div>
       <SessionProvider>
-        <MonetizePage refer={props.refer}/>
+        <MonetizePage refer={props?.refer}/>
       </SessionProvider>
     </div>
   );
