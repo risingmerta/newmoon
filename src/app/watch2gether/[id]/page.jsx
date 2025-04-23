@@ -1,10 +1,11 @@
 import React from "react";
 import WatchLive from "@/component/WatchLive/WatchLive";
-import { connectDB } from "@/lib/mongoClient";  // Use the connectDB function for MongoDB connection
+import { connectDB } from "@/lib/mongoClient"; // Use the connectDB function for MongoDB connection
 import Script from "next/script";
 
 export default async function page({ params, searchParams }) {
   const { animeId } = searchParams;
+  const searchParam = await searchParams;
   const { id } = params;
 
   const db = await connectDB();
@@ -14,6 +15,19 @@ export default async function page({ params, searchParams }) {
   let datajDub = [];
   let datajSub = [];
   let episodes = [];
+
+  const fetchWithErrorHandling = async (url) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error(`Error fetching URL ${url}:`, error);
+      return null;
+    }
+  };
 
   if (animeId) {
     const animeCollection = db.collection("animeInfo");
@@ -28,25 +42,27 @@ export default async function page({ params, searchParams }) {
     const liveRoomsCollection = db.collection("liveRooms");
     const streamAnime = await liveRoomsCollection.findOne({ id });
 
-    if (streamAnime) {
+    if (streamAnime && streamAnime.episodeId) {
       datal = streamAnime;
 
       try {
         const [dubRes, subRes, rawRes] = await Promise.all([
-          fetch(`https://vimal.animoon.me/api/stream?id=${streamAnime.episodeId}&server=hd-2&type=dub`).then((res) => res.json()),
-          fetch(`https://vimal.animoon.me/api/stream?id=${streamAnime.episodeId}&server=hd-2&type=sub`).then((res) => res.json()),
-          fetch(`https://vimal.animoon.me/api/stream?id=${streamAnime.episodeId}&server=hd-2&type=raw`).then((res) => res.json())
+          fetchWithErrorHandling(`https://vimal.animoon.me/api/stream?id=${streamAnime.episodeId}&server=hd-2&type=dub`),
+          fetchWithErrorHandling(`https://vimal.animoon.me/api/stream?id=${streamAnime.episodeId}&server=hd-2&type=sub`),
+          fetchWithErrorHandling(`https://vimal.animoon.me/api/stream?id=${streamAnime.episodeId}&server=hd-2&type=raw`)
         ]);
 
-        datajDub = dubRes || [];
-        datajSub = subRes || [];
+        datajDub = dubRes?.results || [];
+        datajSub = subRes?.results || [];
 
-        if (!datajSub?.results?.streamingLink?.link?.file) {
-          datajSub = rawRes || [];
+        if (!datajSub?.streamingLink?.link?.file) {
+          datajSub = rawRes?.results || [];
         }
       } catch (error) {
         console.error("Error fetching stream data: ", error);
       }
+    } else {
+      console.error("streamAnime or episodeId is missing.");
     }
   }
 
@@ -61,6 +77,7 @@ export default async function page({ params, searchParams }) {
         datajSub={datajSub}
         animeId={animeId}
         episodes={episodes}
+        refer={searchParam?.refer}
       />
       {/* Optionally include an advertisement */}
       {/* <Advertize /> */}

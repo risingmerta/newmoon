@@ -53,7 +53,7 @@ export default function MouseOverCard(props) {
   // const info = hoverAnime?.info?.results;
 
   const genre = hoverAnime?.results?.genres?.map((genre, idx) => (
-    <Link className="genreo-button" key={idx} href={`/${genre}`}>
+    <Link className="genreo-button" key={idx} href={`/${genre}?refer=${props.refer}`}>
       {genre}
     </Link>
   ));
@@ -135,11 +135,11 @@ export default function MouseOverCard(props) {
           <div className="anime-st-genreo"></div>
           <div className="tits-btn">
             {hoverAnime?.results?.status !== "Not yet aired" && (
-              <Link href={`/watch/${props?.data?.id}`} className="tit-bt-w">
+              <Link href={`/watch/${props?.data?.id}?refer=${props.refer}`} className="tit-bt-w">
                 <FaPlayCircle size={15} /> Watch Now
               </Link>
             )}
-            <Link href={`/${props?.data?.id}`} className="tit-bt-d">
+            <Link href={`/${props?.data?.id}?refer=${props.refer}`} className="tit-bt-d">
               Details <FaChevronRight size={12} />
             </Link>
           </div>

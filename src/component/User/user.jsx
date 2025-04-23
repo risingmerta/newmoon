@@ -36,9 +36,10 @@ export default function User(props) {
           sign={sign}
           setProfiIsOpen={setProfiIsOpen}
           profiIsOpen={profiIsOpen}
+          refer={props.refer}
         />
         {profiIsOpen ? (
-          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} />
+          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} refer={props.refer}/>
         ) : (
           ""
         )}
@@ -47,21 +48,22 @@ export default function User(props) {
             logIsOpen={logIsOpen}
             setLogIsOpen={setLogIsOpen}
             sign={sign}
+            refer={props.refer}
           />
         ) : (
           ""
         )}
         <div>
-          <Slab slabId={slabId} />
+          <Slab slabId={slabId} refer={props.refer}/>
         </div>
-        {props.id === "profile" ? <Profito /> : ""}
-        {props.id === "continue-watching" ? <MyComponent page={props.page}/> : ""}
-        {props.id === "watch-list" ? <WatchList type={props.type} ipage={props.page}/> : ""}
-        {props.id === "settings" ? <Settings /> : ""}
-        {props.id === "notification" ? <Notification /> : ""}
+        {props.id === "profile" ? <Profito refer={props.refer}/> : ""}
+        {props.id === "continue-watching" ? <MyComponent page={props.page} refer={props.refer}/> : ""}
+        {props.id === "watch-list" ? <WatchList type={props.type} ipage={props.page} refer={props.refer}/> : ""}
+        {props.id === "settings" ? <Settings refer={props.refer}/> : ""}
+        {props.id === "notification" ? <Notification refer={props.refer}/> : ""}
         {/* {props.id === "monetize" ? <MonetizePage/> : ""} */}
         <div>
-          <Footer />
+          <Footer refer={props.refer}/>
         </div>
       </SessionProvider>
     </>

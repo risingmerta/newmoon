@@ -178,7 +178,7 @@ export default async function page({ params, searchParams }) {
     console.log("Failed to fetch schedule:", e.message);
   }
 
-  const ShareUrl = `https://animoon.me/watch/${epId}`;
+  const ShareUrl = `https://animoon.me/watch/${epId}?refer=${searchParam.refer}`;
   const arise = "this Episode";
 
   let datapp;
@@ -218,6 +218,7 @@ export default async function page({ params, searchParams }) {
         ShareUrl={ShareUrl}
         arise={arise}
         raw={raw}
+        refer={searchParam.refer}
       />
       {direct && <Advertize direct={direct} />}
     </div>

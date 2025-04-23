@@ -15,6 +15,7 @@ const WatchLive = (props) => {
               episodeId={props.episodeId}
               episodes={props.episodes}
               id={props.animeId}
+              refer={props.refer}
             />
           ) : (
             <LivePage
@@ -24,6 +25,7 @@ const WatchLive = (props) => {
               datajSub={props.datajSub}
               datajDub={props.datajDub}
               id={props.id}
+              refer={props.refer}
             />
           )}
         </div>

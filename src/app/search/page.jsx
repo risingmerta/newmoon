@@ -112,6 +112,7 @@ export default async function page({ searchParams }) {
         totalDocs={filteredAnimes.results.totalResults}
         keyword={searchParam.keyword || ""}
         collectionName={`Search results for`}
+        refer={searchParam.refer}
       />
       {direct && <Advertize direct={direct} />}
     </div>

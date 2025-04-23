@@ -76,6 +76,7 @@ export default async function Page({ params, searchParams }) {
         page={pageParam}
         totalPages={count}
         para={params?.id}
+        refer={searchParam.refer}
       />
       {direct && <Advertize direct={direct} />}
     </div>

@@ -125,14 +125,14 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
                 <div className="button-wrapper">
                   <Link
                     href={
-                      storedId ? `/watch/${storedId}` : `/watch/${anime.id}`
+                      storedId ? `/watch/${storedId}?refer=${props.refer}` : `/watch/${anime.id}?refer=${props.refer}`
                     }
                     className="btn-primary hero-button"
                   >
                     <FaPlayCircle size={15} /> Watch Now
                   </Link>
                   <Link
-                    href={`/${anime.id}`}
+                    href={`/${anime.id}?refer=${props.refer}`}
                     className="btn-secondary hero-button"
                   >
                     Details <FaChevronRight size={12} />

@@ -23,7 +23,7 @@ export default function AnimeCollection(props) {
     const links = alphabets.map((el) => {
       return (
         <Link
-          href={`/a-z/alpha?sort=${el}`}
+          href={`/a-z/alpha?sort=${el}&refer=${props.refer}`}
           key={el}
           onClick={props.sort === el ? "" : handleNavigation}
           className={`alphabet-jile ${
@@ -47,6 +47,7 @@ export default function AnimeCollection(props) {
         selectL={props.selectL}
         collectionName={props.collectionName}
         IsLoading={props.IsLoading}
+        refer={props.refer}
       />
     );
   });
@@ -91,7 +92,7 @@ export default function AnimeCollection(props) {
   return (
     <div className="anime-collection-wrapper">
       <div className="backI">
-        <Link href={"/"} onClick={handleNavigation} className="homiK">
+        <Link href={`/?refer=${props.refer}`} onClick={handleNavigation} className="homiK">
           Home
         </Link>
         <div className="colY">&#x2022;</div>
@@ -101,7 +102,7 @@ export default function AnimeCollection(props) {
         <h2 className="heddH9">{props.collectionName}</h2>{" "}
       </div>
       <div className="alphabet-jist d-flex">
-        <Link href={"/a-z/all"} onClick={props.sort ? handleNavigation : ""}>
+        <Link href={`/a-z/all?refer=${props.refer}`} onClick={props.sort ? handleNavigation : ""}>
           <div
             className={`alphabet-jile ${props.sort ? "" : "alpha-selected"}`}
           >
@@ -109,7 +110,7 @@ export default function AnimeCollection(props) {
           </div>
         </Link>
         <Link
-          href={"/a-z/other?sort=other"}
+          href={`/a-z/other?sort=other&refer=${props.refer}`}
           onClick={props.sort === "other" ? "" : handleNavigation}
         >
           <div
@@ -121,7 +122,7 @@ export default function AnimeCollection(props) {
           </div>
         </Link>
         <Link
-          href={"/a-z/0-9?sort=0-9"}
+          href={`/a-z/0-9?sort=0-9&refer=${props.refer}`}
           onClick={props.sort === "0-9" ? "" : handleNavigation}
         >
           <div
@@ -142,8 +143,8 @@ export default function AnimeCollection(props) {
             <Link
               href={
                 props.sort
-                  ? `/a-z/${props.para}?sort=${props.sort}`
-                  : `/a-z/${props.para}`
+                  ? `/a-z/${props.para}?sort=${props.sort}&refer=${props.refer}`
+                  : `/a-z/${props.para}?refer=${props.refer}`
               }
               onClick={handleNavigation}
               className="pagin-tile"
@@ -159,8 +160,8 @@ export default function AnimeCollection(props) {
                 props.sort
                   ? `/a-z/${props.para}?sort=${props.sort}&page=${
                       parseInt(props.page) - 1
-                    }`
-                  : `/a-z/${props.para}?page=${parseInt(props.page) - 1}`
+                    }&refer=${props.refer}`
+                  : `/a-z/${props.para}?page=${parseInt(props.page) - 1}&refer=${props.refer}`
               }
               onClick={handleNavigation}
               className="pagin-tile"
@@ -175,11 +176,11 @@ export default function AnimeCollection(props) {
               href={
                 props.sort
                   ? ii === 1
-                    ? `/a-z/${props.para}?sort=${props.sort}`
-                    : `/a-z/${props.para}?sort=${props.sort}&page=${ii}`
+                    ? `/a-z/${props.para}?sort=${props.sort}&refer=${props.refer}`
+                    : `/a-z/${props.para}?sort=${props.sort}&page=${ii}&refer=${props.refer}`
                   : ii === 1
-                  ? "/a-z/all"
-                  : `/a-z/all?page=${ii}`
+                  ? `/a-z/all??refer=${props.refer}`
+                  : `/a-z/all?page=${ii}&refer=${props.refer}`
               }
               onClick={
                 props.page
@@ -209,10 +210,10 @@ export default function AnimeCollection(props) {
                 props.sort
                   ? `/a-z/${props.para}?sort=${props.sort}&page=${
                       props.page ? parseInt(props.page) + 1 : 2
-                    }`
+                    }&refer=${props.refer}`
                   : `/a-z/${props.para}?page=${
                       props.page ? parseInt(props.page) + 1 : 2
-                    }`
+                    }&refer=${props.refer}`
               }
               onClick={handleNavigation}
               className="pagin-tile"
@@ -226,8 +227,8 @@ export default function AnimeCollection(props) {
             <Link
               href={
                 props.sort
-                  ? `/a-z/${props.para}?sort=${props.sort}&page=${props.totalPages}`
-                  : `/a-z/${props.para}?page=${props.totalPages}`
+                  ? `/a-z/${props.para}?sort=${props.sort}&page=${props.totalPages}&refer=${props.refer}`
+                  : `/a-z/${props.para}?page=${props.totalPages}&refer=${props.refer}`
               }
               onClick={handleNavigation}
               className="pagin-tile"

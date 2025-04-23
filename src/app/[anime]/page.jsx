@@ -105,7 +105,7 @@ export default async function Page({ params, searchParams }) {
     console.error("Error in Page component:", err.message);
   }
 
-  const ShareUrl = `https://animoon.me/${idToCheck}`;
+  const ShareUrl = `https://animoon.me/${idToCheck}?refer=${searchParam.refer}`;
   const arise = "this Anime";
 
   return (
@@ -116,6 +116,7 @@ export default async function Page({ params, searchParams }) {
         ShareUrl={ShareUrl}
         arise={arise}
         id={idToCheck}
+        refer={searchParam.refer}
       />
       {direct && <Advertize direct={direct} />}
     </div>

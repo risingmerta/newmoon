@@ -83,7 +83,7 @@ export default async function page({ searchParams }) {
 
   // Fetch genre-specific anime list and homepage data concurrently
   // Constructing the shareable URL
-  const ShareUrl = `https://animoon.me/genre?id=${cate}&name=${cate}`;
+  const ShareUrl = `https://animoon.me/genre?id=${cate}&name=${cate}&refer=${searchParam.refer}`;
   const arise = `${cate} Anime`;
 
   return (
@@ -102,6 +102,7 @@ export default async function page({ searchParams }) {
         ShareUrl={ShareUrl}
         page={pageParam}
         arise={arise}
+        refer={searchParam.refer}
       />
       {direct && <Advertize direct={direct} />}
     </div>

@@ -12,6 +12,7 @@ export default function MainContainer(props) {
             data={props.data} // Pass the sidebar data
             IsLoading={props.IsLoading}
             selectL={props.selectL}
+            refer={props.refer}
           />
         </div>
 
@@ -24,6 +25,7 @@ export default function MainContainer(props) {
             filterName="recently-updated"
             IsLoading={props.IsLoading}
             selectL={props.selectL}
+            refer={props.refer}
           />
 
           {/* New on Animoon */}
@@ -33,8 +35,9 @@ export default function MainContainer(props) {
             filterName="recently-added"
             IsLoading={props.IsLoading}
             selectL={props.selectL}
+            refer={props.refer}
           />
-          <Schedule schedule={props.schedule} />
+          <Schedule schedule={props.schedule} refer={props.refer}/>
 
           {/* Top Upcoming */}
           <AnimeCollection
@@ -43,6 +46,7 @@ export default function MainContainer(props) {
             filterName="top-upcoming"
             IsLoading={props.IsLoading}
             selectL={props.selectL}
+            refer={props.refer}
           />
         </div>
       </>

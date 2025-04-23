@@ -89,10 +89,10 @@ const MyComponent = (props) => {
         <div className="paginA">
           {currentPage > 1 && (
             <>
-              <Link href={`/user/continue-watching`} className="pagin-tile">
+              <Link href={`/user/continue-watching?refer=${props.refer}`} className="pagin-tile">
                 <FaAngleDoubleLeft />
               </Link>
-              <Link href={`/user/continue-watching?page=${currentPage - 1}`} className="pagin-tile">
+              <Link href={`/user/continue-watching?page=${currentPage - 1}&refer=${props.refer}`} className="pagin-tile">
                 <FaAngleLeft />
               </Link>
             </>
@@ -101,7 +101,7 @@ const MyComponent = (props) => {
           {useArr.map((pageNum) => (
             <Link
               key={pageNum}
-              href={`/user/continue-watching?page=${pageNum}`}
+              href={`/user/continue-watching?page=${pageNum}&refer=${props.refer}`}
               className={`pagin-tile ${currentPage === pageNum ? "pagin-colo" : ""}`}
             >
               {pageNum}
@@ -110,10 +110,10 @@ const MyComponent = (props) => {
 
           {currentPage < totalPages && (
             <>
-              <Link href={`/user/continue-watching?page=${currentPage + 1}`} className="pagin-tile">
+              <Link href={`/user/continue-watching?page=${currentPage + 1}&refer=${props.refer}`} className="pagin-tile">
                 <FaAngleRight />
               </Link>
-              <Link href={`/user/continue-watching?page=${totalPages}`} className="pagin-tile">
+              <Link href={`/user/continue-watching?page=${totalPages}&refer=${props.refer}`} className="pagin-tile">
                 <FaAngleDoubleRight />
               </Link>
             </>

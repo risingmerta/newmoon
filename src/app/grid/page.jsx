@@ -78,7 +78,7 @@ export default async function page({ searchParams }) {
   }
 
   // Construct the shareable URL for this category and page
-  const ShareUrl = `https://animoon.me/grid?name=${cate}&heading=${fiki}`;
+  const ShareUrl = `https://animoon.me/grid?name=${cate}&heading=${fiki}&refer=${searchParam.refer}`;
   const arise = `${fiki} Anime`;
 
   return (
@@ -96,6 +96,7 @@ export default async function page({ searchParams }) {
         ShareUrl={ShareUrl}
         page={pageParam}
         arise={arise}
+        refer={searchParam.refer}
       />
       {direct && <Advertize direct={direct} />}
     </div>

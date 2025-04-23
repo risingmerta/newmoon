@@ -81,9 +81,10 @@ const Home = ({ data, existingAnime, schedule }) => {
           sign={sign}
           setProfiIsOpen={setProfiIsOpen}
           profiIsOpen={profiIsOpen}
+          refer={props.refer}
         />
         {profiIsOpen ? (
-          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} />
+          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} refer={props.refer}/>
         ) : (
           ""
         )}
@@ -92,6 +93,7 @@ const Home = ({ data, existingAnime, schedule }) => {
             logIsOpen={logIsOpen}
             setLogIsOpen={setLogIsOpen}
             sign={sign}
+            refer={props.refer}
           />
         ) : (
           ""
@@ -101,6 +103,7 @@ const Home = ({ data, existingAnime, schedule }) => {
             trendingAnime={data?.spotlights || []}
             existingAnime={existingAnime}
             selectL={selectL}
+            refer={props.refer}
           />
           {/* "//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"*/}
           {/* <div style={{ width: "100%", height: "100px", overflow: "hidden" }}> */}
@@ -112,21 +115,21 @@ const Home = ({ data, existingAnime, schedule }) => {
           <div id="ad-container3"></div>
           {/* </div> */}
 
-          <Trending data={data?.trending || []} selectL={selectL} />
+          <Trending data={data?.trending || []} selectL={selectL} refer={props.refer}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <Share ShareUrl="https://animoon.me/" />
+          <Share ShareUrl={`https://animoon.me/?refer=${props.refer}`} />
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <Featured data={data || {}} selectL={selectL} />
+          <Featured data={data || {}} selectL={selectL} refer={props.refer}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <MainContainer data={data || {}} selectL={selectL} schedule={schedule}/>
+          <MainContainer data={data || {}} selectL={selectL} schedule={schedule} refer={props.refer}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
         </div>
 
         <div>
-          <Footer />
+          <Footer refer={props.refer}/>
         </div>
       </SessionProvider>
     </div>

@@ -8,7 +8,7 @@ import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 
-export default function MonetizePage() {
+export default function MonetizePage(props) {
   const { data: session } = useSession();
   const [selectL, setSelectL] = useState("en");
   const [directLink, setDirectLink] = useState("");
@@ -151,7 +151,7 @@ export default function MonetizePage() {
       </div>
 
       <div>
-        <Footer />
+        <Footer refer={props.refer}/>
       </div>
     </>
   );

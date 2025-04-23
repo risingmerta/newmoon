@@ -268,7 +268,7 @@ export default function Details(props) {
                 {gnt?.animeInfo?.Status !== "Not-yet-aired" && (
                   <Link
                     href={
-                      session ? `/watch2gether/create?animeId=${props?.id}` : ""
+                      session ? `/watch2gether/create?animeId=${props?.id}&refer=${props.refer}` : ""
                     }
                     className="broad-fil"
                     onClick={watch2gether}
@@ -283,7 +283,7 @@ export default function Details(props) {
 
               <div className="anime-details-content">
                 <div className="flex gap-1 items-center specif">
-                  <Link href={"/"} onClick={handleNavigation}>
+                  <Link href={`/?refer=${props.refer}`} onClick={handleNavigation}>
                     <div className="homo">Home</div>
                   </Link>
                   <div className="dotoi">&#x2022;</div>
@@ -328,8 +328,8 @@ export default function Details(props) {
                     <Link
                       href={`${
                         ls.getItem(`Rewo-${props?.id}`)
-                          ? `/watch/${ls.getItem(`Rewo-${props?.id}`)}`
-                          : `/watch/${props?.id}`
+                          ? `/watch/${ls.getItem(`Rewo-${props?.id}`)}?refer=${props.refer}`
+                          : `/watch/${props?.id}?refer=${props.refer}`
                       }`}
                       className="btn-primary hero-button"
                       onClick={handleNavigation}

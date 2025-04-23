@@ -259,7 +259,7 @@ const CreateLive = (props) => {
         <div className="kinj">
           <div>
             <div className="flex gap-1 items-center specif">
-              <Link href={"/"}>
+              <Link href={`/?refer=${props.refer}`}>
                 <div className="homo">Home</div>
               </Link>
               <div className="dotoi">&#x2022;</div>
@@ -454,7 +454,7 @@ const CreateLive = (props) => {
                             `_${
                               props.data?.results?.data?.id?.match(/\d+$/)?.[0]
                             }`
-                          }`
+                          }?refer=${props.refer}`
                         : ""
                     }
                     className="cr1"

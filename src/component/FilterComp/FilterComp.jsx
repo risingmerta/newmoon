@@ -303,6 +303,7 @@ const FilterComp = (props) => {
               sign={sign}
               setProfiIsOpen={setProfiIsOpen}
               profiIsOpen={profiIsOpen}
+              refer={props.refer}
             />
           </div>
           {profiIsOpen ? (
@@ -310,6 +311,7 @@ const FilterComp = (props) => {
               <Profilo
                 setProfiIsOpen={setProfiIsOpen}
                 profiIsOpen={profiIsOpen}
+                refer={props.refer}
               />
             </div>
           ) : (
@@ -321,6 +323,7 @@ const FilterComp = (props) => {
                 logIsOpen={logIsOpen}
                 setLogIsOpen={setLogIsOpen}
                 sign={sign}
+                refer={props.refer}
               />
             </div>
           ) : (
@@ -462,8 +465,8 @@ const FilterComp = (props) => {
             <div>
               <div className="main-container jiki d-flex">
                 <div className="sidebar-wrapper d-flex-fd-column ">
-                  <Genre data={props.data.genres} />
-                  <TopTenAnime data={props.data.topTen} selectL={selectL} />
+                  <Genre data={props.data.genres} refer={props.refer}/>
+                  <TopTenAnime data={props.data.topTen} selectL={selectL} refer={props.refer}/>
                 </div>
 
                 <div className="collections-wrapper d-flex-fd-column a-center ">
@@ -480,6 +483,7 @@ const FilterComp = (props) => {
                     keyword={props?.keyword || ""}
                     onSear={props?.onSear || ""}
                     isInGrid={"true"}
+                    refer={props.refer}
                   />{" "}
                 </div>
               </div>
@@ -494,7 +498,7 @@ const FilterComp = (props) => {
             }}
           ></div>
           <div>
-            <Footer />
+            <Footer refer={props.refer}/>
           </div>
         </SessionProvider>
       </div>

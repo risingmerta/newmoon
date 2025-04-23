@@ -85,9 +85,10 @@ export default function RecommendedTopTen(props) {
           sign={sign}
           setProfiIsOpen={setProfiIsOpen}
           profiIsOpen={profiIsOpen}
+          refer={props.refer || ''}
         />
         {profiIsOpen ? (
-          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} />
+          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} refer={props.refer || ''}/>
         ) : (
           ""
         )}
@@ -96,6 +97,7 @@ export default function RecommendedTopTen(props) {
             logIsOpen={logIsOpen}
             setLogIsOpen={setLogIsOpen}
             sign={sign}
+            refer={props.refer || ''}
           />
         ) : (
           ""
@@ -117,6 +119,7 @@ export default function RecommendedTopTen(props) {
                 id={props.id || ""}
                 // firstName={props.firstName}
                 IsLoading={IsLoading}
+                refer={props.refer || ''}
               />
             )}
 
@@ -125,11 +128,13 @@ export default function RecommendedTopTen(props) {
                 <Genre
                   data={props.data.genres}
                   IsLoading={props.IsLoading ? props.IsLoading : IsLoading}
+                  refer={props.refer}
                 />
                 <TopTenAnime
                   data={props.data.topTen}
                   selectL={selectL}
                   IsLoading={props.IsLoading ? props.IsLoading : IsLoading}
+                  refer={props.refer}
                 />
               </div>
               <div className=" collections-wrapper jik d-flex  ">
@@ -143,6 +148,7 @@ export default function RecommendedTopTen(props) {
                   selectL={selectL}
                   IsLoading={props.IsLoading ? props.IsLoading : IsLoading}
                   isInGrid={"true"}
+                  refer={props.refer}
                 />
               </div>
             </div>

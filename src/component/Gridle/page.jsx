@@ -73,11 +73,13 @@ export default function GenreSidebar(props) {
             sign={sign}
             setProfiIsOpen={setProfiIsOpen}
             profiIsOpen={profiIsOpen}
+            refer={props.refer}
           />
           {profiIsOpen ? (
             <Profilo
               setProfiIsOpen={setProfiIsOpen}
               profiIsOpen={profiIsOpen}
+              refer={props.refer}
             />
           ) : (
             ""
@@ -87,6 +89,7 @@ export default function GenreSidebar(props) {
               logIsOpen={logIsOpen}
               setLogIsOpen={setLogIsOpen}
               sign={sign}
+            refer={props.refer}
             />
           ) : (
             ""
@@ -115,11 +118,12 @@ export default function GenreSidebar(props) {
               />
               <div className=" main-container d-flex  ">
                 <div className="sidebar-wrapper d-flex-fd-column">
-                  <Genre data={props.datal.genres} IsLoading={IsLoading} />
+                  <Genre data={props.datal.genres} IsLoading={IsLoading} refer={props.refer}/>
                   <TopTenAnime
                     data={props.datal.topTen}
                     selectL={selectL}
                     IsLoading={IsLoading}
+                    refer={props.refer}
                   />
                 </div>
                 <div className="collections-wrapper">
@@ -134,13 +138,14 @@ export default function GenreSidebar(props) {
                     totalPages={props.totalPages}
                     genre={props?.genre || ""}
                     isInGrid={"true"}
+                    refer={props.refer}
                   />
                 </div>
               </div>
             </>
           )}
           <div>
-            <Footer />
+            <Footer refer={props.refer}/>
           </div>
         </SessionProvider>
       </div>

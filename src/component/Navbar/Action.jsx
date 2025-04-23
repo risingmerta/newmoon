@@ -21,7 +21,7 @@ const Action = (props) => {
   }
   return (
     <div className={`action-comb ${props.isInSidebar ? 'action-new-c' : ''}`}>
-      <Link href={'/watch2gether'} className={`action-bloc ${props.isInSidebar ? 'action-bS' : ''}`}>
+      <Link href={`/watch2gether?refer=${props.refer}`} className={`action-bloc ${props.isInSidebar ? 'action-bS' : ''}`}>
         <div className={`action-ico ${props.isInSidebar ? 'action-iS' : ''}`}>
           <PiBroadcastFill/>
         </div>

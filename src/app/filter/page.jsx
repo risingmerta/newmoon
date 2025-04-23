@@ -97,6 +97,7 @@ export default async function Page({ searchParams }) {
         totalPages={filteredAnimes.results.totalPage}
         totalDocs={filteredAnimes.results.totalResults}
         collectionName={"Filter Results"}
+        refer={searchParam.refer}
       />
       {direct && <Advertize direct={direct} />}
     </div>

@@ -11,7 +11,7 @@ import Link from "next/link";
 import NavSidebar from "../NavSidebar/NavSidebar";
 import { useSession } from "next-auth/react";
 
-const Navbar = ({ lang, sign, setProfiIsOpen }) => {
+const Navbar = ({ lang, sign, setProfiIsOpen, refer }) => {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showFloat, setShowFloat] = useState(false);
@@ -71,7 +71,7 @@ const Navbar = ({ lang, sign, setProfiIsOpen }) => {
             <FaBars size={25} />
           </div>
           <div>
-            <Link href="/">
+            <Link href={`/?refer=${props.refer}`}>
               <div className="logo-container">
                 <div className="logo-icon"></div>
                 <div className="logo-text">{siteName}</div>
@@ -79,13 +79,13 @@ const Navbar = ({ lang, sign, setProfiIsOpen }) => {
             </Link>
           </div>
           <div className="searc">
-            <SearchInput />
+            <SearchInput refer={props.refer} />
           </div>
           <div className="social-links">
-            <Social />
+            <Social refer={props.refer} />
           </div>
           <div className="nav-action">
-            <Action lang={lang} />
+            <Action lang={lang} refer={props.refer} />
           </div>
         </div>
         <div className="nav-end">
@@ -94,10 +94,12 @@ const Navbar = ({ lang, sign, setProfiIsOpen }) => {
           </div>
           {session ? (
             <img
-              src={session.user.avatar.replace(
-                "https://cdn.noitatnemucod.net/avatar/100x100/",
-                "https://img.flawlessfiles.com/_r/100x100/100/avatar/"
-              ) || "userData?.randomImage"}
+              src={
+                session.user.avatar.replace(
+                  "https://cdn.noitatnemucod.net/avatar/100x100/",
+                  "https://img.flawlessfiles.com/_r/100x100/100/avatar/"
+                ) || "userData?.randomImage"
+              }
               className="profile-ico"
               onClick={toggleProfile}
               alt={session.user.username || "userData?.username" || "user"}
@@ -111,7 +113,7 @@ const Navbar = ({ lang, sign, setProfiIsOpen }) => {
       </div>
       {showFloat && (
         <div className="float-ser">
-          <SearchInput float={true} />
+          <SearchInput float={true} refer={props.refer} />
         </div>
       )}
     </div>

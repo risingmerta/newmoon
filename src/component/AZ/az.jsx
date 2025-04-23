@@ -58,11 +58,13 @@ export default function SearchResults(props) {
             sign={sign}
             setProfiIsOpen={setProfiIsOpen}
             profiIsOpen={profiIsOpen}
+            refer={props.refer} 
           />
           {profiIsOpen ? (
             <Profilo
               setProfiIsOpen={setProfiIsOpen}
               profiIsOpen={profiIsOpen}
+              refer={props.refer}
             />
           ) : (
             ""
@@ -72,6 +74,7 @@ export default function SearchResults(props) {
               logIsOpen={logIsOpen}
               setLogIsOpen={setLogIsOpen}
               sign={sign}
+              refer={props.refer}
             />
           ) : (
             ""
@@ -91,6 +94,7 @@ export default function SearchResults(props) {
                   sort={props.sort}
                   page={props.page}
                   para={props.para}
+                  refer={props.refer}
                 />
               </div>
             </div>
@@ -99,7 +103,7 @@ export default function SearchResults(props) {
           <div id="ad-container2"></div>
 
           <div>
-            <Footer />
+            <Footer refer={props.refer}/>
           </div>
         </SessionProvider>
       </div>

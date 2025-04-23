@@ -26,6 +26,7 @@ const Watchi = (props) => {
           ShareUrl={props.ShareUrl}
           arise={props.arise}
           raw={props.raw}
+          refer={props.refer}
         />
       </div>
     </SessionProvider>
