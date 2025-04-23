@@ -1,48 +1,50 @@
-// import { getServerSession } from "@/app/api/auth/[...nextauth]/route";
-// import { authOptions } from "@/lib/auth"; // adjust this path based on your project
 import { connectDB } from "@/lib/mongoClient";
-
 import Home from "@/component/Home/Home";
-// import Advertize from "@/component/Advertize/Advertize";
+import Advertize from "@/component/Advertize/Advertize"; // Uncomment if you use it
 import Script from "next/script";
 
 export default async function Page({ searchParams }) {
-  const searchParam = await searchParams;
-  // Get the session
-  // const session = await getServerSession(authOptions);
+  let data = [];
+  let existingAnime = [];
+  let animeDocs = [];
+  let direct = "";
 
-  // // If not logged in, you can optionally show a message or redirect
-  // if (!session) {
-  //   console.error("No session found");
-  //   return <div>Please log in to view this page.</div>;
-  // }
+  try {
+    // Fetch external API data
+    const res = await fetch("https://kaori.animoon.me/api/home", {
+      cache: "no-store",
+    });
 
-  // Fetch external API data
-  const res = await fetch(`https://kaori.animoon.me/api/home`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    console.error("Failed to fetch data");
-    return <div>Failed to load content.</div>;
+    if (res.ok) {
+      const json = await res.json();
+      data = json.data || [];
+      existingAnime = json.existingAnime || [];
+    } else {
+      console.error("Failed to fetch data from API");
+    }
+  } catch (err) {
+    console.error("API fetch error:", err);
   }
 
-  // Connect to MongoDB
-  const db = await connectDB();
-  const animeCollection = db.collection("animoon-schedule");
-  const profileCollection = db.collection("profile");
+  try {
+    const db = await connectDB();
+    const animeCollection = db.collection("animoon-schedule");
+    const profileCollection = db.collection("profile");
 
-  // Fetch anime schedule documents
-  let animeDocs = await animeCollection.find({}).toArray();
-  animeDocs = JSON.parse(JSON.stringify(animeDocs)); // Required for Next.js serialization
+    const docs = await animeCollection.find({}).toArray();
+    animeDocs = JSON.parse(JSON.stringify(docs)); // required by Next.js
 
-  // Fetch the user's profile using their ID from session
-  const userProfile = await profileCollection.findOne({
-    id: searchParam.refer,
-  });
-  const direct = JSON.parse(JSON.stringify(userProfile));
+    const referId = typeof searchParams?.refer === "string" ? searchParams.refer : null;
 
-  // Get the response JSON from the API
-  const { data, existingAnime } = await res.json();
+    if (referId) {
+      const userProfile = await profileCollection.findOne({ id: referId });
+      if (userProfile?.directLink) {
+        direct = userProfile.directLink;
+      }
+    }
+  } catch (err) {
+    console.error("MongoDB error:", err);
+  }
 
   return (
     <div>
@@ -52,11 +54,9 @@ export default async function Page({ searchParams }) {
         src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
       /> */}
 
-      {/* Render Home Component */}
+      {/* Render Components */}
       <Home data={data} existingAnime={existingAnime} schedule={animeDocs} />
-
-      {/* Optional Advertize Component */}
-      <Advertize direct={direct} />
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }
