@@ -30,6 +30,7 @@ export default function Card({
   selectL,
   length,
   datr,
+  refer,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [screenWidth, setScreenWidth] = useState(0);
@@ -81,8 +82,8 @@ export default function Card({
       <Link
         href={`${
           collectionName !== "Top Upcoming"
-            ? `/watch/${data.id}?refer=${props.refer}`
-            : `/${data.id}?refer=${props.refer}`
+            ? `/watch/${data.id}?refer=${refer}`
+            : `/${data.id}?refer=${refer}`
         }`}
         // prefetch
         onClick={handleNavigation}
