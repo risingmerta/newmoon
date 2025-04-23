@@ -2,6 +2,7 @@ import FilterComp from "@/component/FilterComp/FilterComp";
 import React from "react";
 import { connectDB } from "@/lib/mongoClient";
 import Script from "next/script";
+import Advertize from "@/component/Advertize/Advertize";
 
 // MongoDB connection details
 export async function generateMetadata({ params }) {

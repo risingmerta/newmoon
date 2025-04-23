@@ -1,6 +1,7 @@
 import React from "react";
 import RecommendedTopTen from "../../layouts/RecommendedTopTen";
 import { connectDB } from "@/lib/mongoClient";
+import Advertize from "@/component/Advertize/Advertize";
 
 const homeCollectionName = "animoon-home";
 const animeCollectionName = "animeInfo";

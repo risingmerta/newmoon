@@ -2,6 +2,7 @@ import React from "react";
 import { connectDB } from "@/lib/mongoClient";
 import Watchi from "@/component/Watchi/page";
 import Script from "next/script";
+import Advertize from "@/component/Advertize/Advertize";
 
 let sharedAnimeData = null;
 

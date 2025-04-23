@@ -2,6 +2,7 @@ import SearchResults from "@/component/AZ/az";
 import Script from "next/script";
 import React from "react";
 import { connectDB } from "@/lib/mongoClient";
+import Advertize from "@/component/Advertize/Advertize";
 
 export async function generateMetadata({ params }) {
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon";
