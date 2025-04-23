@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 import { connectDB } from "@/lib/mongoClient";
 import Home from "@/component/Home/Home";
@@ -11,7 +11,7 @@ export default async function Page({ searchParams }) {
   let animeDocs = [];
   let direct = "";
 
-  const searchParam = await searchParams
+  const searchParam = await searchParams;
 
   try {
     const res = await fetch("https://kaori.animoon.me/api/home", {
@@ -37,7 +37,7 @@ export default async function Page({ searchParams }) {
     const docs = await animeCollection.find({}).toArray();
     animeDocs = JSON.parse(JSON.stringify(docs));
 
-    const referId =  searchParam.refer;
+    const referId = searchParam.refer;
     if (referId) {
       const userProfile = await profileCollection.findOne({ id: referId });
       if (userProfile?.directLink) {

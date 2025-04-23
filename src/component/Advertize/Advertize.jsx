@@ -4,7 +4,7 @@ import "./advertize.css";
 
 const Advertize = (props) => {
   const [time, setTime] = useState(new Date());
-  const [adver, setAdver] = useState("false");
+  const [showAd, setShowAd] = useState(false);
 
   // LocalStorage wrapper
   const localStorageWrapper = () => {
@@ -47,9 +47,9 @@ const Advertize = (props) => {
       currentHour !== parseInt(lastHour);
 
     if (shouldShowAd) {
-      setAdver("true");
+      setShowAd(true);
     } else {
-      setAdver("false");
+      setShowAd(false);
     }
 
     return () => clearInterval(interval);
@@ -61,18 +61,16 @@ const Advertize = (props) => {
     ls.setItem("lastHour", time.getHours().toString());
     ls.setItem("truth", "false");
     window.open(
-      props.direct
-        ? props.direct
-        : "https://www.highrevenuenetwork.com/hnq4sfr7se?key=fa60dc3aeeb0a08aa0476e80986ad233"
+      props.direct || "https://www.highrevenuenetwork.com/hnq4sfr7se?key=fa60dc3aeeb0a08aa0476e80986ad233"
     );
   }
 
   return (
     <div
       className="Advertize"
-      style={{ zIndex: adver === "true" ? 100 : -1 }}
+      style={{ zIndex: showAd ? 100 : -1 }}
       onClick={() => {
-        setAdver("false");
+        setShowAd(false);
         Newtab();
       }}
     ></div>
