@@ -14,7 +14,7 @@ import BannerAd from "../Banner/Banner";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 
-const Home = ({ data, existingAnime, schedule }) => {
+const Home = ({ data, existingAnime, schedule , refer }) => {
   const [selectL, setSelectL] = useState("en");
   const [profiIsOpen, setProfiIsOpen] = useState(false);
   const [logIsOpen, setLogIsOpen] = useState(false);
@@ -81,10 +81,10 @@ const Home = ({ data, existingAnime, schedule }) => {
           sign={sign}
           setProfiIsOpen={setProfiIsOpen}
           profiIsOpen={profiIsOpen}
-          refer={props.refer}
+          refer={refer}
         />
         {profiIsOpen ? (
-          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} refer={props.refer}/>
+          <Profilo setProfiIsOpen={setProfiIsOpen} profiIsOpen={profiIsOpen} refer={refer}/>
         ) : (
           ""
         )}
@@ -93,7 +93,7 @@ const Home = ({ data, existingAnime, schedule }) => {
             logIsOpen={logIsOpen}
             setLogIsOpen={setLogIsOpen}
             sign={sign}
-            refer={props.refer}
+            refer={refer}
           />
         ) : (
           ""
@@ -103,7 +103,7 @@ const Home = ({ data, existingAnime, schedule }) => {
             trendingAnime={data?.spotlights || []}
             existingAnime={existingAnime}
             selectL={selectL}
-            refer={props.refer}
+            refer={refer}
           />
           {/* "//disgustingmad.com/b29918b4e5fbf3e4c13e32f24c7c143c/invoke.js"*/}
           {/* <div style={{ width: "100%", height: "100px", overflow: "hidden" }}> */}
@@ -115,21 +115,21 @@ const Home = ({ data, existingAnime, schedule }) => {
           <div id="ad-container3"></div>
           {/* </div> */}
 
-          <Trending data={data?.trending || []} selectL={selectL} refer={props.refer}/>
+          <Trending data={data?.trending || []} selectL={selectL} refer={refer}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <Share ShareUrl={`https://animoon.me/?refer=${props.refer}`} />
+          <Share ShareUrl={`https://animoon.me/?refer=${refer}`} />
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <Featured data={data || {}} selectL={selectL} refer={props.refer}/>
+          <Featured data={data || {}} selectL={selectL} refer={refer}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <MainContainer data={data || {}} selectL={selectL} schedule={schedule} refer={props.refer}/>
+          <MainContainer data={data || {}} selectL={selectL} schedule={schedule} refer={refer}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
         </div>
 
         <div>
-          <Footer refer={props.refer}/>
+          <Footer refer={refer}/>
         </div>
       </SessionProvider>
     </div>
