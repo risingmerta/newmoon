@@ -34,7 +34,7 @@ function transformURL(originalURL) {
   return `https://img.flawlessfiles.com/_r/300x400/100/${part1}/${part2}/${id}/${id}.jpg`;
 }
 
-export default function Hero({ trendingAnime, existingAnime, selectL }) {
+export default function Hero({ trendingAnime, existingAnime, selectL,refer }) {
   const [localStorageData, setLocalStorageData] = useState({});
 
   useEffect(() => {
@@ -125,14 +125,14 @@ export default function Hero({ trendingAnime, existingAnime, selectL }) {
                 <div className="button-wrapper">
                   <Link
                     href={
-                      storedId ? `/watch/${storedId}?refer=${props.refer}` : `/watch/${anime.id}?refer=${props.refer}`
+                      storedId ? `/watch/${storedId}?refer=${refer}` : `/watch/${anime.id}?refer=${refer}`
                     }
                     className="btn-primary hero-button"
                   >
                     <FaPlayCircle size={15} /> Watch Now
                   </Link>
                   <Link
-                    href={`/${anime.id}?refer=${props.refer}`}
+                    href={`/${anime.id}?refer=${refer}`}
                     className="btn-secondary hero-button"
                   >
                     Details <FaChevronRight size={12} />
