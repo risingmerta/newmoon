@@ -37,7 +37,7 @@ export default async function Page({ searchParams }) {
 
     const referId = searchParam.refer;
     if (referId) {
-      const userProfile = await profileCollection.findOne({ id: referId });
+      const userProfile = await profileCollection.findOne({ _id: referId });
       if (userProfile?.directLink) {
         direct = userProfile.directLink;
       }
