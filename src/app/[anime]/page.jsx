@@ -79,11 +79,13 @@ export async function generateMetadata({ params }) {
 
 // ───────────────────────────────────────────────────────────
 
-export default async function Page({ params }) {
+export default async function Page({ params, searchParams }) {
   const idToCheck = params.anime;
+  const searchParam = await searchParams;
 
   let data = null;
   let animeDoc = null;
+  let direct = "";
 
   try {
     const db = await connectDB();
@@ -91,6 +93,16 @@ export default async function Page({ params }) {
     animeDoc = await fetchAndStoreAnime(db, idToCheck);
   } catch (err) {
     console.error("Error in Page component:", err.message);
+  }
+
+  const profileCollection = db.collection("profile");
+
+  const referId = searchParam.refer;
+  if (referId) {
+    const userProfile = await profileCollection.findOne({ _id: referId });
+    if (userProfile?.directLink) {
+      direct = userProfile.directLink;
+    }
   }
 
   const ShareUrl = `https://animoon.me/${idToCheck}`;
@@ -105,6 +117,7 @@ export default async function Page({ params }) {
         arise={arise}
         id={idToCheck}
       />
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }

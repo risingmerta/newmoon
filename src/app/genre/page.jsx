@@ -17,6 +17,8 @@ export async function generateMetadata({ searchParams }) {
 
 export default async function page({ searchParams }) {
   const searchParam = await searchParams;
+  let direct = "";
+
   const cate = searchParam.name?.toString() || "default-category"; // Ensure cate has a value
   const date = cate
     .replaceAll(" ", "-")
@@ -40,6 +42,15 @@ export default async function page({ searchParams }) {
     // Fetch homepage data
     const homeCollection = db.collection(homeCollectionName.trim());
     const document = await homeCollection.findOne({}); // Adjust query as needed
+
+    const profileCollection = db.collection("profile");
+    const referId = searchParam.refer;
+    if (referId) {
+      const userProfile = await profileCollection.findOne({ _id: referId });
+      if (userProfile?.directLink) {
+        direct = userProfile.directLink;
+      }
+    }
 
     if (document) {
       data = document;
@@ -92,7 +103,7 @@ export default async function page({ searchParams }) {
         page={pageParam}
         arise={arise}
       />
-      {/* <Advertize /> */}
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }

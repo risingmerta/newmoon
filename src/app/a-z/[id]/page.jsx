@@ -17,6 +17,9 @@ export default async function Page({ params, searchParams }) {
   const pageParam = searchParams?.page || "1";
   const sortParam = searchParams?.sort?.toString().toLowerCase();
   const azCollectionName = sortParam ? `az-list_${sortParam}` : "az-list";
+  let direct = "";
+
+  const searchParam = await searchParams;
 
   let existingAnime = [];
   let count = 0;
@@ -36,9 +39,20 @@ export default async function Page({ params, searchParams }) {
     }
 
     count = await animeCollection.countDocuments();
+
+    const profileCollection = db.collection("profile");
+
+    const referId = searchParam.refer;
+    if (referId) {
+      const userProfile = await profileCollection.findOne({ _id: referId });
+      if (userProfile?.directLink) {
+        direct = userProfile.directLink;
+      }
+    }
   } catch (error) {
     console.error("MongoDB Error:", error.message);
   }
+
 
   try {
     const url = sortParam
@@ -62,6 +76,7 @@ export default async function Page({ params, searchParams }) {
         totalPages={count}
         para={params?.id}
       />
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }

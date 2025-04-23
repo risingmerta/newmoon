@@ -29,6 +29,8 @@ export default async function page({ searchParams }) {
   let existingAnime = [];
   let count;
 
+  let direct = "";
+
   try {
     // Connect to MongoDB using the connectDB function
     const db = await connectDB();
@@ -36,6 +38,16 @@ export default async function page({ searchParams }) {
     // Fetch homepage data from MongoDB
     const homeCollection = db.collection(homeCollectionName.trim());
     const document = await homeCollection.findOne({}); // Adjust query as needed
+
+    const profileCollection = db.collection("profile");
+
+    const referId = searchParam.refer;
+    if (referId) {
+      const userProfile = await profileCollection.findOne({ _id: referId });
+      if (userProfile?.directLink) {
+        direct = userProfile.directLink;
+      }
+    }
 
     if (document) {
       data = document;
@@ -85,7 +97,7 @@ export default async function page({ searchParams }) {
         page={pageParam}
         arise={arise}
       />
-      {/* <Advertize /> */}
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }

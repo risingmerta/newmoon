@@ -28,6 +28,22 @@ export default async function page({ params, searchParams }) {
   const searchParam = await searchParams;
   const page = searchParam.page;
   const slabId = param.replace("-", " ");
+  let direct = "";
+
+  try {
+    const db = await connectDB();
+    const profileCollection = db.collection("profile");
+
+    const referId = searchParam.refer;
+    if (referId) {
+      const userProfile = await profileCollection.findOne({ _id: referId });
+      if (userProfile?.directLink) {
+        direct = userProfile.directLink;
+      }
+    }
+  } catch (err) {
+    console.error("MongoDB error:", err);
+  }
 
   return (
     <>
@@ -38,7 +54,7 @@ export default async function page({ params, searchParams }) {
       <div>
         <User type={searchParam.type} id={param} page={page} />
       </div>
-      {/* <Advertize /> */}
+      {direct && <Advertize direct={direct} />}
     </>
   );
 }

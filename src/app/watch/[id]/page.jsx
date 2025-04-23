@@ -24,8 +24,12 @@ export async function generateMetadata({ params }) {
 
     if (!existingAnime || isInfoMissing) {
       const [dat, epis] = await Promise.all([
-        fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`).then((r) => r.json()),
-        fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`).then((r) => r.json()),
+        fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`).then((r) =>
+          r.json()
+        ),
+        fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`).then((r) =>
+          r.json()
+        ),
       ]);
 
       if (
@@ -45,7 +49,8 @@ export async function generateMetadata({ params }) {
 
     sharedAnimeData = existingAnime;
 
-    const title = existingAnime?.info?.results?.data?.title || datao?.results?.data?.title;
+    const title =
+      existingAnime?.info?.results?.data?.title || datao?.results?.data?.title;
     return {
       title: `Watch ${title} English Sub/Dub online free on ${siteName}`,
       description: `${siteName} is the best site to watch ${title} SUB online, or you can even watch underrated anime on ${siteName}.`,
@@ -65,15 +70,31 @@ export default async function page({ params, searchParams }) {
     db.collection("animeInfo"),
     db.collection("epi"),
   ];
+  let direct = "";
+
+  const searchParam = await searchParams;
 
   const idToCheck = params.id;
-  const epis = searchParams.ep;
+  const epis = searchParam.ep;
   const episodeIdParam = epis ? `${params.id}?ep=${epis}` : null;
 
   let existingAnime = sharedAnimeData;
 
   if (!existingAnime) {
     existingAnime = await animeCollection.findOne({ _id: idToCheck });
+  }
+
+  const profileCollection = db.collection("profile");
+
+  const docs = await animeCollection.find({}).toArray();
+  animeDocs = JSON.parse(JSON.stringify(docs));
+
+  const referId = searchParam?.refer;
+  if (referId) {
+    const userProfile = await profileCollection.findOne({ _id: referId });
+    if (userProfile?.directLink) {
+      direct = userProfile.directLink;
+    }
   }
 
   let datao = existingAnime?.info;
@@ -85,8 +106,12 @@ export default async function page({ params, searchParams }) {
     data?.results?.episodes?.length === 0
   ) {
     const [dat, episData] = await Promise.all([
-      fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`).then((r) => r.json()),
-      fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`).then((r) => r.json()),
+      fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`).then((r) =>
+        r.json()
+      ),
+      fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`).then((r) =>
+        r.json()
+      ),
     ]);
     if (
       dat?.results?.data?.title &&
@@ -196,6 +221,7 @@ export default async function page({ params, searchParams }) {
         arise={arise}
         raw={raw}
       />
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }

@@ -19,12 +19,23 @@ export default async function Page({ searchParams }) {
   const searchParam = await searchParams;
   const homeCollectionName = "animoon-home";
   let data;
+  let direct = "";
 
   try {
     const db = await connectDB();
     const homeCollection = db.collection(homeCollectionName.trim());
 
     const document = await homeCollection.findOne({}); // Adjust query as needed
+
+    const profileCollection = db.collection("profile");
+
+    const referId = searchParam.refer;
+    if (referId) {
+      const userProfile = await profileCollection.findOne({ _id: referId });
+      if (userProfile?.directLink) {
+        direct = userProfile.directLink;
+      }
+    }
 
     if (document) {
       data = document;
@@ -58,7 +69,7 @@ export default async function Page({ searchParams }) {
       searchParam.sort ? `&sort=${searchParam.sort}` : ""
     }${searchParam.genres ? `&genres=${searchParam.genres}` : ""}`
   );
-  
+
   const filteredAnimes = await res.json();
 
   return (
@@ -86,7 +97,7 @@ export default async function Page({ searchParams }) {
         totalDocs={filteredAnimes.results.totalResults}
         collectionName={"Filter Results"}
       />
-      {/* <Advertize /> */}
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }

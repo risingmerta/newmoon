@@ -26,17 +26,25 @@ export default async function page({ searchParams }) {
   const homeCollectionName = "animoon-home";
 
   let data;
+  let direct = "";
 
   try {
     // Connect to MongoDB using the connectDB function
-    const client = await connectDB;
-    console.log("Connected to MongoDB");
-
-    const db = client.db("mydatabase");
+    const db = await connectDB();
 
     // Fetch homepage data from MongoDB
     const homeCollection = db.collection(homeCollectionName.trim());
     const document = await homeCollection.findOne({}); // Adjust query as needed
+
+    const profileCollection = db.collection("profile");
+
+    const referId = searchParam.refer;
+    if (referId) {
+      const userProfile = await profileCollection.findOne({ _id: referId });
+      if (userProfile?.directLink) {
+        direct = userProfile.directLink;
+      }
+    }
 
     if (document) {
       data = document;
@@ -105,7 +113,7 @@ export default async function page({ searchParams }) {
         keyword={searchParam.keyword || ""}
         collectionName={`Search results for`}
       />
-      {/* <Advertize /> */}
+      {direct && <Advertize direct={direct} />}
     </div>
   );
 }
