@@ -104,7 +104,7 @@ export default async function page({ searchParams }) {
         arise={arise}
         refer={searchParam.refer}
       />
-      {direct && <Advertize direct={direct} />}
+      <Advertize direct={direct} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ export default async function page({ searchParams }) {
   return (
     <div>
       <Montiz refer={searc.refer} />
+      <Advertize direct={searc.refer} />
     </div>
   );
 }

@@ -51,7 +51,7 @@ export default async function Page({ searchParams }) {
       {/* Optional */}
       {/* <Script strategy="afterInteractive" src="..." /> */}
       <Home data={data} existingAnime={existingAnime} schedule={animeDocs} refer={searchParam.refer}/>
-      {direct && <Advertize direct={direct} />}
+      <Advertize direct={direct} />
     </div>
   );
 }

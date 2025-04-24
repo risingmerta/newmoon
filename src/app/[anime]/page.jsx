@@ -118,7 +118,7 @@ export default async function Page({ params, searchParams }) {
         id={idToCheck}
         refer={searchParam.refer}
       />
-      {direct && <Advertize direct={direct} />}
+      <Advertize direct={direct} />
     </div>
   );
 }

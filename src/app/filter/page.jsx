@@ -99,7 +99,7 @@ export default async function Page({ searchParams }) {
         collectionName={"Filter Results"}
         refer={searchParam.refer}
       />
-      {direct && <Advertize direct={direct} />}
+      <Advertize direct={direct} />
     </div>
   );
 }

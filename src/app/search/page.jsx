@@ -114,7 +114,7 @@ export default async function page({ searchParams }) {
         collectionName={`Search results for`}
         refer={searchParam.refer}
       />
-      {direct && <Advertize direct={direct} />}
+      <Advertize direct={direct} />
     </div>
   );
 }

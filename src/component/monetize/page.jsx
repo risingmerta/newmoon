@@ -23,10 +23,13 @@ export default function MonetizePage(props) {
 
   const handleSave = async () => {
     if (!directLink) {
-      return alert("Please enter your Direct Adsterra Link.");
+      return setStatus("Please enter your Direct Adsterra Link.");
     }
 
-    if (!session) return;
+    if (!session) {
+      setLogIsOpen(true)
+      return setStatus("Please sign in to save your links.");
+    }
 
     try {
       const res = await fetch("/api/save-links", {
@@ -126,7 +129,10 @@ export default function MonetizePage(props) {
           )}
         </div>
 
-        <button className="saveButton" onClick={handleSave}>
+        <button
+          className="saveButton"
+          onClick={() => handleSave()}
+        >
           💾 Save My Links
         </button>
 
@@ -151,7 +157,7 @@ export default function MonetizePage(props) {
       </div>
 
       <div>
-        <Footer refer={props.refer}/>
+        <Footer refer={props.refer} />
       </div>
     </>
   );

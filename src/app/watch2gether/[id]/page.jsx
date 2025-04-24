@@ -2,6 +2,7 @@ import React from "react";
 import WatchLive from "@/component/WatchLive/WatchLive";
 import { connectDB } from "@/lib/mongoClient";  // Use the connectDB function for MongoDB connection
 import Script from "next/script";
+import Advertize from "@/component/Advertize/Advertize";
 
 export default async function page({ params, searchParams }) {
   const { animeId } = searchParams;
@@ -65,7 +66,7 @@ export default async function page({ params, searchParams }) {
         refer={searchParam?.refer}
       />
       {/* Optionally include an advertisement */}
-      {/* <Advertize /> */}
+      <Advertize />
     </div>
   );
 }
