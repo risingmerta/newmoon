@@ -7,6 +7,7 @@ import Profilo from "../Profilo/Profilo";
 import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import Toast from "../Toast/Toast";
 
 export default function MonetizePage(props) {
   const { data: session } = useSession();
@@ -14,6 +15,8 @@ export default function MonetizePage(props) {
   const [directLink, setDirectLink] = useState("");
   const [refLink, setRefLink] = useState("");
   const [status, setStatus] = useState("");
+
+  const [showToast, setShowToast] = useState(false);
 
   const [profiIsOpen, setProfiIsOpen] = useState(false);
   const [logIsOpen, setLogIsOpen] = useState(false);
@@ -23,28 +26,28 @@ export default function MonetizePage(props) {
 
   const handleSave = async () => {
     if (!directLink) {
-      return setStatus("Please enter your Direct Adsterra Link.");
+      setStatus("Please enter your Direct Adsterra Link.");
+      return;
     }
-
     if (!session) {
-      setLogIsOpen(true)
-      return setStatus("Please sign in to save your links.");
+      setLogIsOpen(true);
+      setStatus("Please sign in to save your links.");
+      return;
     }
 
     try {
       const res = await fetch("/api/save-links", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          directLink,
-          refLink,
-          userId: session?.user?.id,
-        }),
+        body: JSON.stringify({ directLink, refLink }),
       });
-
       const result = await res.json();
+
       if (result.success) {
-        setStatus("✅ Your links have been saved.");
+        setStatus("");
+        setShowToast(true);
+        setDirectLink("");
+        setRefLink("");
       } else {
         setStatus("❌ Failed to save links.");
       }
@@ -155,6 +158,13 @@ export default function MonetizePage(props) {
           Made with ❤️ by <strong style={{ color: "#c084fc" }}>Animoon</strong>
         </div>
       </div>
+
+      {showToast && (
+        <Toast
+          message="✅ Your links have been saved!"
+          onClose={() => setShowToast(false)}
+        />
+      )}
 
       <div>
         <Footer refer={props.refer} />

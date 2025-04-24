@@ -1,3 +1,4 @@
+import Advertize from "@/component/Advertize/Advertize";
 import Montiz from "@/component/Montiz/page";
 import React from "react";
 

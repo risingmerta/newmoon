@@ -19,7 +19,7 @@ export default async function page({searchParams}) {
         src="//disgustingmad.com/a5/d2/60/a5d260a809e0ec23b08c279ab693d778.js"
       /> */}
       <AllLive liveRoom={liveRoom} refer={searchParam?.refer}/>
-      {/* <Advertize /> */}
+      <Advertize />
     </div>
   );
 }
