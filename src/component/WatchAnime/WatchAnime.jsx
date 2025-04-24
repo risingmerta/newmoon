@@ -28,6 +28,7 @@ import { FaCirclePlay } from "react-icons/fa6";
 import SignInSignUpModal from "@/component/SignSignup/SignInSignUpModal";
 import { Lily_Script_One } from "next/font/google";
 import { PiBroadcastFill } from "react-icons/pi";
+import CopyUrlButton from "../CopyUrlButton/CopyUrlButton";
 
 function transformURL(originalURL) {
   if (!originalURL) return null; // Handle null/undefined cases
@@ -1420,6 +1421,8 @@ export default function WatchAnime(props) {
               arise={props.arise}
               refer={props.refer}
             />
+
+            <CopyUrlButton url={props.ShareUrl}/>
 
             <div
               id="ad-containers"

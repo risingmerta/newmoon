@@ -17,6 +17,7 @@ import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import { PiBroadcastFill } from "react-icons/pi";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
+import CopyUrlButton from "../CopyUrlButton/CopyUrlButton";
 
 function transformURL(originalURL) {
   if (!originalURL) return null; // Handle null/undefined cases
@@ -396,6 +397,7 @@ export default function Details(props) {
                   ShareUrl={props.ShareUrl}
                   arise={props.arise}
                 />
+                <CopyUrlButton url={props.ShareUrl}/>
               </div>
             </div>
           </div>

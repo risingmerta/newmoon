@@ -13,6 +13,7 @@ import Footer from "../Footer/Footer";
 import BannerAd from "../Banner/Banner";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
+import CopyUrlButton from "../CopyUrlButton/CopyUrlButton";
 
 const Home = ({ data, existingAnime, schedule , refer }) => {
   const [selectL, setSelectL] = useState("en");
@@ -119,6 +120,7 @@ const Home = ({ data, existingAnime, schedule , refer }) => {
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
           <Share ShareUrl={`https://animoon.me/?refer=${refer}`} />
+          <CopyUrlButton url={`https://animoon.me/?refer=${refer}`}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
           <Featured data={data || {}} selectL={selectL} refer={refer}/>

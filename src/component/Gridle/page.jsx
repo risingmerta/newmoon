@@ -12,6 +12,7 @@ import Profilo from "../Profilo/Profilo";
 import SignInSignUpModal from "../SignSignup/SignInSignUpModal";
 import Footer from "../Footer/Footer";
 import { usePathname } from "next/navigation";
+import CopyUrlButton from "../CopyUrlButton/CopyUrlButton";
 export default function GenreSidebar(props) {
   const [selectL, setSelectL] = useState("en");
   const [profiIsOpen, setProfiIsOpen] = useState(false);
@@ -116,6 +117,7 @@ export default function GenreSidebar(props) {
                 ShareUrl={props.ShareUrl}
                 arise={props.arise}
               />
+              <CopyUrlButton url={props.ShareUrl}/>
               <div className=" main-container d-flex  ">
                 <div className="sidebar-wrapper d-flex-fd-column">
                   <Genre data={props.datal.genres} IsLoading={IsLoading} refer={props.refer}/>
