@@ -39,7 +39,11 @@ export default function MonetizePage(props) {
       const res = await fetch("/api/save-links", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ directLink, refLink }),
+        body: JSON.stringify({
+          directLink,
+          refLink,
+          userId: session?.user?.id,
+        }),
       });
       const result = await res.json();
 
