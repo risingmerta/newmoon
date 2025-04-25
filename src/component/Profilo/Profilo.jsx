@@ -47,27 +47,27 @@ export default function Profilo(props) {
       >
         <div className="logA logAC">{session?.user.username}</div>
         <div className="logA logAB">{session?.user.email}</div>
-        <Link href={`/user/profile${props.refer?'?refer'=props.refer:''}`} className="profD">
+        <Link href={`/user/profile${props.refer ? `?refer=${props.refer}` : ''}`} className="profD">
           <FaUser />
           Profile
         </Link>
-        <Link href={`/user/continue-watching${props.refer?'?refer'=props.refer:''}`} className="profD">
+        <Link href={`/user/continue-watching${props.refer ? `?refer=${props.refer}` : ''}`} className="profD">
           <FaHistory />
           Continue Watching
         </Link>
-        <Link href={`/user/watch-list${props.refer?'?refer'=props.refer:''}`} className="profD">
+        <Link href={`/user/watch-list${props.refer ? `?refer=${props.refer}` : ''}`} className="profD">
           <FaHeart />
           Watch List
         </Link>
-        <Link href={`/user/notification${props.refer?'?refer'=props.refer:''}`} className="profD">
+        <Link href={`/user/notification${props.refer ? `?refer=${props.refer}` : ''}`} className="profD">
           <FaBell />
           Notification
         </Link>
-        <Link href={`/user/settings${props.refer?'?refer'=props.refer:''}`} className="profD">
+        <Link href={`/user/settings${props.refer ? `?refer=${props.refer}` : ''}`} className="profD">
           <FaCog />
           Settings
         </Link>
-        <Link href={`/monetize${props.refer?'?refer'=props.refer:''}`} className="profD">
+        <Link href={`/monetize${props.refer ? `?refer=${props.refer}` : ''}`} className="profD">
           <FaSackDollar />
           Monetize
         </Link>

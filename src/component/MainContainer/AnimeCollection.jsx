@@ -60,7 +60,7 @@ export default function AnimeCollection(props) {
 
           {props.isInGrid ? null : (
             <Link
-              href={`/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer?'?refer'=props.refer:''}`}
+              href={`/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer ? `&refer=${props.refer}` : ''}`}
               className="view-more-link view-more-linkop"
               onClick={handleNavigation}
             >
@@ -81,7 +81,7 @@ export default function AnimeCollection(props) {
             <h2 className="header-title heddH2">{props.collectionName}</h2>
             {props.isInGrid ? null : (
               <Link
-                href={`/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer?'?refer'=props.refer:''}`}
+                href={`/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer ? `&refer=${props.refer}` : ''}`}
                 className="view-more-link view-more-linkop"
                 onClick={handleNavigation}
               >
@@ -110,8 +110,8 @@ export default function AnimeCollection(props) {
                             first === "?" && second ? "?" : first
                         )
                       : props.fiki
-                      ? `/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer?'?refer'=props.refer:''}`
-                      : `/genre?id=${props.filterName}&name=${props.filterName}${props.refer?'?refer'=props.refer:''}`
+                      ? `/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer ? `&refer=${props.refer}` : ''}`
+                      : `/genre?id=${props.filterName}&name=${props.filterName}${props.refer ? `&refer=${props.refer}` : ''}`
                   }
                   className="pagin-tile"
                   onClick={handleNavigation}
@@ -129,10 +129,10 @@ export default function AnimeCollection(props) {
                       : props.fiki
                       ? `/grid?name=${props.filterName}&heading=${
                           props.collectionName
-                        }&page=${currentPage - 1}${props.refer?'?refer'=props.refer:''}`
+                        }&page=${currentPage - 1}${props.refer ? `&refer=${props.refer}` : ''}`
                       : `/genre?id=${props.filterName}&name=${
                           props.filterName
-                        }&page=${currentPage - 1}${props.refer?'?refer'=props.refer:''}`
+                        }&page=${currentPage - 1}${props.refer ? `&refer=${props.refer}` : ''}`
                   }
                   className="pagin-tile"
                   onClick={handleNavigation}
@@ -150,11 +150,11 @@ export default function AnimeCollection(props) {
                     ? props.fullPath.replace(/([?&])page=\d+/, `$1page=${ii}`)
                     : props.fiki
                     ? ii === 1
-                      ? `/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer?'?refer'=props.refer:''}`
-                      : `/grid?name=${props.filterName}&heading=${props.collectionName}&page=${ii}${props.refer?'?refer'=props.refer:''}`
+                      ? `/grid?name=${props.filterName}&heading=${props.collectionName}${props.refer ? `&refer=${props.refer}` : ''}`
+                      : `/grid?name=${props.filterName}&heading=${props.collectionName}&page=${ii}${props.refer ? `&refer=${props.refer}` : ''}`
                     : ii === 1
-                    ? `/genre?id=${props.filterName}&name=${props.filterName}${props.refer?'?refer'=props.refer:''}`
-                    : `/genre?id=${props.filterName}&name=${props.filterName}&page=${ii}${props.refer?'?refer'=props.refer:''}`
+                    ? `/genre?id=${props.filterName}&name=${props.filterName}${props.refer ? `&refer=${props.refer}` : ''}`
+                    : `/genre?id=${props.filterName}&name=${props.filterName}&page=${ii}${props.refer ? `&refer=${props.refer}` : ''}`
                 }
                 className={`pagin-tile ${
                   props.page
@@ -178,21 +178,15 @@ export default function AnimeCollection(props) {
                     props.datr === "yes"
                       ? props.fullPath.replace(
                           /([?&])page=\d+/,
-                          `$1page=${props.page ? currentPage + 1 : 2}&refer=${
-                            props.refer
-                          }`
+                          `$1page=${props.page ? currentPage + 1 : 2}${props.refer ? `&refer=${props.refer}` : ''}`
                         )
                       : props.fiki
                       ? `/grid?name=${props.filterName}&heading=${
                           props.collectionName
-                        }&page=${props.page ? currentPage + 1 : 2}&refer=${
-                          props.refer
-                        }`
+                        }&page=${props.page ? currentPage + 1 : 2}${props.refer ? `&refer=${props.refer}` : ''}`
                       : `/genre?id=${props.filterName}&name=${
                           props.filterName
-                        }&page=${props.page ? currentPage + 1 : 2}&refer=${
-                          props.refer
-                        }`
+                        }&page=${props.page ? currentPage + 1 : 2}${props.refer ? `&refer=${props.refer}` : ''}`
                   }
                   className="pagin-tile"
                   onClick={handleNavigation}
@@ -208,8 +202,8 @@ export default function AnimeCollection(props) {
                           `$1page=${totalPages}`
                         )
                       : props.fiki
-                      ? `/grid?name=${props.filterName}&heading=${props.collectionName}&page=${totalPages}${props.refer?'?refer'=props.refer:''}`
-                      : `/genre?id=${props.filterName}&name=${props.filterName}&page=${totalPages}${props.refer?'?refer'=props.refer:''}`
+                      ? `/grid?name=${props.filterName}&heading=${props.collectionName}&page=${totalPages}${props.refer ? `&refer=${props.refer}` : ''}`
+                      : `/genre?id=${props.filterName}&name=${props.filterName}&page=${totalPages}${props.refer ? `&refer=${props.refer}` : ''}`
                   }
                   className="pagin-tile"
                   onClick={handleNavigation}

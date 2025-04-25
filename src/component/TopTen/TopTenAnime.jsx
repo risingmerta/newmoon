@@ -53,7 +53,7 @@ export default function TopTenAnime(props) {
           <div className="anime-details d-flex-fd-column">
             <span className="title">
               <Link
-                href={`/${el.id}${props.refer?'?refer'=props.refer:''}`}
+                href={`/${el.id}${props.refer ? `?refer=${props.refer}` : ''}`}
                 className="trans-03 tito"
                 onClick={handleNavigation}
               >

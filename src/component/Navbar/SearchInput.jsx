@@ -37,7 +37,7 @@ const SearchInput = (props) => {
 
   const handleSearch = () => {
     if (value) {
-      router.push(`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`);
+      router.push(`/search?keyword=${value}${props.refer ? `&refer=${props.refer}` : ''}`);
       // setSearchForm({ name: "" });
     }
   };
@@ -54,7 +54,7 @@ const SearchInput = (props) => {
       {props.float ? (
         <div className="search-container">
           <div className="common-wealth">
-            <Link href={`/filter?refer=${props.refer}`} className="filter-ico">
+            <Link href={`/filter${props.refer ? `?refer=${props.refer}` : ''}`} className="filter-ico">
               <FaFilter />
             </Link>
             <div className="float-bloc">
@@ -70,11 +70,11 @@ const SearchInput = (props) => {
                 />
               </div>
               <div className="flit">
-                <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`}>
+                <Link href={`/search?keyword=${value}${props.refer ? `&refer=${props.refer}` : ''}`}>
                   <FaSearch />
                 </Link>
                 {!props.float && (
-                  <Link href={`/filter?refer=${props.refer}`} className="filter-btn">
+                  <Link href={`/filter${props.refer ? `?refer=${props.refer}` : ''}`} className="filter-btn">
                     Filter
                   </Link>
                 )}
@@ -85,7 +85,7 @@ const SearchInput = (props) => {
             <div className="dropdown">
               {data.map((item) => (
                 <Link
-                  href={`/${item.id}?refer=${props.refer}`}
+                  href={`/${item.id}${props.refer ? `?refer=${props.refer}` : ''}`}
                   key={item.id}
                   className="dropdown-item"
                 >
@@ -115,7 +115,7 @@ const SearchInput = (props) => {
                   </div>
                 </Link>
               ))}
-              <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`} className="allR">
+              <Link href={`/search?keyword=${value}${props.refer ? `&refer=${props.refer}` : ''}`} className="allR">
                 {" "}
                 <div>View all results</div>
                 <div>
@@ -140,11 +140,11 @@ const SearchInput = (props) => {
               />
             </div>
             <div className="flit">
-              <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`}>
+              <Link href={`/search?keyword=${value}${props.refer ? `&refer=${props.refer}` : ''}`}>
                 <FaSearch />
               </Link>
               {!props.float && (
-                <Link href={`/filter?refer=${props.refer}`} className="filter-btn">
+                <Link href={`/filter${props.refer ? `?refer=${props.refer}` : ''}`} className="filter-btn">
                   Filter
                 </Link>
               )}
@@ -154,7 +154,7 @@ const SearchInput = (props) => {
             <div className="dropdown">
               {data.map((item) => (
                 <Link
-                  href={`/${item.id}?refer=${props.refer}`}
+                  href={`/${item.id}${props.refer ? `?refer=${props.refer}` : ''}`}
                   key={item.id}
                   className="dropdown-item"
                 >
@@ -184,7 +184,7 @@ const SearchInput = (props) => {
                   </div>
                 </Link>
               ))}
-              <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`} className="allR">
+              <Link href={`/search?keyword=${value}${props.refer ? `&refer=${props.refer}` : ''}`} className="allR">
                 {" "}
                 <div>View all results</div>
                 <div>

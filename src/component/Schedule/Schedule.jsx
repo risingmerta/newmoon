@@ -175,7 +175,7 @@ export default function Schedule(props) {
         <div className="schedule-list">
           {(showAll ? scheduleData : scheduleData.slice(0, 7)).map(
             (item, idx) => (
-              <Link href={`/${item.id}${props.refer?'?refer'=props.refer:''}`} key={idx} className="schedule-item">
+              <Link href={`/${item.id}${props.refer ? `?refer=${props.refer}` : ''}`} key={idx} className="schedule-item">
                 <div className="item-info">
                   <div className="item-time">{item.time || "N/A"}</div>
                   <h3 className="item-title">{item.title || "N/A"}</h3>

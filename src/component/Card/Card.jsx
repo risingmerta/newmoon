@@ -82,8 +82,8 @@ export default function Card({
       <Link
         href={`${
           collectionName !== "Top Upcoming"
-            ? `/watch/${data.id}${refer?'?refer'=refer:''}`
-            : `/${data.id}${refer?'?refer'=refer:''}`
+            ? `/watch/${data.id}${props.refer ? `?refer=${props.refer}` : ''}`
+            : `/${data.id}${props.refer ? `?refer=${props.refer}` : ''}`
         }`}
         // prefetch
         onClick={handleNavigation}

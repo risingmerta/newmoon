@@ -336,12 +336,8 @@ export default function Details(props) {
                     <Link
                       href={`${
                         ls.getItem(`Rewo-${props?.id}`)
-                          ? `/watch/${ls.getItem(`Rewo-${props?.id}`)}${
-                              props.refer ? "&refer=" + props.refer : ""
-                            }`
-                          : `/watch/${props?.id}${
-                              props.refer ? "?refer=" + props.refer : ""
-                            }`
+                          ? `/watch/${ls.getItem(`Rewo-${props?.id}`)}${props.refer ? `&refer=${props.refer}` : ''}`
+                          : `/watch/${props?.id}${props.refer ? `?refer=${props.refer}` : ''}`
                       }`}
                       className="btn-primary hero-button"
                       onClick={handleNavigation}

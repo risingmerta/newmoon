@@ -16,7 +16,7 @@ export default function Footer(props) {
     const links = alphabets.map((el) => {
       return (
         <Link
-          href={`/a-z/alpha?sort=${el}${props.refer?'?refer'=props.refer:''}`}
+          href={`/a-z/alpha?sort=${el}${props.refer ? `&refer=${props.refer}` : ''}`}
           key={el}
           className="alphabet-tile"
           onClick={handleNavigation}
@@ -47,7 +47,7 @@ export default function Footer(props) {
     <div className="footer-container d-flex-fd-column j-center">
       <div className="logo-social-links d-flex">
         <div className="main-element">
-          <Link href="/${props.refer?'?refer'=props.refer:''}">
+          <Link href="/${props.refer ? `&refer=${props.refer}` : ''}">
             <div className="logo-container">
               <div className="logo-icon"></div>
               <div className="logo-text">{siteName}</div>
@@ -61,13 +61,13 @@ export default function Footer(props) {
         <span>Searching anime order by alphabet name A to Z.</span>
       </div>
       <div className="alphabet-list d-flex">
-        <Link href={`/a-z/all${props.refer?'?refer'=props.refer:''}`} onClick={handleNavigation}>
+        <Link href={`/a-z/all${props.refer ? `?refer=${props.refer}` : ''}`} onClick={handleNavigation}>
           <div className="alphabet-tile">All</div>
         </Link>
-        <Link href={`/a-z/other?sort=other${props.refer?'?refer'=props.refer:''}`} onClick={handleNavigation}>
+        <Link href={`/a-z/other?sort=other${props.refer ? `&refer=${props.refer}` : ''}`} onClick={handleNavigation}>
           <div className="alphabet-tile">#</div>
         </Link>
-        <Link href={`/a-z/0-9?sort=0-9${props.refer?'?refer'=props.refer:''}`} onClick={handleNavigation}>
+        <Link href={`/a-z/0-9?sort=0-9${props.refer ? `&refer=${props.refer}` : ''}`} onClick={handleNavigation}>
           <div className="alphabet-tile">0-9</div>
         </Link>
         {links}

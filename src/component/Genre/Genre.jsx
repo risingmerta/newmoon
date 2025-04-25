@@ -19,7 +19,7 @@ export default function Genre(props) {
     return (
       <Link
         key={idx}
-        href={`/genre?id=${el}&name=${el}${props.refer?'?refer'=props.refer:''}`}
+        href={`/genre?id=${el}&name=${el}${props.refer ? `&refer=${props.refer}` : ''}`}
         onClick={handleNavigation}
       >
         <div>{replaceAndCapitalize(el)}</div>

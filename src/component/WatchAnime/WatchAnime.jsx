@@ -376,7 +376,7 @@ export default function WatchAnime(props) {
     const len = el.episode_no === epiod ? 20 : 30;
     return (
       <Link
-        href={`/watch/${el.id}${props.refer ? "&refer=" + props.refer : ""}`}
+        href={`/watch/${el.id}${props.refer ? `&refer=${props.refer}` : ''}`}
         title={el.title}
         className={`${
           episodeList.length <= 24 ? "episode-tile" : `episode-tile-blocks`
@@ -1004,7 +1004,7 @@ export default function WatchAnime(props) {
                             <Link
                               href={`/watch/${
                                 props.data.results.episodes[epiod - 2]?.id
-                              }${props.refer ? "&refer=" + props.refer : ""}`}
+                              }${props.refer ? `&refer=${props.refer}` : ''}`}
                             >
                               <div
                                 className="backw"
@@ -1021,7 +1021,7 @@ export default function WatchAnime(props) {
                             <Link
                               href={`/watch/${
                                 props.data.results.episodes[epiod]?.id
-                              }${props.refer ? "&refer=" + props.refer : ""}`}
+                              }${props.refer ? `&refer=${props.refer}` : ''}`}
                             >
                               <div
                                 className="fordw"
@@ -1300,9 +1300,7 @@ export default function WatchAnime(props) {
                               {props?.datao?.results.seasons?.map((sea) => (
                                 <>
                                   <Link
-                                    href={`/${sea.id}${
-                                      props.refer ? "?refer=" + props.refer : ""
-                                    }`}
+                                    href={`/${sea.id}${props.refer ? `?refer=${props.refer}` : ''}`}
                                     onClick={handleNavigation}
                                   >
                                     <div

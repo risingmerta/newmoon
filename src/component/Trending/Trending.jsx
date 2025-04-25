@@ -50,8 +50,8 @@ export default function Trending(props) {
           <Link
             href={`${
               localStorageData[el.id]
-                ? `/watch/${localStorageData[el.id]}${props.refer?'&refer'=props.refer:''}`
-                : `/watch/${el.id}${props.refer?'?refer'=props.refer:''}`
+                ? `/watch/${localStorageData[el.id]}${props.refer ? `&refer=${props.refer}` : ''}`
+                : `/watch/${el.id}${props.refer ? `?refer=${props.refer}` : ''}`
             }`}
             prefetch
           >

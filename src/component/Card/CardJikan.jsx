@@ -76,9 +76,9 @@ export default function Card(props) {
         href={`${
           props.collectionName !== "Top Upcoming"
             ? ls.getItem(`Rewo-${anime.id}`)
-              ? `/watch/${ls.getItem(`Rewo-${anime.id}`)}${props.refer?'&refer'=props.refer:''}`
-              : `/watch${anime.id}${props.refer?'?refer'=props.refer:''}`
-            : `/${anime.id}${props.refer?'?refer'=props.refer:''}`
+              ? `/watch/${ls.getItem(`Rewo-${anime.id}`)}${props.refer ? `&refer=${props.refer}` : ''}`
+              : `/watch${anime.id}${props.refer ? `?refer=${props.refer}` : ''}`
+            : `/${anime.id}${props.refer ? `?refer=${props.refer}` : ''}`
         }`}
         prefetch
         onClick={handleNavigation}
