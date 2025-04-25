@@ -41,34 +41,34 @@ export default function NavSidebar(props) {
         <div className="navigation-link-list">
           <ul>
             <li>
-              <Link href={`/?refer=${props.refer}`}>Home</Link>
+              <Link href={`/${props.refer?'?refer'=props.refer:''}`}>Home</Link>
             </li>
             <li>
-              <Link href={`/grid?name=most-popular&heading=Most Popular&refer=${props.refer}`}>
+              <Link href={`/grid?name=most-popular&heading=Most Popular${props.refer?'&refer'=props.refer:''}`}>
                 Most Popular
               </Link>
             </li>
             <li>
-              <Link href={`/grid?name=movie&heading=Movies&refer=${props.refer}`}>Movies</Link>
+              <Link href={`/grid?name=movie&heading=Movies${props.refer?'&refer'=props.refer:''}`}>Movies</Link>
             </li>
             <li>
-              <Link href={`/grid?name=tv&heading=TV Series&refer=${props.refer}`}>TV Series</Link>
+              <Link href={`/grid?name=tv&heading=TV Series${props.refer?'&refer'=props.refer:''}`}>TV Series</Link>
             </li>
             <li>
-              <Link href={`/grid?name=ova&heading=OVAs&refer=${props.refer}`}>OVAs</Link>
+              <Link href={`/grid?name=ova&heading=OVAs${props.refer?'&refer'=props.refer:''}`}>OVAs</Link>
             </li>
             <li>
-              <Link href={`/grid?name=ona&heading=ONAs&refer=${props.refer}`}>ONAs</Link>
+              <Link href={`/grid?name=ona&heading=ONAs${props.refer?'&refer'=props.refer:''}`}>ONAs</Link>
             </li>
             <li>
-              <Link href={`/grid?name=special&heading=Specials&refer=${props.refer}`}>Specials</Link>
-              <Link href={`/grid?name=completed&heading=Completed&refer=${props.refer}`}>
+              <Link href={`/grid?name=special&heading=Specials${props.refer?'&refer'=props.refer:''}`}>Specials</Link>
+              <Link href={`/grid?name=completed&heading=Completed${props.refer?'&refer'=props.refer:''}`}>
                 Completed
               </Link>
-              <Link href={`/grid?name=dubbed-anime&heading=Dubbed Anime&refer=${props.refer}`}>
+              <Link href={`/grid?name=dubbed-anime&heading=Dubbed Anime${props.refer?'&refer'=props.refer:''}`}>
                 Dubbed Anime
               </Link>
-              <Link href={`/grid?name=subbed-anime&heading=Subbed Anime&refer=${props.refer}`}>
+              <Link href={`/grid?name=subbed-anime&heading=Subbed Anime${props.refer?'&refer'=props.refer:''}`}>
                 Subbed Anime
               </Link>
             </li>

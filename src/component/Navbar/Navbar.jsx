@@ -71,7 +71,7 @@ const Navbar = ({ lang, sign, setProfiIsOpen, refer }) => {
             <FaBars size={25} />
           </div>
           <div>
-            <Link href={`/?refer=${refer}`}>
+            <Link href={`/${refer?'?refer'=refer:''}`}>
               <div className="logo-container">
                 <div className="logo-icon"></div>
                 <div className="logo-text">{siteName}</div>

@@ -37,7 +37,7 @@ const SearchInput = (props) => {
 
   const handleSearch = () => {
     if (value) {
-      router.push(`/search?keyword=${value}&refer=${props.refer}`);
+      router.push(`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`);
       // setSearchForm({ name: "" });
     }
   };
@@ -70,7 +70,7 @@ const SearchInput = (props) => {
                 />
               </div>
               <div className="flit">
-                <Link href={`/search?keyword=${value}&refer=${props.refer}`}>
+                <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`}>
                   <FaSearch />
                 </Link>
                 {!props.float && (
@@ -115,7 +115,7 @@ const SearchInput = (props) => {
                   </div>
                 </Link>
               ))}
-              <Link href={`/search?keyword=${value}&refer=${props.refer}`} className="allR">
+              <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`} className="allR">
                 {" "}
                 <div>View all results</div>
                 <div>
@@ -140,7 +140,7 @@ const SearchInput = (props) => {
               />
             </div>
             <div className="flit">
-              <Link href={`/search?keyword=${value}&refer=${props.refer}`}>
+              <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`}>
                 <FaSearch />
               </Link>
               {!props.float && (
@@ -184,7 +184,7 @@ const SearchInput = (props) => {
                   </div>
                 </Link>
               ))}
-              <Link href={`/search?keyword=${value}&refer=${props.refer}`} className="allR">
+              <Link href={`/search?keyword=${value}${props.refer?'&refer'=props.refer:''}`} className="allR">
                 {" "}
                 <div>View all results</div>
                 <div>

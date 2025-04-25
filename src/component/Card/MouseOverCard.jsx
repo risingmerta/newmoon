@@ -135,11 +135,11 @@ export default function MouseOverCard(props) {
           <div className="anime-st-genreo"></div>
           <div className="tits-btn">
             {hoverAnime?.results?.status !== "Not yet aired" && (
-              <Link href={`/watch/${props?.data?.id}?refer=${props.refer}`} className="tit-bt-w">
+              <Link href={`/watch/${props?.data?.id}${props.refer?'?refer'=props.refer:''}`} className="tit-bt-w">
                 <FaPlayCircle size={15} /> Watch Now
               </Link>
             )}
-            <Link href={`/${props?.data?.id}?refer=${props.refer}`} className="tit-bt-d">
+            <Link href={`/${props?.data?.id}${props.refer?'?refer'=props.refer:''}`} className="tit-bt-d">
               Details <FaChevronRight size={12} />
             </Link>
           </div>

@@ -218,7 +218,7 @@ export default function Details(props) {
             ></iframe>
           `;
       }
-    } 
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -269,7 +269,11 @@ export default function Details(props) {
                 {gnt?.animeInfo?.Status !== "Not-yet-aired" && (
                   <Link
                     href={
-                      session ? `/watch2gether/create?animeId=${props?.id}&refer=${props.refer}` : ""
+                      session
+                        ? `/watch2gether/create?animeId=${props?.id}${
+                            props.refer ? "&refer=" + props.refer : ""
+                          }`
+                        : ""
                     }
                     className="broad-fil"
                     onClick={watch2gether}
@@ -284,7 +288,10 @@ export default function Details(props) {
 
               <div className="anime-details-content">
                 <div className="flex gap-1 items-center specif">
-                  <Link href={`/?refer=${props.refer}`} onClick={handleNavigation}>
+                  <Link
+                    href={`/${props.refer ? "?refer=" + props.refer : ""}`}
+                    onClick={handleNavigation}
+                  >
                     <div className="homo">Home</div>
                   </Link>
                   <div className="dotoi">&#x2022;</div>
@@ -329,8 +336,12 @@ export default function Details(props) {
                     <Link
                       href={`${
                         ls.getItem(`Rewo-${props?.id}`)
-                          ? `/watch/${ls.getItem(`Rewo-${props?.id}`)}?refer=${props.refer}`
-                          : `/watch/${props?.id}?refer=${props.refer}`
+                          ? `/watch/${ls.getItem(`Rewo-${props?.id}`)}${
+                              props.refer ? "&refer=" + props.refer : ""
+                            }`
+                          : `/watch/${props?.id}${
+                              props.refer ? "?refer=" + props.refer : ""
+                            }`
                       }`}
                       className="btn-primary hero-button"
                       onClick={handleNavigation}
@@ -397,7 +408,7 @@ export default function Details(props) {
                   ShareUrl={props.ShareUrl}
                   arise={props.arise}
                 />
-                <CopyUrlButton url={props.ShareUrl}/>
+                <CopyUrlButton url={props.ShareUrl} />
               </div>
             </div>
           </div>
@@ -454,7 +465,7 @@ export default function Details(props) {
       {/* Ad container */}
       <div
         id="ad-container"
-        style={{ 
+        style={{
           width: "100%",
           display: "flex",
           justifyContent: "center",

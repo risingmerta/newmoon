@@ -91,22 +91,22 @@ const WatchList = (props) => {
           </div>
           <div className="butM">
             <div className="butInnM">
-              <Link href={`/user/watch-list?refer=${props.refer}`} className={`namil ${!props.type ? "selectedNO" : ""}`}>
+              <Link href={`/user/watch-list${props.refer?'?refer'=props.refer:''}`} className={`namil ${!props.type ? "selectedNO" : ""}`}>
                 All
               </Link>
-              <Link href={`/user/watch-list?type=1&refer=${props.refer}`} className={`oamil ${props.type === "1" ? "selectedNO" : ""}`}>
+              <Link href={`/user/watch-list?type=1${props.refer?'?refer'=props.refer:''}`} className={`oamil ${props.type === "1" ? "selectedNO" : ""}`}>
                 Watching
               </Link>
-              <Link href={`/user/watch-list?type=2&refer=${props.refer}`} className={`oamil ${props.type === "2" ? "selectedNO" : ""}`}>
+              <Link href={`/user/watch-list?type=2${props.refer?'?refer'=props.refer:''}`} className={`oamil ${props.type === "2" ? "selectedNO" : ""}`}>
                 On-Hold
               </Link>
-              <Link href={`/user/watch-list?type=3&refer=${props.refer}`} className={`oamil ${props.type === "3" ? "selectedNO" : ""}`}>
+              <Link href={`/user/watch-list?type=3${props.refer?'?refer'=props.refer:''}`} className={`oamil ${props.type === "3" ? "selectedNO" : ""}`}>
                 Plan to Watch
               </Link>
-              <Link href={`/user/watch-list?type=4&refer=${props.refer}`} className={`oamil ${props.type === "4" ? "selectedNO" : ""}`}>
+              <Link href={`/user/watch-list?type=4${props.refer?'?refer'=props.refer:''}`} className={`oamil ${props.type === "4" ? "selectedNO" : ""}`}>
                 Dropped
               </Link>
-              <Link href={`/user/watch-list?type=5&refer=${props.refer}`} className={`oamil ${props.type === "5" ? "selectedNO" : ""}`}>
+              <Link href={`/user/watch-list?type=5${props.refer?'?refer'=props.refer:''}`} className={`oamil ${props.type === "5" ? "selectedNO" : ""}`}>
                 Completed
               </Link>
             </div>

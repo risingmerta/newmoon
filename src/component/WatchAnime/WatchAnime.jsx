@@ -376,7 +376,7 @@ export default function WatchAnime(props) {
     const len = el.episode_no === epiod ? 20 : 30;
     return (
       <Link
-        href={`/watch/${el.id}?refer=${props.refer}`}
+        href={`/watch/${el.id}${props.refer ? "&refer=" + props.refer : ""}`}
         title={el.title}
         className={`${
           episodeList.length <= 24 ? "episode-tile" : `episode-tile-blocks`
@@ -760,7 +760,10 @@ export default function WatchAnime(props) {
 
               {/* </div> */}
               <div className="flex gap-1 items-center pecif">
-                <Link href={`/?refer=${props.refer}`} onClick={handleNavigation}>
+                <Link
+                  href={`/${props.refer ? "?refer=" + props.refer : ""}`}
+                  onClick={handleNavigation}
+                >
                   <div className="omo">Home</div>
                 </Link>
                 <div className="otoi">&#x2022;</div>
@@ -1001,7 +1004,7 @@ export default function WatchAnime(props) {
                             <Link
                               href={`/watch/${
                                 props.data.results.episodes[epiod - 2]?.id
-                              }&refer=${props.refer}`}
+                              }${props.refer ? "&refer=" + props.refer : ""}`}
                             >
                               <div
                                 className="backw"
@@ -1016,7 +1019,9 @@ export default function WatchAnime(props) {
                               </div>
                             </Link>
                             <Link
-                              href={`/watch/${props.data.results.episodes[epiod]?.id}&refer=${props.refer}`}
+                              href={`/watch/${
+                                props.data.results.episodes[epiod]?.id
+                              }${props.refer ? "&refer=" + props.refer : ""}`}
                             >
                               <div
                                 className="fordw"
@@ -1065,7 +1070,11 @@ export default function WatchAnime(props) {
                             <Link
                               href={
                                 session
-                                  ? `/watch2gether/create?animeId=${props.datao.results.data?.id}&refer=${props.refer}`
+                                  ? `/watch2gether/create?animeId=${
+                                      props.datao.results.data?.id
+                                    }${
+                                      props.refer ? "&refer=" + props.refer : ""
+                                    }`
                                   : ""
                               }
                               onClick={watch2gether}
@@ -1291,7 +1300,9 @@ export default function WatchAnime(props) {
                               {props?.datao?.results.seasons?.map((sea) => (
                                 <>
                                   <Link
-                                    href={`/${sea.id}?refer=${props.refer}`}
+                                    href={`/${sea.id}${
+                                      props.refer ? "?refer=" + props.refer : ""
+                                    }`}
                                     onClick={handleNavigation}
                                   >
                                     <div
@@ -1422,7 +1433,7 @@ export default function WatchAnime(props) {
               refer={props.refer}
             />
 
-            <CopyUrlButton url={props.ShareUrl}/>
+            <CopyUrlButton url={props.ShareUrl} />
 
             <div
               id="ad-containers"
