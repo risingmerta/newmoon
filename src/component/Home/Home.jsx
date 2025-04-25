@@ -119,8 +119,8 @@ const Home = ({ data, existingAnime, schedule , refer }) => {
           <Trending data={data?.trending || []} selectL={selectL} refer={refer}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
-          <Share ShareUrl={`https://animoon.me/${props.refer ? `?refer=${props.refer}` : ''}`} />
-          <CopyUrlButton url={`https://animoon.me/${props.refer ? `?refer=${props.refer}` : ''}`}/>
+          <Share ShareUrl={`https://animoon.me/${refer ? `?refer=${refer}` : ''}`} />
+          <CopyUrlButton url={`https://animoon.me/${refer ? `?refer=${refer}` : ''}`}/>
           <div id="ad-container2" style={{ margin: "0 auto" }}></div>
 
           <Featured data={data || {}} selectL={selectL} refer={refer}/>
