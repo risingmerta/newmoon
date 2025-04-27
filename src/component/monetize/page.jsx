@@ -1,5 +1,4 @@
 "use client";
-
 import "./monetize.css";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -29,23 +28,21 @@ export default function MonetizePage(props) {
         setAlreadyMonetized(false);
         return;
       }
-
       try {
         const res = await fetch(`/api/get-links?userId=${session?.user?.id}`);
         const result = await res.json();
 
         if (result?.directLink) {
           setAlreadyMonetized(true);
-          setDirectLink(result.directLink); // Pre-fill the existing direct link
+          setDirectLink(result.directLink);
         }
         if (result?.refLink) {
-          setRefLink(result.refLink); // Pre-fill the existing referral link
+          setRefLink(result.refLink);
         }
       } catch (err) {
         console.error("Error fetching user links:", err);
       }
     };
-
     fetchLinks();
   }, [session]);
 
@@ -59,7 +56,6 @@ export default function MonetizePage(props) {
       setStatus("Please sign in to save your links.");
       return;
     }
-
     try {
       const res = await fetch("/api/save-links", {
         method: "POST",
@@ -71,7 +67,6 @@ export default function MonetizePage(props) {
         }),
       });
       const result = await res.json();
-
       if (result.success) {
         setStatus("");
         setShowToast(true);
@@ -111,8 +106,7 @@ export default function MonetizePage(props) {
           <>
             <h1 className="heading">🎉 You Are Monetized!</h1>
             <p className="text">
-              Thanks for setting up your Direct Link. Start sharing and earning
-              now!
+              Thanks for setting up your Direct Link. Start sharing and earning now!
             </p>
             <a
               className="button"
@@ -123,7 +117,6 @@ export default function MonetizePage(props) {
               🚀 Manage Your Adsterra Account
             </a>
 
-            {/* Update Links Form */}
             <div className="box" style={{ marginTop: "2rem" }}>
               <h2 className="boxTitle">✏️ Update Your Links</h2>
 
@@ -154,31 +147,30 @@ export default function MonetizePage(props) {
           </>
         ) : (
           <>
-            <h1 className="heading">
-              💸 Start Earning with Animoon + Adsterra
-            </h1>
+            <h1 className="heading">💸 Start Earning with Animoon + Adsterra</h1>
             <p className="text">
               Earn from your streams + refer friends to earn even more!
             </p>
 
+            {/* Step 1 - Join Adsterra */}
             <div className="box">
-              <h2 className="boxTitle">🎥 1. Earn from Live Streaming</h2>
+              <h2 className="boxTitle">🚀 1. Join Adsterra</h2>
               <p className="text">
-                Share your live stream link anywhere — the more people watch,
-                the more you earn!
+                Create your Adsterra publisher account to get your Direct Link.
               </p>
+              <a
+                className="button"
+                href="https://beta.publishers.adsterra.com/referral/XbbeibecUR"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                🚀 Join Adsterra & Get Your Link
+              </a>
             </div>
 
+            {/* Step 2 - How to Add Direct Link */}
             <div className="box">
-              <h2 className="boxTitle">🔗 2. Add Your Direct Adsterra Link</h2>
-              <label>Your Adsterra Direct Link:</label>
-              <input
-                type="text"
-                value={directLink}
-                onChange={(e) => setDirectLink(e.target.value)}
-                placeholder="Paste your direct ad link here"
-                className="input"
-              />
+              <h2 className="boxTitle">▶️ 2. How to Add Direct Link</h2>
               <div className="videoWrapper">
                 <iframe
                   src="https://www.youtube.com/embed/a9RXktchr6o"
@@ -187,8 +179,17 @@ export default function MonetizePage(props) {
                   allowFullScreen
                 ></iframe>
               </div>
+              <label>Your Adsterra Direct Link:</label>
+              <input
+                type="text"
+                value={directLink}
+                onChange={(e) => setDirectLink(e.target.value)}
+                placeholder="Paste your direct ad link here"
+                className="input"
+              />
             </div>
 
+            {/* Step 3 - Refer Friends (Optional) */}
             <div className="box">
               <h2 className="boxTitle">🤝 3. (Optional) Refer Friends</h2>
               <label>Your Adsterra Referral Link:</label>
@@ -217,18 +218,8 @@ export default function MonetizePage(props) {
 
             {status && <p className="status">{status}</p>}
 
-            <a
-              className="button"
-              href="https://beta.publishers.adsterra.com/referral/XbbeibecUR"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              🚀 Join Adsterra & Get Your Link
-            </a>
-
             <p className="note">
-              Save your links above. Share live streams with your audience or
-              friends to start earning!
+              Save your links above. Share live streams with your audience or friends to start earning!
             </p>
           </>
         )}
