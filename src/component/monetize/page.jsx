@@ -25,7 +25,10 @@ export default function MonetizePage(props) {
 
   useEffect(() => {
     const fetchLinks = async () => {
-      if (!session) return;
+      if (!session) {
+        setAlreadyMonetized(false);
+        return;
+      }
 
       try {
         const res = await fetch(`/api/get-links?userId=${session?.user?.id}`);
@@ -107,7 +110,10 @@ export default function MonetizePage(props) {
         {alreadyMonetized ? (
           <>
             <h1 className="heading">🎉 You Are Monetized!</h1>
-            <p className="text">Thanks for setting up your Direct Link. Start sharing and earning now!</p>
+            <p className="text">
+              Thanks for setting up your Direct Link. Start sharing and earning
+              now!
+            </p>
             <a
               className="button"
               href="https://beta.publishers.adsterra.com/referral/XbbeibecUR"
@@ -148,7 +154,9 @@ export default function MonetizePage(props) {
           </>
         ) : (
           <>
-            <h1 className="heading">💸 Start Earning with Animoon + Adsterra</h1>
+            <h1 className="heading">
+              💸 Start Earning with Animoon + Adsterra
+            </h1>
             <p className="text">
               Earn from your streams + refer friends to earn even more!
             </p>
@@ -156,8 +164,8 @@ export default function MonetizePage(props) {
             <div className="box">
               <h2 className="boxTitle">🎥 1. Earn from Live Streaming</h2>
               <p className="text">
-                Share your live stream link anywhere — the more people watch, the
-                more you earn!
+                Share your live stream link anywhere — the more people watch,
+                the more you earn!
               </p>
             </div>
 

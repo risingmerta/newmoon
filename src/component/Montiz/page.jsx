@@ -10,5 +10,5 @@ export default function Montiz(props) {
         <MonetizePage refer={props?.refer}/>
       </SessionProvider>
     </div>
-  );
+  ); 
 }
