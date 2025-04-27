@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export default function Loading() {
+// Your Loading Component
+function Loading() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
@@ -63,5 +64,14 @@ export default function Loading() {
         transition: "width 0.3s ease",
       }}
     />
+  );
+}
+
+// Wrap the Loading component inside Suspense
+export default function PageComponent() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Loading />
+    </Suspense>
   );
 }
