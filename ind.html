@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monetize Page</title>
+  <style>
+    /* General Styles */
+    body {
+      background-color: #121212; /* Dark background */
+      color: #ffffff; /* White text color */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1.heading {
+      font-size: 2.5rem;
+      color: #00f2fe;
+      text-align: center;
+    }
+
+    .text {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .button {
+      background-color: #00f2fe;
+      color: #fff;
+      padding: 12px 24px;
+      text-align: center;
+      display: block;
+      margin: 20px auto;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      color: #888;
+      font-size: 1rem;
+    }
+
+    .box {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #1c1c1c;
+      border-radius: 10px;
+    }
+
+    .boxTitle {
+      font-size: 1.5rem;
+      color: #00f2fe;
+      margin-bottom: 10px;
+    }
+
+    .input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #333;
+      background-color: #222;
+      color: #fff;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .saveButton {
+      background-color: #00f2fe;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      display: block;
+      margin: 20px auto;
+      cursor: pointer;
+    }
+
+    .saveButton:hover {
+      background-color: #00c1d1;
+    }
+
+    .status {
+      text-align: center;
+      color: red;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1rem;
+    }
+
+    .videoWrapper {
+      margin-top: 15px;
+      padding: 20px;
+      background-color: #1c1c1c;
+      border-radius: 10px;
+    }
+
+    .videoWrapper iframe {
+      width: 100%;
+      height: 315px;
+      border-radius: 10px;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media screen and (max-width: 768px) {
+      h1.heading {
+        font-size: 2rem; /* Reduce heading size on smaller screens */
+      }
+
+      .text {
+        font-size: 1rem; /* Smaller text for better readability */
+      }
+
+      .boxTitle {
+        font-size: 1.3rem; /* Smaller box titles on smaller screens */
+      }
+
+      .saveButton {
+        padding: 12px 20px; /* Adjust button padding */
+      }
+
+      .input {
+        font-size: 1rem; /* Adjust input font size */
+      }
+
+      .videoWrapper iframe {
+        height: 200px; /* Adjust iframe height */
+      }
+
+      .note {
+        font-size: 0.9rem; /* Smaller text for notes */
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 15px; /* Add smaller padding on very small screens */
+      }
+
+      h1.heading {
+        font-size: 1.8rem; /* Even smaller heading */
+      }
+
+      .text {
+        font-size: 0.9rem; /* Smaller text */
+      }
+
+      .box {
+        padding: 10px; /* Adjust padding for smaller screens */
+      }
+
+      .boxTitle {
+        font-size: 1.2rem; /* Even smaller box titles */
+      }
+
+      .saveButton {
+        padding: 10px 16px; /* Reduce padding for buttons */
+      }
+
+      .input {
+        font-size: 0.9rem; /* Adjust input font size for small screens */
+      }
+
+      .videoWrapper iframe {
+        height: 180px; /* Further adjust iframe height for small screens */
+      }
+
+      .note {
+        font-size: 0.8rem; /* Smaller note text */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="heading">💸 Start Earning with Animoon + Adsterra</h1>
+    <p class="text">
+      Join Adsterra, get your link, and start earning today!
+    </p>
+
+    <a
+      class="button"
+      href="https://beta.publishers.adsterra.com/referral/XbbeibecUR"
+      target="_blank"
+    >
+      🚀 Join Adsterra & Get Your Link
+    </a>
+
+    <p class="note">
+      After joining, add your direct link here to start earning!
+    </p>
+
+    <!-- How To Create Adsterra Direct Link -->
+    <div class="box">
+      <h2 class="boxTitle">🔧 How to Create Adsterra Direct Link</h2>
+      <div class="videoWrapper">
+        <iframe
+          src="https://www.youtube.com/embed/a9RXktchr6o"
+          title="How To Create ADSTERRA DIRECT LINK As A Beginner (2024)"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Adsterra Link Section -->
+    <div class="box">
+      <h2 class="boxTitle">🔗 Add Your Adsterra Link</h2>
+      <label>Your Adsterra Direct Link:</label>
+      <input
+        type="text"
+        id="directLink"
+        placeholder="Paste your direct ad link here"
+        class="input"
+      />
+    </div>
+
+    <!-- Optional Referral Link Section -->
+    <div class="box">
+      <h2 class="boxTitle">🤝 (Optional) Add Your Referral Link</h2>
+      <label>Your Adsterra Referral Link (Optional):</label>
+      <input
+        type="text"
+        id="refLink"
+        placeholder="Paste your referral link here (optional)"
+        class="input"
+      />
+      <iframe
+        id="refIframe"
+        width="100%"
+        height="250"
+        frameborder="0"
+        sandbox="allow-scripts allow-same-origin"
+        title="Referral Link Preview"
+        style="display:none"
+      ></iframe>
+    </div>
+
+    <!-- Save Links Button -->
+    <button class="saveButton" onclick="saveLinks()">
+      💾 Save My Links
+    </button>
+
+    <!-- Status Message -->
+    <p id="status" class="status"></p>
+
+    <div class="footer">
+      Made with ❤️ by <strong style="color: #00f2fe">Animoon</strong>
+    </div>
+  </div>
+
+  <script>
+    function saveLinks() {
+      const directLink = document.getElementById("directLink").value;
+      const refLink = document.getElementById("refLink").value;
+
+      if (!directLink) {
+        document.getElementById("status").textContent =
+          "❌ Please enter your Direct Adsterra Link.";
+        return;
+      }
+
+      // Save the links (just logging in this case)
+      console.log("Saving Direct Link:", directLink);
+      console.log("Saving Referral Link:", refLink);
+
+      // Example: Show success message
+      document.getElementById("status").textContent =
+        "✅ Your links have been saved!";
+
+      // If referral link is provided, display its preview
+      if (refLink) {
+        const refIframe = document.getElementById("refIframe");
+        refIframe.src = refLink;
+        refIframe.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
