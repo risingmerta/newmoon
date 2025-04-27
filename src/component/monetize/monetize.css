@@ -9,44 +9,52 @@
 }
 
 .heading {
-  color: #4ade80;
+  color: #00f2fe;
   text-align: center;
   font-size: 28px;
 }
 
 .text {
-  color: #ccc;
+  color: #bbb;
   font-size: 14px;
   text-align: center;
 }
 
 .box {
-  background-color: #1e1e1e;
+  background-color: #111;
   padding: 15px;
   border-radius: 12px;
   margin: 20px 0;
+  border: 1px solid #00f2fe30; /* subtle border with theme color transparency */
 }
 
 .boxTitle {
   font-size: 18px;
   margin-bottom: 8px;
+  color: #00f2fe;
 }
 
 .input {
   width: 100%;
   padding: 10px;
-  background: #3a3a3a;
-  border: 1px solid #555;
+  background: #1c1c1c;
+  border: 1px solid #00f2fe60;
   color: #fff;
   border-radius: 8px;
   margin-top: 5px;
   margin-bottom: 12px;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: #00f2fe;
+  outline: none;
 }
 
 .saveButton {
   width: 100%;
-  background-color: #22c55e;
-  color: black;
+  background: linear-gradient(90deg, #00f2fe, #4facfe);
+  color: #000;
   font-weight: bold;
   padding: 12px;
   text-align: center;
@@ -54,19 +62,29 @@
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.saveButton:hover {
+  opacity: 0.9;
 }
 
 .button {
   display: block;
   width: 100%;
-  background-color: #3b82f6;
-  color: #fff;
+  background: #00f2fe;
+  color: #000;
   font-weight: bold;
   padding: 12px;
   text-align: center;
   border-radius: 10px;
   text-decoration: none;
   margin-top: 12px;
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: #4facfe;
 }
 
 .note {
@@ -79,14 +97,14 @@
 .footer {
   text-align: center;
   font-size: 12px;
-  color: #888;
+  color: #666;
   margin-top: 20px;
 }
 
 .status {
   text-align: center;
   font-size: 14px;
-  color: #4ade80;
+  color: #00f2fe;
   margin-top: 12px;
 }
 
