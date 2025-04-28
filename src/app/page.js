@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/mongoClient";
 import Home from "@/component/Home/Home";
 import Advertize from "@/component/Advertize/Advertize";
 import Script from "next/script";
+import HeroSkeleton from "@/component/HeroSkeleton/HeroSkeleton";
 
 export default async function Page({ searchParams }) {
   let data = [];
@@ -52,7 +53,16 @@ export default async function Page({ searchParams }) {
     <div>
       {/* Optional */}
       {/* <Script strategy="afterInteractive" src="..." /> */}
-      <Home data={data} existingAnime={existingAnime} schedule={animeDocs} refer={searchParam.refer}/>
+      {data && existingAnime && animeDocs ? (
+        <Home
+          data={data}
+          existingAnime={existingAnime}
+          schedule={animeDocs}
+          refer={searchParam.refer}
+        />
+      ) : (
+        <HeroSkeleton />
+      )}
       <Advertize direct={direct} />
     </div>
   );
