@@ -110,14 +110,18 @@ export default async function Page({ params, searchParams }) {
 
   return (
     <div>
-      <RecommendedTopTen
-        uiui={animeDoc}
-        data={data}
-        ShareUrl={ShareUrl}
-        arise={arise}
-        id={idToCheck}
-        refer={searchParam.refer}
-      />
+      {data ? (
+        <RecommendedTopTen
+          uiui={animeDoc}
+          data={data}
+          ShareUrl={ShareUrl}
+          arise={arise}
+          id={idToCheck}
+          refer={searchParam.refer}
+        />
+      ) : (
+        <HeroSkeleton />
+      )}
       <Advertize direct={direct} />
     </div>
   );

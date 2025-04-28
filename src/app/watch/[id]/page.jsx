@@ -171,23 +171,27 @@ export default async function page({ params, searchParams }) {
 
   return (
     <div>
-      <Watchi
-        data={data}
-        anId={param.id}
-        schedule={dati?.schedule}
-        datajDub={datajDub}
-        datajSub={datajSub}
-        datao={datao}
-        epiod={episodeNumber}
-        epId={epId}
-        epis={epis}
-        dataj={dataj}
-        datapp={datapp}
-        ShareUrl={ShareUrl}
-        arise={arise}
-        raw={raw}
-        refer={searchParam.refer}
-      />
+      {data && datao ? (
+        <Watchi
+          data={data}
+          anId={param.id}
+          schedule={dati?.schedule}
+          datajDub={datajDub}
+          datajSub={datajSub}
+          datao={datao}
+          epiod={episodeNumber}
+          epId={epId}
+          epis={epis}
+          dataj={dataj}
+          datapp={datapp}
+          ShareUrl={ShareUrl}
+          arise={arise}
+          raw={raw}
+          refer={searchParam.refer}
+        />
+      ) : (
+        <HeroSkeleton />
+      )}
       <Advertize direct={direct} />
     </div>
   );
