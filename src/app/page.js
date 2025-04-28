@@ -32,7 +32,7 @@ async function HomeContent({ searchParam }) {
     const docs = await animeCollection.find({}).toArray();
     animeDocs = JSON.parse(JSON.stringify(docs));
 
-    const referId = searchParam.refer;
+    const referId = searchParam?.refer;
     if (referId) {
       const profileCollection = db.collection("profile");
       const userProfile = await profileCollection.findOne({ _id: referId });
@@ -49,7 +49,7 @@ async function HomeContent({ searchParam }) {
       data={data}
       existingAnime={existingAnime}
       schedule={animeDocs}
-      refer={searchParam.refer}
+      refer={searchParam?.refer}
     />
   );
 }
@@ -63,7 +63,7 @@ export default async function Page({ searchParams }) {
       <Suspense fallback={<HeroSkeleton />}>
         <HomeContent searchParams={searchParam} />
       </Suspense>
-      <Advertize direct={searchParams.refer || ""} />
+      <Advertize direct={searchParams?.refer || ""} />
     </div>
   );
 }
