@@ -3,7 +3,8 @@ import React, { Suspense } from "react";
 import { connectDB } from "@/lib/mongoClient";
 import Watchi from "@/component/Watchi/page";
 import Advertize from "@/component/Advertize/Advertize";
-import HeroSkeleton from "@/component/Loading/HeroSkeleton"; // Assuming you have a loading skeleton
+import HeroSkeleton from "@/component/HeroSkeleton/HeroSkeleton";
+// import HeroSkeleton from "@/component/Loading/HeroSkeleton"; // Assuming you have a loading skeleton
 
 // --- Fetch anime data ---
 const fetchAnimeData = async (idToCheck) => {
