@@ -73,7 +73,7 @@ function Card({
     : 0;
 
   const handleNavigation = () => {
-    if (pathname.includes("/watch/")) return; // Already on a watch page
+    if (!pathname.includes("/watch/")) return; // Already on a watch page
     let timer;
 
     setLoading(true);
