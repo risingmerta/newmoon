@@ -4,7 +4,7 @@ import { connectDB } from "@/lib/mongoClient";
 import Watchi from "@/component/Watchi/page";
 import Advertize from "@/component/Advertize/Advertize";
 // import HeroSkeleton from "@/component/Loading/HeroSkeleton"; // Assuming you have a loading skeleton
-import SpotlightLoader from "@/component/Loader/Spotlight.loader";
+import SpotlightLoader from "@/component/Loader/SpotlightLoader";
 
 // --- Fetch anime data ---
 const fetchAnimeData = async (idToCheck) => {

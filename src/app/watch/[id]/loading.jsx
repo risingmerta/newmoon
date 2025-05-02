@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import SpotlightLoader from "@/component/Loader/Spotlight.loader";
+import SpotlightLoader from "@/component/Loader/SpotlightLoader";
 
 // Your Loading Component
 function Loading() {

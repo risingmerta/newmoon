@@ -3,7 +3,7 @@ import { connectDB } from "@/lib/mongoClient";
 import Home from "@/component/Home/Home";
 import Advertize from "@/component/Advertize/Advertize";
 import HeroSkeleton from "@/component/HeroSkeleton/HeroSkeleton";
-import SpotlightLoader from "@/component/Loader/Spotlight.loader";
+import SpotlightLoader from "@/component/Loader/SpotlightLoader";
 
 export const dynamic = "force-dynamic";
 

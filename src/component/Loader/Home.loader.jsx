@@ -1,7 +1,7 @@
 import CartLoader from "./Cart.loader";
 import CategoryCardLoader from "./CategoryCard.loader";
 import SidecardLoader from "./Sidecard.loader";
-import SpotlightLoader from "./Spotlight.loader";
+import SpotlightLoader from "./SpotlightLoader";
 import Trendingloader from "./Trending.loader";
 function HomeLoader() {
   return (
