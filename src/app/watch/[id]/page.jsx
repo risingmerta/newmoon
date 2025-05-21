@@ -88,10 +88,6 @@ async function WatchPage({ params, searchParams }) {
   const datao = existingAnime?.info;
   const data = existingAnime?.episodes;
 
-  if (!data || !datao) {
-    return <HeroSkeleton />;
-  }
-
   // Find episode
   const epId = episodeIdParam || data?.results?.episodes[0]?.id;
   const episodeNumber =
