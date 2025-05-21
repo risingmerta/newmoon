@@ -1,72 +1,75 @@
-// /app/watch/[id]/page.tsx
-import React, { Suspense } from "react";
+import React from "react";
 import { connectDB } from "@/lib/mongoClient";
 import Watchi from "@/component/Watchi/page";
+import Script from "next/script";
 import Advertize from "@/component/Advertize/Advertize";
-// import HeroSkeleton from "@/component/Loading/HeroSkeleton"; // Assuming you have a loading skeleton
-import SpotlightLoader from "@/component/Loader/SpotlightLoader";
 
-// --- Fetch anime data ---
+// Centralized data fetching function
 const fetchAnimeData = async (idToCheck) => {
   try {
     const db = await connectDB();
     const animeCollection = db.collection("animeInfo");
 
+    // Check if the anime data already exists in the database
     let existingAnime = await animeCollection.findOne({ _id: idToCheck });
+
     let datao = existingAnime?.info;
     let data = existingAnime?.episodes;
 
     const isInfoMissing =
       !existingAnime?.info?.results?.data ||
       !Array.isArray(existingAnime?.episodes?.results?.episodes) ||
-      existingAnime?.episodes?.results?.episodes.length === 0;
+      existingAnime.episodes.results.episodes.length === 0;
 
     if (!existingAnime || isInfoMissing) {
-      const [info, episodes] = await Promise.all([
-        fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`).then((res) =>
-          res.json()
+      const [dat, epis] = await Promise.all([
+        fetch(`https://vimal.animoon.me/api/info?id=${idToCheck}`).then((r) =>
+          r.json()
         ),
-        fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`).then(
-          (res) => res.json()
+        fetch(`https://vimal.animoon.me/api/episodes/${idToCheck}`).then((r) =>
+          r.json()
         ),
       ]);
 
       if (
-        info?.results?.data?.title &&
-        Array.isArray(episodes?.results?.episodes) &&
-        episodes?.results?.episodes.length > 0
+        dat?.results?.data?.title &&
+        Array.isArray(epis?.results?.episodes) &&
+        epis?.results?.episodes.length > 0
       ) {
         await animeCollection.updateOne(
           { _id: idToCheck },
-          { $set: { info, episodes } },
+          { $set: { info: dat, episodes: epis } },
           { upsert: true }
         );
-        existingAnime = { info, episodes };
+        datao = dat;
+        existingAnime = { info: dat, episodes: epis };
       }
     }
 
     return existingAnime;
   } catch (error) {
-    console.error("Error fetching anime data:", error);
+    console.error("Error fetching anime data: ", error);
     return null;
   }
 };
 
-// --- Metadata generation ---
 export async function generateMetadata({ params }) {
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Animoon";
-  const idToCheck = params.id;
+  const param = await params;
+  const idToCheck = param.id;
 
   try {
     const existingAnime = await fetchAnimeData(idToCheck);
-    const title = existingAnime?.info?.results?.data?.title || "Anime";
+    const title =
+      existingAnime?.info?.results?.data?.title ||
+      existingAnime?.info?.results?.data?.title;
 
     return {
       title: `Watch ${title} English Sub/Dub online free on ${siteName}`,
       description: `${siteName} is the best site to watch ${title} SUB online, or you can even watch underrated anime on ${siteName}.`,
     };
   } catch (error) {
-    console.error("Error generating metadata:", error);
+    console.error("Error fetching metadata: ", error);
     return {
       title: `Watch Anime Online Free on ${siteName}`,
       description: `${siteName} is the best site to watch anime in high quality with both sub and dub options.`,
@@ -74,44 +77,52 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// --- Page component with suspense ---
-async function WatchPage({ params, searchParams }) {
-  const idToCheck = params.id;
-  const epis = searchParams?.ep;
-  const episodeIdParam = epis ? `${idToCheck}?ep=${epis}` : null;
-
-  const db = await connectDB();
-  const profileCollection = db.collection("profile");
+export default async function page({ params, searchParams }) {
+  const param = await params;
+  const searchParam = await searchParams;
+  const idToCheck = param.id;
+  const epis = searchParam.ep;
+  const episodeIdParam = epis ? `${param.id}?ep=${epis}` : null;
 
   // Fetch anime data
-  const existingAnime = await fetchAnimeData(idToCheck);
-  const datao = existingAnime?.info;
-  const data = existingAnime?.episodes;
+  let existingAnime = await fetchAnimeData(idToCheck);
 
-  // Find episode
+  // Profile collection and refer ID check
+  const db = await connectDB();
+  const profileCollection = db.collection("profile");
+  let direct = "";
+
+  const referId = searchParam?.refer;
+  if (referId) {
+    const userProfile = await profileCollection.findOne({ _id: referId });
+    if (userProfile?.directLink) {
+      direct = userProfile.directLink;
+    }
+  }
+
+  let datao = existingAnime?.info;
+  let data = existingAnime?.episodes;
+
   const epId = episodeIdParam || data?.results?.episodes[0]?.id;
-  const episodeNumber =
+  let episodeNumber =
     data?.results?.episodes?.find((ep) => ep?.id === epId)?.episode_no || 0;
+  let epiod = episodeNumber;
 
-  const epiod = episodeNumber;
-
-  // Check dub availability
-  const dubTruth =
+  let dubTruth =
     datao?.results?.data?.animeInfo?.tvInfo?.dub >= epiod ? "yes" : "";
 
-  // Streaming fetcher
-  const fetchStreamData = async (id, type) => {
+  // Fetch streaming data
+  const fetchStreamData = async (epId, type) => {
     try {
       return await fetch(
-        `https://vimal.animoon.me/api/stream?id=${id}&server=hd-2&type=${type}`
-      ).then((res) => res.json());
-    } catch (error) {
-      console.error(`Error fetching ${type}:`, error);
+        `https://vimal.animoon.me/api/stream?id=${epId}&server=hd-2&type=${type}`
+      ).then((r) => r.json());
+    } catch (e) {
+      console.error(`Error fetching ${type}:`, e);
       return [];
     }
   };
 
-  // Fetch streaming links
   let datajDub = dubTruth ? await fetchStreamData(epId, "dub") : [];
   let datajSub = await fetchStreamData(epId, "sub");
   let raw = "";
@@ -121,15 +132,15 @@ async function WatchPage({ params, searchParams }) {
     raw = "yes";
   }
 
-  // Fetch schedule
+  // Schedule data
   let dati = null;
   try {
-    const res = await fetch(
+    const respi = await fetch(
       `https://vimal.animoon.me/api/schedule/${idToCheck}`
     );
-    if (res.ok) {
-      const json = await res.json();
-      const dateOnly = json?.results?.nextEpisodeSchedule?.split(" ")[0];
+    if (respi.ok) {
+      const datih = await respi.json();
+      const dateOnly = datih?.results?.nextEpisodeSchedule?.split(" ")[0];
       if (dateOnly) {
         const schDoc = await db
           .collection("animoon-schedule")
@@ -139,68 +150,45 @@ async function WatchPage({ params, searchParams }) {
           : null;
       }
     }
-  } catch (error) {
-    console.error("Failed to fetch schedule:", error.message);
+  } catch (e) {
+    console.log("Failed to fetch schedule:", e.message);
   }
 
-  // Fetch homepage data
-  let datapp = null;
+  const ShareUrl = `https://animoon.me/watch/${epId}&refer=${searchParam.refer}`;
+  const arise = "this Episode";
+
+  let datapp;
   try {
     const doc = await db.collection("animoon-home").findOne({});
     datapp =
       doc ||
-      (await fetch("https://vimal.animoon.me/api/").then((res) => res.json()));
-  } catch (error) {
-    console.error("Error fetching homepage data:", error.message);
+      (await fetch("https://vimal.animoon.me/api/").then((r) => r.json()));
+  } catch (e) {
+    console.error("Error fetching homepage data:", e.message);
   }
 
-  // Refer link
-  let direct = "";
-  const referId = searchParams?.refer;
-  if (referId) {
-    const userProfile = await profileCollection.findOne({ _id: referId });
-    if (userProfile?.directLink) {
-      direct = userProfile.directLink;
-    }
-  }
-
-  const ShareUrl = `https://animoon.me/watch/${epId}&refer=${
-    searchParams?.refer || ""
-  }`;
-  const arise = "this Episode";
+  const dataj = [];
 
   return (
     <div>
       <Watchi
         data={data}
-        anId={idToCheck}
+        anId={param.id}
         schedule={dati?.schedule}
         datajDub={datajDub}
         datajSub={datajSub}
         datao={datao}
-        epiod={epiod}
+        epiod={episodeNumber}
         epId={epId}
         epis={epis}
-        dataj={[]}
+        dataj={dataj}
         datapp={datapp}
         ShareUrl={ShareUrl}
         arise={arise}
         raw={raw}
-        refer={referId}
+        refer={searchParam.refer}
       />
       <Advertize direct={direct} />
     </div>
-  );
-}
-
-// --- Final export using Suspense ---
-export default async function PageWrapper({ params, searchParams }) {
-  const searchParam = await searchParams;
-  const param = await params;
-  return (
-    <Suspense fallback={<SpotlightLoader />}>
-      {/* Wrapped your async page inside Suspense */}
-      <WatchPage params={param} searchParams={searchParam} />
-    </Suspense>
   );
 }

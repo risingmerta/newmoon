@@ -179,33 +179,35 @@ export default function WatchAnime(props) {
 
   let epiod = props.epiod;
 
-let message;
+  let message;
 
-if (props.schedule?.releaseDate && props.schedule?.time) {
-  // Combine release date and time (UTC-safe)
-  const dateStr = `${props.schedule.releaseDate}T${props.schedule.time}:00Z`;
+  if (props.schedule?.releaseDate && props.schedule?.time) {
+    // Combine release date and time
+    const dateStr = `${props.schedule?.releaseDate}T${props.schedule?.time}:00`; // Convert to ISO format (2025-04-28T00:45:00)
 
-  const nextEpisodeDate = new Date(dateStr);
+    // Create a Date object from the combined string
+    const nextEpisodeDate = new Date(dateStr);
 
-  if (isNaN(nextEpisodeDate)) {
-    message = "🚨 There was an error with the episode schedule date.";
+    // Check if the date is valid
+    if (isNaN(nextEpisodeDate)) {
+      message = "🚨 There was an error with the episode schedule date.";
+    } else {
+      const formattedDate = nextEpisodeDate?.toLocaleString("en-US", {
+        month: "numeric",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+
+      // Prepare the new message
+      message = `🚀 Estimated the next episode will come at ${formattedDate}`;
+    }
   } else {
-    const formattedDate = nextEpisodeDate.toLocaleString("en-US", {
-      month: "numeric",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-    });
-
-    message = `🚀 Estimated the next episode will come at ${formattedDate}`;
+    message = "";
   }
-} else {
-  message = "";
-}
-
 
   console.log(message); // Output the message
 
